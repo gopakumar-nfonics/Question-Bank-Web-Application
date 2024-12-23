@@ -1,0 +1,31 @@
+.kt_app_root-login{
+    background: #0c0c0c7a;
+    display: flex;
+    width: 100%;
+    padding-right: 30px;
+}
+
+.footer-label
+{
+    color:#a19d9d !important;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.login-div {
+    background: #000000cb  !important;
+}
+
+.br-right {
+    border-right: 1px solid #eff2f5 !important;
+    border-radius: 0;
+}
+.color-green {
+    color: #45ab48 !important;
+}
+.breadcrumb {
+    padding: 0 2.25rem !important;
+    background-color:transparent !important;
+    justify-content:space-between;
+}
