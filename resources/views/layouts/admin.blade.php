@@ -107,11 +107,9 @@
 									<!--end::Menu separator-->
 									<!--begin::Menu item-->
 									<div class="menu-item px-5">
-										@if (Auth::user()->isRecruiter())
-										<a href="{{ route('recruiter.edit', ['recruiter' => Auth::user()->id]) }}" class="menu-link px-5">My Profile</a>
-										@elseif (Auth::user()->isStudent())
-										<a href="{{ route('student.edit', ['student' => Auth::user()->id]) }}" class="menu-link px-5">My Profile</a>
-										@endif
+										
+										<a href="" class="menu-link px-5">My Profile</a>
+										
 									</div>
 									<!--end::Menu item-->
 
@@ -205,57 +203,36 @@
 
 								<!--end:Menu item-->
 
-
-
-
-
-
-								<!--begin:Menu item-->
-
-
-
 								<!--begin:Menu item-->
 
 								<!--begin:Menu item-->
-
-
-								<!--end:Menu item-->
-
-								<!--end:Menu item-->
-
-
-
-								<!--begin:Menu item-->
-								<!--end:Menu item-->
-
-								<!--begin:Menu item-->
-								@if( !empty(Auth::user()->isRecruiter()) )
+								@if( !empty(Auth::user()->isAdmin()) )
 								<div class="menu-item pt-5">
 									<!--begin:Menu content-->
 									<div class="menu-content">
-										<span class="menu-heading fw-bold text-uppercase fs-7">Jobs</span>
+										<span class="menu-heading fw-bold text-uppercase fs-7">Subjects</span>
 									</div>
 									<!--end:Menu content-->
 								</div>
 
-								<div data-kt-menu-trigger="click" class="menu-item menu-accordion  @if(in_array(Route::currentRouteName(),array('job.index','job.create','job.edit'))) show @endif">
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('subject.index','subject.create','subject.edit'))) show @endif">
 									<!--begin:Menu link-->
 									<span class="menu-link">
 										<span class="menu-icon">
-											<i class="fa-solid fa-users f-15 p-0"></i>
+											<i class="fa-solid fa-layer-group f-15 p-0"></i>
 										</span>
-										<span class="menu-title">Manage Jobs</span>
+										<span class="menu-title">Manage Subjects</span>
 										<span class="menu-arrow"></span>
 									</span>
 									<div class="menu-sub menu-sub-accordion">
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
-											<a class="menu-link @if(in_array(Route::currentRouteName(),array('job.index'))) active  @endif" href="{{route('job.index')}}">
+											<a class="menu-link @if(in_array(Route::currentRouteName(),array('subject.index'))) active  @endif" href="{{route('subject.index')}}">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
-												<span class="menu-title">Job List</span>
+												<span class="menu-title">Subject List</span>
 											</a>
 											<!--end:Menu link-->
 										</div>
@@ -263,11 +240,11 @@
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
-											<a class="menu-link @if(in_array(Route::currentRouteName(),array('job.create'))) active  @endif" href="{{route('job.create')}}">
+											<a class="menu-link @if(in_array(Route::currentRouteName(),array('subject.create'))) active  @endif" href="{{route('subject.create')}}">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
-												<span class="menu-title">Create Job</span>
+												<span class="menu-title">Create Subject</span>
 											</a>
 											<!--end:Menu link-->
 										</div>
@@ -280,50 +257,6 @@
 								<!--end:Menu item-->
 
 
-								<!--begin:Menu item-->
-
-								<!--begin:Menu item-->
-								@if( !empty(Auth::user()->isAdmin()) )
-								<div class="menu-item pt-5">
-									<!--begin:Menu content-->
-									<div class="menu-content">
-										<span class="menu-heading fw-bold text-uppercase fs-7">Company</span>
-									</div>
-									<!--end:Menu content-->
-								</div>
-
-								<div class="menu-item">
-									<!--begin:Menu link-->
-									<a class="menu-link  @if(in_array(Route::currentRouteName(),array('recruiter.index'))) active  @endif" href="{{route('recruiter.index')}}">
-										<span class="menu-icon">
-											<i class="fa-solid fa-building f-15 p-0"></i>
-										</span>
-										<span class="menu-title">Manage Company</span>
-										<!-- <span class="menu-arrow"></span> -->
-									</a>
-								</div>
-
-								<div class="menu-item pt-5">
-									<!--begin:Menu content-->
-									<div class="menu-content">
-										<span class="menu-heading fw-bold text-uppercase fs-7">Students</span>
-									</div>
-									<!--end:Menu content-->
-								</div>
-
-								<div class="menu-item">
-									<!--begin:Menu link-->
-									<a class="menu-link  @if(in_array(Route::currentRouteName(),array('student.index','student.view'))) active  @endif" href="{{route('student.index')}}">
-										<span class="menu-icon">
-											<i class="fa-solid fa-users f-15 p-0"></i>
-										</span>
-										<span class="menu-title">Manage Students</span>
-										<!-- <span class="menu-arrow"></span> -->
-									</a>
-								</div>
-								
-								<!--end:Menu item-->
-
 								<div class="menu-item pt-5">
 									<!--begin:Menu content-->
 									<div class="menu-content">
@@ -332,7 +265,7 @@
 									<!--end:Menu content-->
 								</div>
 								<!--begin:Menu item-->
-								<div data-kt-menu-trigger="click" class="menu-item menu-accordion  @if(in_array(Route::currentRouteName(),array('user.index','user.create','user.edit'))) show @endif">
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion  ">
 									<!--begin:Menu link-->
 									<span class="menu-link">
 										<span class="menu-icon">
@@ -347,7 +280,7 @@
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
-											<a class="menu-link @if(in_array(Route::currentRouteName(),array('user.index'))) active  @endif" href="{{route('user.index')}}">
+											<a class="menu-link " href="">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -359,7 +292,7 @@
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
-											<a class="menu-link @if(in_array(Route::currentRouteName(),array('user.create'))) active  @endif" href="{{route('user.create')}}">
+											<a class="menu-link " href="">
 												<span class="menu-bullet">
 													<span class="bullet bullet-dot"></span>
 												</span>
@@ -374,7 +307,6 @@
 								</div>
 
 								<!--end:Menu item-->
-								@endif
 
 							</div>
 							<!--end::Menu-->
