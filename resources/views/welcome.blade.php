@@ -24,14 +24,14 @@
                     src="assets/media/misc/lg_bg.png" alt="" />
                 <!--end::Image-->
                 <!--begin::Title-->
-                <h1 class="d-none d-lg-block text-white fs-1 fw-bolder text-center mt-6">Placement Management System</h1>
+                <h1 class="d-none d-lg-block text-white fs-1 fw-bolder text-center mt-6">Question Bank Management System</h1>
                 <!--end::Title-->
                 <!--begin::Text-->
-                <div class="d-none d-lg-block text-white fs-base text-center">To expedite the hiring process,
+                <!-- <div class="d-none d-lg-block text-white fs-base text-center">To expedite the hiring process,
                     <a href="#" class="opacity-75-hover text-warning fw-bold me-1">this system links</a>administrators, companies and students.
                     <br />It manages
                     <a href="#" class="opacity-75-hover text-warning fw-bold me-1">applications, interviews, jobs , and profiles</a> in a single platform.
-                </div>
+                </div> -->
                 <!--end::Text-->
             </div>
             <!--end::Content-->
@@ -119,9 +119,9 @@
                         </div>
                         <!--end::Submit button-->
 
-                        <div class="text-gray-500 text-center fw-semibold fs-6 mt-10">Not a User yet?
+                        <!-- <div class="text-gray-500 text-center fw-semibold fs-6 mt-10">Not a User yet?
                             <a href="{{route('register')}}" class="link-primary">Sign Up</a>
-                        </div>
+                        </div> -->
 
                     </form>
                     <!--end::Form-->

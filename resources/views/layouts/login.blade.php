@@ -5,13 +5,13 @@
 	<head><base href="../../../"/>
 		<title>{{config('app.name')}}</title>
 		<meta charset="utf-8" />
-		<meta name="description" content="Placement Management System" />
-		<meta name="keywords" content="Placement Management System" />
+		<meta name="description" content="Question Bank Management System" />
+		<meta name="keywords" content="Question Bank Management System" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="article" />
-		<meta property="og:title" content="Placement Management System" />
-		<meta property="og:site_name" content="Placement Management System" />
+		<meta property="og:title" content="Question Bank Management System" />
+		<meta property="og:site_name" content="Question Bank Management System" />
 		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
 		<!--begin::Fonts(mandatory for all pages)-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
