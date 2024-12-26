@@ -22,4 +22,9 @@ class Subject extends Model
     {
         return $this->belongsTo(User::class, 'sub_created_by');
     }
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class, 'subject_id');
+    }
 }

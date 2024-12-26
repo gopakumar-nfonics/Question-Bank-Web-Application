@@ -252,6 +252,51 @@
 
 									</div>
 								</div>
+								<div class="menu-item pt-5">
+									<!--begin:Menu content-->
+									<div class="menu-content">
+										<span class="menu-heading fw-bold text-uppercase fs-7">Topics</span>
+									</div>
+									<!--end:Menu content-->
+								</div>
+
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('topic.index','topic.create','topic.edit'))) show @endif">
+									<!--begin:Menu link-->
+									<span class="menu-link">
+										<span class="menu-icon">
+											<i class="fa-solid fa-layer-group f-15 p-0"></i>
+										</span>
+										<span class="menu-title">Manage Topics</span>
+										<span class="menu-arrow"></span>
+									</span>
+									<div class="menu-sub menu-sub-accordion">
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link @if(in_array(Route::currentRouteName(),array('topic.index'))) active  @endif" href="{{route('topic.index')}}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Topics List</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link @if(in_array(Route::currentRouteName(),array('topic.create'))) active  @endif" href="{{route('topic.create')}}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Create Topic</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+
+									</div>
+								</div>
 								@endif
 
 								<!--end:Menu item-->
