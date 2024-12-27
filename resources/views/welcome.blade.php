@@ -11,7 +11,7 @@
 
         <!--begin::Aside-->
         <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-1"
-            style="background-image: url(assets/media/misc/auth-bg.png)">
+            style="background-image: url(assets/images/bg.jpg)">
             <!--begin::Content-->
             <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
                 <!--begin::Logo-->
@@ -19,12 +19,10 @@
                     <img alt="Logo" src="assets/media/logos/logo.svg" class="h-50px h-lg-50px" />
                 </a>
                 <!--end::Logo-->
-                <!--begin::Image-->
-                <img class="d-none d-lg-block mx-auto w-100px w-md-50 w-lg-300px"
-                    src="assets/media/misc/lg_bg.png" alt="" />
-                <!--end::Image-->
+
                 <!--begin::Title-->
-                <h1 class="d-none d-lg-block text-white fs-1 fw-bolder text-center mt-6">Question Bank Management System</h1>
+                <h1 class="d-none d-lg-block text-white fs-1 fw-bolder text-center mt-6">Question Bank Management System
+                </h1>
                 <!--end::Title-->
                 <!--begin::Text-->
                 <!-- <div class="d-none d-lg-block text-white fs-base text-center">To expedite the hiring process,

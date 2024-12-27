@@ -29,3 +29,8 @@
     background-color:transparent !important;
     justify-content:space-between;
 }
+.tagify.form-control-lg
+{
+    padding: 10px !important;
+    gap: 10px !important;
+}

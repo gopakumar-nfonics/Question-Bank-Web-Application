@@ -11,21 +11,19 @@
 
         <!--begin::Aside-->
         <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-1"
-            style="background-image: url(assets/media/misc/auth-bg.png)">
+            style="background-image: url(assets/images/bg.jpg)">
             <!--begin::Content-->
             <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
                 <!--begin::Logo-->
                 <a href="" class="mb-0 mb-lg-12">
-                    <img alt="Logo" src="assets/media/logos/logo.svg" class="h-50px h-lg-50px" />
+                    <img alt="Logo" src="assets/images/app_logo.png" class="h-150px h-lg-150px" />
                 </a>
                 <!--end::Logo-->
                 <!--begin::Image-->
-                <img class="d-none d-lg-block mx-auto w-100px w-md-50 w-lg-300px"
-                    src="assets/media/misc/lg_bg.png" alt="" />
+                <!-- <img class="d-none d-lg-block mx-auto w-100px w-md-50 w-lg-300px" alt=""
+                    src="assets/images/app_logo.png" /> -->
                 <!--end::Image-->
-                <!--begin::Title-->
-                <h1 class="d-none d-lg-block text-white fs-1 fw-bolder text-center mt-6">Question Bank Management System</h1>
-                <!--end::Title-->
+
                 <!--begin::Text-->
                 <!-- <div class="d-none d-lg-block text-white fs-base text-center">To expedite the hiring process,
                     <a href="#" class="opacity-75-hover text-warning fw-bold me-1">this system links</a>administrators, companies and students.
