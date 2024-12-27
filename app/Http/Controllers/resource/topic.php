@@ -37,7 +37,7 @@ class topic extends Controller
     {
          // Validate the input
     $validatedData = $request->validate([
-        'topic_subject' => 'required|exists:subjects_tbl,id', // Ensures the subject exists
+        'topic_subject' => 'required|exists:tbl_subjects,id', // Ensures the subject exists
         'topic_name' => 'required|string', // Validate the tags as a string initially
     ], [
         'topic_subject.required' => 'Please select a subject.',
@@ -55,7 +55,7 @@ class topic extends Controller
             if (isset($topic['value'])) {
                 topics::create([
                     'subject_id' => $request->input('topic_subject'), // Save the subject ID
-                    'topic_name'  => $topic['value'], // Save the topic name
+                    'topic_name'  => ucfirst($topic['value']), // Save the topic name
                     'created_by' => Auth::id(),
                 ]);
             }
@@ -136,7 +136,7 @@ class topic extends Controller
         foreach ($topicsToAdd as $topicName) {
             topics::create([
                 'subject_id' => $id,
-                'topic_name' => $topicName,
+                'topic_name' => ucfirst($topicName),
                 'created_by' => Auth::id(),
             ]);
         }

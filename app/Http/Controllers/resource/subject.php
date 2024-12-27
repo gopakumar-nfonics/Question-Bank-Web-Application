@@ -33,15 +33,15 @@ class subject extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'sub_name' => 'required|unique:subjects_tbl,sub_name',
-            'sub_code' => 'required|unique:subjects_tbl,sub_code',
+            'sub_name' => 'required|unique:tbl_subjects,sub_name',
+            'sub_code' => 'required|unique:tbl_subjects,sub_code',
         ]);
     
             try {
                 $subject = new subjects();
-                $subject->sub_name = $request->sub_name;    
+                $subject->sub_name = ucfirst($request->sub_name);   
                 $subject->sub_code = $request->sub_code;
-                $subject->sub_created_by  = Auth::id();
+                $subject->created_by  = Auth::id();
                 $subject->sub_remarks  = $request->remarks;    
                 $subject->save();
         
@@ -75,13 +75,13 @@ class subject extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'sub_name' => 'required|unique:subjects_tbl,sub_name,'.$id,
-            'sub_code' => 'required|unique:subjects_tbl,sub_code,'.$id,
+            'sub_name' => 'required|unique:tbl_subjects,sub_name,'.$id,
+            'sub_code' => 'required|unique:tbl_subjects,sub_code,'.$id,
         ]);
     
             try {
                 $subject = subjects::findOrFail($id);
-                $subject->sub_name = $request->sub_name;    
+                $subject->sub_name = ucfirst($request->sub_name);
                 $subject->sub_code = $request->sub_code;
                 $subject->sub_remarks  = $request->remarks;       
                 $subject->save();
