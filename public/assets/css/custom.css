@@ -29,7 +29,7 @@
     background-color:transparent !important;
     justify-content:space-between;
 }
-.tagify.form-control-lg
+.tagify.form-control
 {
     padding: 10px !important;
     gap: 10px !important;
@@ -51,4 +51,9 @@
 .sign-in-input
 {
     color: #ccc !important;
+}
+.avatar-div
+{
+border: 1px solid #942b4b !important;
+padding: 3px !important;
 }

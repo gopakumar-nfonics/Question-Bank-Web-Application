@@ -5,7 +5,7 @@
 
 <head>
     <base href="" />
-    <title>Login | {{config('app.name')}}</title>
+    <title>{{config('app.name')}}</title>
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="{{ url('/') }}/assets/media/logos/favicon.ico" />
     <!--begin::Fonts(mandatory for all pages)-->
@@ -93,7 +93,7 @@
                                 <!--begin::Menu wrapper-->
                                 <!--begin:Menu item-->
                                 <!--end:Menu item-->
-                                <div class="cursor-pointer symbol symbol-35px symbol-md-40px"
+                                <div class="cursor-pointer symbol symbol-35px symbol-md-40px avatar-div"
                                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                                     data-kt-menu-placement="bottom-end">
                                     <a href="">
