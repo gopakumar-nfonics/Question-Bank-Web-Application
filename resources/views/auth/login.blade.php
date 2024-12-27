@@ -3,44 +3,37 @@
 @section('content')
 <!--begin::Theme mode setup on page load-->
 <!--end::Theme mode setup on page load-->
-
 <!--begin::Root-->
 <div class="d-flex flex-column flex-root" id="kt_app_root">
+    <!--begin::Page bg image-->
+    <style>
+    body {
+        background-image: url('assets/images/bg.jpg');
+    }
+    </style>
+    <!--end::Page bg image-->
     <!--begin::Authentication - Sign-in -->
-    <div class="d-flex flex-column flex-lg-row flex-column-fluid">
-
+    <div class="d-flex flex-column flex-column-fluid flex-lg-row">
         <!--begin::Aside-->
-        <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-1"
-            style="background-image: url(assets/images/bg.jpg)">
-            <!--begin::Content-->
-            <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
+        <div class="d-flex flex-center w-lg-50 pt-15 pt-lg-0 px-10">
+            <!--begin::Aside-->
+            <div class="d-flex flex-center flex-lg-start flex-column">
                 <!--begin::Logo-->
-                <a href="" class="mb-0 mb-lg-12">
-                    <img alt="Logo" src="assets/images/app_logo.png" class="h-150px h-lg-150px" />
-                </a>
-                <!--end::Logo-->
-                <!--begin::Image-->
-                <!-- <img class="d-none d-lg-block mx-auto w-100px w-md-50 w-lg-300px" alt=""
-                    src="assets/images/app_logo.png" /> -->
-                <!--end::Image-->
 
-                <!--begin::Text-->
-                <!-- <div class="d-none d-lg-block text-white fs-base text-center">To expedite the hiring process,
-                    <a href="#" class="opacity-75-hover text-warning fw-bold me-1">this system links</a>administrators, companies and students.
-                    <br />It manages
-                    <a href="#" class="opacity-75-hover text-warning fw-bold me-1">applications, interviews, jobs , and profiles</a> in a single platform.
-                </div> -->
-                <!--end::Text-->
+                <img alt="Logo" src="assets/images/app_logo.png" class="h-125px" />
+
+                <!--end::Logo-->
+
             </div>
-            <!--end::Content-->
+            <!--begin::Aside-->
         </div>
-        <!--end::Aside-->
+        <!--begin::Aside-->
         <!--begin::Body-->
-        <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-2">
-            <!--begin::Form-->
-            <div class="d-flex flex-center flex-column flex-lg-row-fluid">
-                <!--begin::Wrapper-->
-                <div class="w-lg-500px p-10">
+        <div class="d-flex flex-center w-lg-50 p-10">
+            <!--begin::Card-->
+            <div class="card rounded-3 w-md-550px">
+                <!--begin::Card body-->
+                <div class="card-body p-10 p-lg-20">
                     <!--begin::Form-->
                     <form method="post" action="{{ route('login') }}" class="form w-100" id="kt_sign_in_form">
                         @csrf
@@ -123,27 +116,22 @@
 
                     </form>
                     <!--end::Form-->
-                </div>
-                <!--end::Wrapper-->
-            </div>
-            <!--end::Form-->
-            <!--begin::Footer-->
-            <div class="d-flex flex-center flex-wrap px-5">
-                <!--begin::Links-->
-                <div class="d-flex fw-semibold text-gray-400 fs-base">
-                    <span class="px-5" target="_blank">© 2024. Amrita Vishwa Vidyapeetham. All Rights Reserved.</span>
+                    <div class="d-flex fw-semibold text-gray-400 fs-base">
+                        <span class="px-5" target="_blank">&copy;{{ \Carbon\Carbon::now()->year }}. Amrita
+                            Vishwa Vidyapeetham. All Rights Reserved.</span>
 
+                    </div>
                 </div>
-                <!--end::Links-->
+                <!--end::Card body-->
             </div>
-            <!--end::Footer-->
+            <!--end::Card-->
         </div>
         <!--end::Body-->
-
     </div>
     <!--end::Authentication - Sign-in-->
 </div>
 <!--end::Root-->
+
 
 
 @endsection
