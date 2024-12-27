@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('sub_code')->unique(); // Subject code
             $table->string('sub_name'); // Subject name
-            $table->unsignedBigInteger('sub_created_by'); // User ID of the creator
+            $table->unsignedBigInteger('created_by'); // User ID of the creator
             $table->timestamps();
-            $table->foreign('sub_created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('tbl_users')->onDelete('cascade');
         });
     }
 

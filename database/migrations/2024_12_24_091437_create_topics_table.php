@@ -20,7 +20,7 @@ return new class extends Migration
 
             // Define the foreign key constraints
             $table->foreign('subject_id')->references('id')->on('subjects_tbl')->onDelete('cascade');
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('tbl_users')->onDelete('cascade');
         });
     }
 

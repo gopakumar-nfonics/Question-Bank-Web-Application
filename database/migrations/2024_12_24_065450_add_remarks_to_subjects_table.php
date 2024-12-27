@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('subjects_tbl', function (Blueprint $table) {
-            $table->text('sub_remarks')->nullable()->after('sub_created_by');
+            $table->text('sub_remarks')->nullable()->after('sub_name');
         });
     }
 
