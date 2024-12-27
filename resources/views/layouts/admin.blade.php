@@ -74,9 +74,7 @@
                     <!--begin::Mobile logo-->
                     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                         <a href="" class="d-lg-none">
-                            <img alt="Logo"
-                                src="{{ isset(Auth::user()->personalInformation->image_path) && !empty(Auth::user()->personalInformation->image_path) ? asset('storage/images/' . Auth::user()->personalInformation->image_path) : asset('assets/images/user-thumb.jpg') }}"
-                                class="h-30px" />
+                            <img alt="Logo" src="/assets/images/am_avatar.jpg" class="h-30px" />
                         </a>
                     </div>
                     <!--end::Mobile logo-->
@@ -98,8 +96,9 @@
                                 <div class="cursor-pointer symbol symbol-35px symbol-md-40px"
                                     data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
                                     data-kt-menu-placement="bottom-end">
-                                    <img src="{{ isset(Auth::user()->personalInformation->image_path) && !empty(Auth::user()->personalInformation->image_path) ? asset('storage/images/' . Auth::user()->personalInformation->image_path) : asset('assets/images/user-thumb.jpg') }}"
-                                        alt="user" />
+                                    <a href="">
+                                        <img alt="Logo" src="/assets/images/am_avatar.jpg" class="h-35px" />
+                                    </a>
                                 </div>
                                 <!--begin::User account menu-->
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
@@ -109,8 +108,9 @@
                                         <div class="menu-content d-flex align-items-center px-3">
                                             <!--begin::Avatar-->
                                             <div class="symbol symbol-50px me-5">
-                                                <img src="{{ isset(Auth::user()->personalInformation->image_path) && !empty(Auth::user()->personalInformation->image_path) ? asset('storage/images/' . Auth::user()->personalInformation->image_path) : asset('assets/images/user-thumb.jpg') }}"
-                                                    alt="user" />
+                                                <a href="">
+                                                    <img alt="Logo" src="/assets/images/am_avatar.jpg" class="h-30px" />
+                                                </a>
                                             </div>
                                             <!--end::Avatar-->
                                             <!--begin::Username-->
@@ -118,7 +118,7 @@
                                                 <div class="fw-bold d-flex align-items-center fs-5">
                                                     {{ Auth::user()->first_name }}
                                                     @if(Auth::user()->last_name){{ Auth::user()->last_name }}@endif
-                                                    <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2"
+                                                    <span class="badge badge-light-success fw-bold fs-8 px-0 py-1 ms-0"
                                                         style="text-transform: capitalize">{{Auth::user()->role}}</span>
                                                 </div>
                                                 <a href=""
@@ -279,9 +279,9 @@
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
                                         <span class="menu-icon">
-                                            <i class="fa-solid fa-layer-group f-15 p-0"></i>
+                                            <i class="fa-solid fa-layer-group  p-0"></i>
                                         </span>
-                                        <span class="menu-title">Manage Subjects</span>
+                                        <span class="menu-title">Subjects</span>
                                         <span class="menu-arrow"></span>
                                     </span>
                                     <div class="menu-sub menu-sub-accordion">
@@ -327,9 +327,10 @@
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
                                         <span class="menu-icon">
-                                            <i class="fa-solid fa-layer-group f-15 p-0"></i>
+                                            <i class="fa-solid fa-code-branch fa-rotate-90  p-0"></i>
+
                                         </span>
-                                        <span class="menu-title">Manage Topics</span>
+                                        <span class="menu-title">Topics</span>
                                         <span class="menu-arrow"></span>
                                     </span>
                                     <div class="menu-sub menu-sub-accordion">
@@ -363,7 +364,7 @@
                                     </div>
                                 </div>
 
-								<div class="menu-item pt-5">
+                                <div class="menu-item pt-5">
                                     <!--begin:Menu content-->
                                     <div class="menu-content">
                                         <span class="menu-heading fw-bold text-uppercase fs-7">Questions</span>
@@ -376,9 +377,10 @@
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
                                         <span class="menu-icon">
-                                            <i class="fa-solid fa-layer-group f-15 p-0"></i>
+
+                                            <i class="fa-solid fa-clipboard-question p-0"></i>
                                         </span>
-                                        <span class="menu-title">Manage Questions</span>
+                                        <span class="menu-title">Questions</span>
                                         <span class="menu-arrow"></span>
                                     </span>
                                     <div class="menu-sub menu-sub-accordion">
@@ -428,7 +430,7 @@
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
                                         <span class="menu-icon">
-                                            <i class="fa-solid fa-users f-15 p-0"></i>
+                                            <i class="fa-solid fa-users  p-0"></i>
                                         </span>
                                         <span class="menu-title">User</span>
                                         <span class="menu-arrow"></span>

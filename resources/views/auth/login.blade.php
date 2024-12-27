@@ -31,7 +31,7 @@
         <!--begin::Body-->
         <div class="d-flex flex-center w-lg-50 p-10">
             <!--begin::Card-->
-            <div class="card rounded-3 w-md-550px">
+            <div class="card sign-in-card rounded-3 w-md-550px">
                 <!--begin::Card body-->
                 <div class="card-body p-10 p-lg-20">
                     <!--begin::Form-->
@@ -41,7 +41,11 @@
                         <div class="text-center mb-15">
                             <!--begin::Title-->
 
-                            <h2 class="text-gray-800 fw-bolder mt-2 pt-3 br-b-1">Sign In</h2>
+                            <h2 class="text-gray-800 fw-bolder mt-2 pt-3 br-b-1 hr-blue"> <img alt="Logo"
+                                    src="{{ url('/') }}/assets/images/qbank_logo.png"
+                                    class="h-30px app-sidebar-logo-default" /></h2>
+
+
 
                             <!--end::Title-->
                             <!--begin::Subtitle-->
@@ -49,13 +53,14 @@
 
                             @if ($errors->has('email'))
 
-                            <div class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6">
+                            <div
+                                class="notice d-flex bg-light-danger rounded border-danger border border-dashed p-6 mt-10">
                                 <!--begin::Wrapper-->
-                                <div class="d-flex flex-stack flex-grow-1">
+                                <div class="d-flex flex-center flex-grow-1">
                                     <!--begin::Content-->
                                     <div class="fw-semibold">
-                                        <h4 class="text-gray-900 fw-bold">Unable to Sign In</h4>
-                                        <div class="fs-6 text-gray-700">{{ $errors->first('email') }}
+                                        <h4 class="text-danger fw-bold">Unable to Sign In</h4>
+                                        <div class="fs-6 text-gray">{{ $errors->first('email') }}
                                         </div>
                                     </div>
                                     <!--end::Content-->
@@ -73,7 +78,7 @@
                         <div class="fv-row mb-8">
                             <!--begin::Email-->
                             <input type="text" placeholder="Email" name="email" autocomplete="off"
-                                class="form-control bg-transparent" />
+                                class="form-control bg-transparent sign-in-input" />
 
                             <!--end::Email-->
                         </div>
@@ -81,7 +86,7 @@
                         <div class="fv-row mb-3">
                             <!--begin::Password-->
                             <input type="password" placeholder="Password" name="password" autocomplete="off"
-                                class="form-control bg-transparent" />
+                                class="form-control bg-transparent sign-in-input" />
                             <!--end::Password-->
                         </div>
                         <!--end::Input group=-->
