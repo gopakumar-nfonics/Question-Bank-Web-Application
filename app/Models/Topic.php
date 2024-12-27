@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Topic extends Model
 {
-    protected $table = 'topics_tbl';
+    protected $table = 'tbl_topics';
 
     protected $primaryKey = 'topic_id';
 

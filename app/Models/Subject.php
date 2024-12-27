@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Subject extends Model
 {
-    protected $table = 'subjects_tbl';
+    protected $table = 'tbl_subjects';
 
     protected $primaryKey = 'id';
 
