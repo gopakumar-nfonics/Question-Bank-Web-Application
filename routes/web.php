@@ -23,3 +23,4 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])-
 Route::resource('subject',\App\Http\Controllers\resource\subject::class);
 Route::resource('topic',\App\Http\Controllers\resource\topic::class);
 Route::resource('question',\App\Http\Controllers\resource\question::class);
+Route::get('/topics/{subject}', [\App\Http\Controllers\resource\topic::class, 'getTopics']);

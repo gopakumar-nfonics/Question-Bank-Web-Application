@@ -4,6 +4,9 @@ namespace App\Http\Controllers\resource;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\DifficultyLevel;
+use App\Models\Subject;
+
 
 class question extends Controller
 {
@@ -20,7 +23,9 @@ class question extends Controller
      */
     public function create()
     {
-        return view('question.create');
+        $difficultyLevels = DifficultyLevel::all();
+        $subjects = Subject::all();
+        return view('question.create',compact('difficultyLevels','subjects'));
     }
 
     /**

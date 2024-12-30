@@ -155,4 +155,10 @@ class topic extends Controller
     {
         //
     }
+
+    public function getTopics($subjectId)
+    {
+        $topics = topics::where('subject_id', $subjectId)->get(['topic_id', 'topic_name']);
+        return response()->json($topics);
+    }
 }
