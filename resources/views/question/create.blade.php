@@ -56,7 +56,7 @@ input[type="radio"]:checked+.form-check-label {
                                                             @endforeach
                                                         </select>
                                                         @error('q_subject')
-                                                        <div class="questions">
+                                                        <div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                         @enderror
@@ -72,7 +72,7 @@ input[type="radio"]:checked+.form-check-label {
                                                             <option value="">Select Topic</option>
                                                         </select>
                                                         @error('q_topic')
-                                                        <div class="questions">
+                                                        <div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                         @enderror
@@ -92,7 +92,7 @@ input[type="radio"]:checked+.form-check-label {
                                                                 {{ $level->difficulty_level }}</option>
                                                             @endforeach
                                                         </select>
-                                                        @error('difficulty_level')<div class="questions">
+                                                        @error('difficulty_level')<div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div> @enderror
                                                     </div>
@@ -106,8 +106,8 @@ input[type="radio"]:checked+.form-check-label {
                                                     <div class="fs-6 fw-bold text-gray-700 col-lg-12">
                                                         <label class="required form-label">Question</label>
                                                         <textarea id="summernote" name="question"
-                                                            class="form-control mb-2 @error('question') is-invalid @enderror"></textarea>
-                                                        @error('question')<div class="questions">
+                                                            class="form-control mb-2 @error('question') is-invalid @enderror questions"></textarea>
+                                                        @error('question')<div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div> @enderror
                                                     </div>
@@ -128,8 +128,8 @@ input[type="radio"]:checked+.form-check-label {
                                                         </label>
                                                     </div>
                                                     <textarea id="option1" name="option1"
-                                                        class="form-control mb-2 @error('option1') is-invalid @enderror"></textarea>
-                                                    @error('option1')<div class="questions">{{ $message }}</div>
+                                                        class="form-control mb-2 @error('option1') is-invalid @enderror questions"></textarea>
+                                                    @error('option1')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -150,8 +150,8 @@ input[type="radio"]:checked+.form-check-label {
                                                         </label>
                                                     </div>
                                                     <textarea id="option2" name="option2"
-                                                        class="form-control mb-2 @error('option2') is-invalid @enderror"></textarea>
-                                                    @error('option2')<div class="questions">{{ $message }}</div>
+                                                        class="form-control mb-2 @error('option2') is-invalid @enderror questions"></textarea>
+                                                    @error('option2')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -172,8 +172,8 @@ input[type="radio"]:checked+.form-check-label {
                                                         </label>
                                                     </div>
                                                     <textarea id="option3" name="option3"
-                                                        class="form-control mb-2 @error('option3') is-invalid @enderror"></textarea>
-                                                    @error('option3')<div class="questions">{{ $message }}</div>
+                                                        class="form-control mb-2 @error('option3') is-invalid @enderror questions"></textarea>
+                                                    @error('option3')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -194,8 +194,8 @@ input[type="radio"]:checked+.form-check-label {
                                                         </label>
                                                     </div>
                                                     <textarea id="option4" name="option4"
-                                                        class="form-control mb-2 @error('option4') is-invalid @enderror"></textarea>
-                                                    @error('option4')<div class="questions">{{ $message }}</div>
+                                                        class="form-control mb-2 @error('option4') is-invalid @enderror questions"></textarea>
+                                                    @error('option4')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -225,7 +225,7 @@ input[type="radio"]:checked+.form-check-label {
 @section('pageScripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.0/katex.min.js"></script>
 <script>
-document.getElementById('questions').addEventListener('input', function() {
+document.getElementsByClassName('questions').addEventListener('input', function() {
     var latex = this.value;
     var output = document.getElementById('mathOutput');
     output.innerHTML = ''; // Clear previous output
