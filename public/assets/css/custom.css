@@ -57,3 +57,18 @@
 border: 1px solid #942b4b !important;
 padding: 3px !important;
 }
+.form-check-input[type=radio]
+
+{
+    border: 1px solid #ccc;
+    border-radius: 0%;
+    width: 20px;
+    height: 20px;
+}
+.form-check-input:checked[type=radio] {
+    background: url('/assets/images/tick.png');
+    background-repeat: no-repeat !important;
+    background-position: center center;
+    background-size: 24px 24px !important;
+    border: none !important;
+}
