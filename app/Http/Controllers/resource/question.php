@@ -17,7 +17,9 @@ class question extends Controller
      */
     public function index()
     {
-        //
+        $questions = Questions::with(['subject', 'topic', 'correctAnswer'])->get();
+
+        return view('question.index',compact('questions'));
     }
 
     /**
