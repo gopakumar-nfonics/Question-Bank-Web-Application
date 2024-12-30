@@ -20,4 +20,19 @@ class Question extends Model
         'qs_topic_id',
         'created_by',
     ];
+
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class, 'qs_subject_id');
+    }
+
+    public function topic()
+    {
+        return $this->belongsTo(Topic::class, 'qs_topic_id');
+    }
+
+    public function correctAnswer()
+    {
+        return $this->belongsTo(QuestionOption::class, 'qs_answer', 'qo_id');
+    }
 }

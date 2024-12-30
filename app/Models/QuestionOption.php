@@ -17,4 +17,9 @@ class QuestionOption extends Model
         'qo_options',
         'qo_created_by',
     ];
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class, 'qo_question_id');
+    }
 }
