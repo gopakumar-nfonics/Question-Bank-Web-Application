@@ -147,4 +147,13 @@ class question extends Controller
     {
         //
     }
+
+    public function qspapper()
+    {
+
+        $difficultyLevels = DifficultyLevel::all();
+        $subjects = Subject::all();
+        return view('question.qs_papper',compact('difficultyLevels','subjects'));
+
+    }
 }
