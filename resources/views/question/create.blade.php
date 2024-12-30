@@ -2,9 +2,15 @@
 
 @section('content')
 <style>
-    table tr:first-child td:nth-child(5) button {
-        display: none;
-    }
+   input[type="radio"]:checked {
+    background-color: green;
+    border-color: green;
+}
+
+/* Optionally, change the label color when the radio button is checked */
+input[type="radio"]:checked + .form-check-label {
+    color: green;
+}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.0/katex.min.css">
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main" data-select2-id="select2-data-kt_app_main">
@@ -107,66 +113,78 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Option 1 -->
                                         <div class="row pe-0 pb-5">
                                             <div class="col-lg-12">
                                                 <div class="fv-row mt-5">
-                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12">
+                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12 d-flex justify-content-between">
                                                         <label class="required form-label">Option 1</label>
-                                                        <textarea id="option1" name="option1"
-                                                            class="form-control mb-2 @error('option1') is-invalid @enderror"></textarea>
-                                                        @error('option1')<div class="questions">
-                                                            {{ $message }}
-                                                        </div> @enderror
+                                                        <label for="is_answer1" class="form-check-label">
+                                                        Is Answer &nbsp;
+                                                            <input type="radio" id="is_answer1" checked name="is_answer" value="1" class="form-check-input">
+                                                            
+                                                        </label>
                                                     </div>
+                                                    <textarea id="option1" name="option1" class="form-control mb-2 @error('option1') is-invalid @enderror"></textarea>
+                                                    @error('option1')<div class="questions">{{ $message }}</div> @enderror
                                                 </div>
                                             </div>
                                         </div>
+
                                         <!-- Option 2 -->
                                         <div class="row pe-0 pb-5">
                                             <div class="col-lg-12">
                                                 <div class="fv-row mt-5">
-                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12">
+                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12 d-flex justify-content-between">
                                                         <label class="required form-label">Option 2</label>
-                                                        <textarea id="option2" name="option2"
-                                                            class="form-control mb-2 @error('option2') is-invalid @enderror"></textarea>
-                                                        @error('option2')<div class="questions">
-                                                            {{ $message }}
-                                                        </div> @enderror
+                                                        <label for="is_answer2" class="form-check-label">
+                                                        Is Answer &nbsp;
+                                                            <input type="radio" id="is_answer2" name="is_answer" value="2" class="form-check-input">
+                                                            
+                                                        </label>
                                                     </div>
+                                                    <textarea id="option2" name="option2" class="form-control mb-2 @error('option2') is-invalid @enderror"></textarea>
+                                                    @error('option2')<div class="questions">{{ $message }}</div> @enderror
                                                 </div>
                                             </div>
                                         </div>
+
                                         <!-- Option 3 -->
                                         <div class="row pe-0 pb-5">
                                             <div class="col-lg-12">
                                                 <div class="fv-row mt-5">
-                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12">
+                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12 d-flex justify-content-between">
                                                         <label class="required form-label">Option 3</label>
-                                                        <textarea id="option3" name="option3"
-                                                            class="form-control mb-2 @error('option3') is-invalid @enderror"></textarea>
-                                                        @error('option3')<div class="questions">
-                                                            {{ $message }}
-                                                        </div> @enderror
+                                                        <label for="is_answer3" class="form-check-label">
+                                                        Is Answer &nbsp;
+                                                            <input type="radio" id="is_answer3" name="is_answer" value="3" class="form-check-input">
+                                                            
+                                                        </label>
                                                     </div>
+                                                    <textarea id="option3" name="option3" class="form-control mb-2 @error('option3') is-invalid @enderror"></textarea>
+                                                    @error('option3')<div class="questions">{{ $message }}</div> @enderror
                                                 </div>
                                             </div>
                                         </div>
+
                                         <!-- Option 4 -->
                                         <div class="row pe-0 pb-5">
                                             <div class="col-lg-12">
                                                 <div class="fv-row mt-5">
-                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12">
+                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12 d-flex justify-content-between">
                                                         <label class="required form-label">Option 4</label>
-                                                        <textarea id="option4" name="option4"
-                                                            class="form-control mb-2 @error('option4') is-invalid @enderror"></textarea>
-                                                        @error('option4')<div class="questions">
-                                                            {{ $message }}
-                                                        </div> @enderror
+                                                        <label for="is_answer4" class="form-check-label">
+                                                        Is Answer &nbsp;
+                                                            <input type="radio" id="is_answer4" name="is_answer" value="4" class="form-check-input">
+                                                            
+                                                        </label>
                                                     </div>
+                                                    <textarea id="option4" name="option4" class="form-control mb-2 @error('option4') is-invalid @enderror"></textarea>
+                                                    @error('option4')<div class="questions">{{ $message }}</div> @enderror
                                                 </div>
                                             </div>
                                         </div>
+
+
 
                                         <!-- Submit Button -->
                                         <div class="row pe-0 pb-5">
@@ -190,20 +208,20 @@
 @section('pageScripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.0/katex.min.js"></script>
 <script>
-document.getElementById('questions').addEventListener('input', function() {
-    var latex = this.value;
-    var output = document.getElementById('mathOutput');
-    output.innerHTML = ''; // Clear previous output
-    if (latex.trim() !== '') {
-        katex.render(latex, output, {
-            throwOnError: false
-        });
-    }
-});
+    document.getElementById('questions').addEventListener('input', function() {
+        var latex = this.value;
+        var output = document.getElementById('mathOutput');
+        output.innerHTML = ''; // Clear previous output
+        if (latex.trim() !== '') {
+            katex.render(latex, output, {
+                throwOnError: false
+            });
+        }
+    });
 </script>
 
 <script>
-    document.getElementById('q_subject').addEventListener('change', function () {
+    document.getElementById('q_subject').addEventListener('change', function() {
         const subjectId = this.value;
         const topicDropdown = document.getElementById('q_topic');
         topicDropdown.innerHTML = '<option value="">Select Topic</option>'; // Reset topics
