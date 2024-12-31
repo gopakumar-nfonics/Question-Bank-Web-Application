@@ -73,13 +73,14 @@
                                             <div class="d-flex align-items-center flex-column mt-3 w-100 pt-10">
                                                 <div
                                                     class="d-flex justify-content-between fw-bold fs-6  w-100 mt-auto mb-2">
-                                                    <span> <span id="progress-numerator">0</span>/<span id="progress-denominator">0</span></span>
+                                                    <span> <span id="progress-numerator">0</span>/<span
+                                                            id="progress-denominator">0</span></span>
                                                     <span><span id="progress-percentage">0%</span></span>
                                                 </div>
                                                 <div class="h-8px mx-3 w-100 bg-light-danger rounded">
-                                                    <div class="bg-danger rounded h-8px" id="progress-bar" role="progressbar"
-                                                        style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
-                                                        aria-valuemax="100"></div>
+                                                    <div class="bg-danger rounded h-8px" id="progress-bar"
+                                                        role="progressbar" style="width: 0%;" aria-valuenow="0"
+                                                        aria-valuemin="0" aria-valuemax="100"></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -224,7 +225,30 @@ function updateProgressBar() {
     document.getElementById('progress-numerator').innerText = addedQuestions;
     document.getElementById('progress-denominator').innerText = totalQuestions;
     document.getElementById('progress-percentage').innerText = `${Math.round(percentage)}%`;
-    document.getElementById('progress-bar').style.width = `${percentage}%`;
+
+    const progressBar = document.getElementById('progress-bar');
+    const progressContainer = progressBar.parentElement;
+
+    // Remove existing classes
+    progressBar.classList.remove('bg-danger', 'bg-warning', 'bg-info');
+    progressContainer.classList.remove('bg-light-danger', 'bg-light-warning', 'bg-light-info');
+
+    // Add classes based on percentage
+    if (percentage < 25) {
+        progressBar.classList.add('bg-danger');
+        progressContainer.classList.add('bg-light-danger');
+    } else if (percentage < 50) {
+        progressBar.classList.add('bg-warning');
+        progressContainer.classList.add('bg-light-warning');
+    } else if (percentage < 75) {
+        progressBar.classList.add('bg-info');
+        progressContainer.classList.add('bg-light-info');
+    } else {
+        progressBar.classList.add('bg-success'); // Optional for >= 75%
+        progressContainer.classList.add('bg-light-success'); // Optional for >= 75%
+    }
+
+    progressBar.style.width = `${percentage}%`;
 }
 
 
@@ -284,7 +308,7 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
 
         tbody.appendChild(row);
 
-       
+
 
         // Add remove functionality to the new row
         row.querySelector('.remove-btn').addEventListener('click', function() {
@@ -356,12 +380,11 @@ document.getElementById('kt_question_form').addEventListener('submit', function(
 });
 
 // Update the denominator as the user types in total_num_questions
-document.getElementById('total_num_questions').addEventListener('input', function () {
+document.getElementById('total_num_questions').addEventListener('input', function() {
     const totalQuestions = parseInt(this.value) || 0;
     document.getElementById('progress-denominator').innerText = totalQuestions;
     updateProgressBar(); // Update the progress bar whenever the total changes
 });
-
 </script>
 
 @endsection
