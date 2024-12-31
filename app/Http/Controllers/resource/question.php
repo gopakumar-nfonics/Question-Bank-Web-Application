@@ -230,4 +230,12 @@ class question extends Controller
     return redirect()->route('question.index')->with('success', 'Question paper configuration saved successfully!');
 }
 
+public function configirationlist()
+    {
+        $questionConfigs = QuestionConfig::with('subject:id,sub_name') 
+            ->get();
+
+        return view('question.configirations',compact('questionConfigs'));
+    }
+
 }
