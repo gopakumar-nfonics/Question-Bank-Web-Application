@@ -485,8 +485,8 @@
                                         <!--begin:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('question.create'))) active  @endif"
-                                                href="{{route('question.create')}}">
+                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('question.qspgeneration'))) active  @endif"
+                                                href="{{route('question.qspgeneration')}}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
