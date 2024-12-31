@@ -1,18 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<style>
-   input[type="radio"]:checked {
-    background-color: green;
-    border-color: green;
-}
 
-/* Optionally, change the label color when the radio button is checked */
-input[type="radio"]:checked + .form-check-label {
-    color: green;
-}
-</style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.0/katex.min.css">
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main" data-select2-id="select2-data-kt_app_main">
     <!--begin::Content wrapper-->
     <div class="d-flex flex-column flex-column-fluid" data-select2-id="select2-data-122-9irx">
@@ -21,7 +10,7 @@ input[type="radio"]:checked + .form-check-label {
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Create Question
+                        Configure Question Paper
                     </h1>
                 </div>
             </div>
@@ -42,9 +31,10 @@ input[type="radio"]:checked + .form-check-label {
                                     @csrf
                                     <div class="mb-0">
 
-                                        <!-- Difficulty Level -->
-                                        <div class="row pe-0 pb-5">
-                                            <div class="col-lg-4">
+                                        <div class="row mb-6">
+
+                                            <!--begin::Col-->
+                                            <div class="col-lg-7">
                                                 <div class="fv-row mt-5">
                                                     <div class="fs-6 fw-bold text-gray-700 col-lg-12">
                                                         <label class="required form-label">Subject</label>
@@ -63,7 +53,31 @@ input[type="radio"]:checked + .form-check-label {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-3 fv-row">
+                                                <!--begin::Col-->
+                                                <div class="col-lg-12 fv-row">
+                                                    <!--begin::Label-->
+                                                    <label
+                                                        class="col-lg-12 col-form-label required fw-semibold fs-6">No.Of
+                                                        Questions</label>
+                                                    <!--end::Label-->
+                                                    <input type="number" name="sub_name"
+                                                        class="form-control form-control-lg  @error('sub_name') is-invalid @enderror"
+                                                        placeholder="No.Of Questions" />
+                                                    @error('sub_name')<div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <!--end::Col-->
+                                            </div>
+                                            <!--end::Col-->
+                                        </div>
+
+                                        <div class="row mb-5  flex-grow justify-content-between">
+
+                                            <!--begin::Col-->
+                                            <div class="col-lg-5">
                                                 <div class="fv-row mt-5">
                                                     <div class="fs-6 fw-bold text-gray-700 col-lg-12">
                                                         <label class="required form-label">Topic</label>
@@ -72,124 +86,91 @@ input[type="radio"]:checked + .form-check-label {
                                                             <option value="">Select Topic</option>
                                                         </select>
                                                         @error('q_topic')
-                                                        <div class="questions">
+                                                        <div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                         @enderror
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div class="col-lg-4">
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-2">
                                                 <div class="fv-row mt-5">
                                                     <div class="fs-6 fw-bold text-gray-700 col-lg-12">
                                                         <label class="required form-label">Difficulty Level</label>
-                                                        <select name="difficulty_level"
+                                                        <select name="difficulty_level" id="difficulty_level"
                                                             class="form-control mb-2 @error('difficulty_level') is-invalid @enderror">
-                                                            <option value="">Select Difficulty Level</option>
+                                                            <option value="">Select Level</option>
                                                             @foreach($difficultyLevels as $level)
-                                                            <option value="{{ $level->id }}">{{ $level->difficulty_level }}</option>
+                                                            <option value="{{ $level->id }}">
+                                                                {{ $level->difficulty_level }}</option>
                                                             @endforeach
                                                         </select>
-                                                        @error('difficulty_level')<div class="questions">
+                                                        @error('difficulty_level')<div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div> @enderror
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <!-- Question -->
-                                        <div class="row pe-0 pb-5">
-                                            <div class="col-lg-12">
-                                                <div class="fv-row mt-5">
-                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12">
-                                                        <label class="required form-label">Question</label>
-                                                        <textarea id="summernote" name="question"
-                                                            class="form-control mb-2 @error('question') is-invalid @enderror"></textarea>
-                                                        @error('question')<div class="questions">
-                                                            {{ $message }}
-                                                        </div> @enderror
-                                                    </div>
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-3 fv-row">
+                                                <!--begin::Col-->
+                                                <div class="col-lg-12 fv-row">
+                                                    <!--begin::Label-->
+                                                    <label
+                                                        class="col-lg-12 col-form-label required fw-semibold fs-6">No.Of
+                                                        Questions</label>
+                                                    <!--end::Label-->
+                                                    <input type="number" name="no_of_questions" id="no_of_questions"
+                                                        class="form-control form-control-lg"
+                                                        placeholder="No. Of Questions" />
+                                                    @error('sub_name')<div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
+                                                <!--end::Col-->
                                             </div>
-                                        </div>
-                                        <div class="row pe-0 pb-5">
-                                            <div class="col-lg-12">
-                                                <div class="fv-row mt-5">
-                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12 d-flex justify-content-between">
-                                                        <label class="required form-label">Option 1</label>
-                                                        <label for="is_answer1" class="form-check-label">
-                                                        Is Answer &nbsp;
-                                                            <input type="radio" id="is_answer1" checked name="is_answer" value="1" class="form-check-input">
-                                                            
-                                                        </label>
-                                                    </div>
-                                                    <textarea id="option1" name="option1" class="form-control mb-2 @error('option1') is-invalid @enderror"></textarea>
-                                                    @error('option1')<div class="questions">{{ $message }}</div> @enderror
-                                                </div>
+                                            <!--end::Col-->
+                                            <!--begin::Col-->
+                                            <div class="col-lg-2 fv-row add-button-div">
+                                                <button class="btn btn-sm btn-success w-150px mt-0 mb-1"
+                                                    data-kt-element="add-item" id="addRowBtn">Add
+                                                </button>
                                             </div>
+                                            <!--end::Col-->
                                         </div>
 
-                                        <!-- Option 2 -->
-                                        <div class="row pe-0 pb-5">
-                                            <div class="col-lg-12">
-                                                <div class="fv-row mt-5">
-                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12 d-flex justify-content-between">
-                                                        <label class="required form-label">Option 2</label>
-                                                        <label for="is_answer2" class="form-check-label">
-                                                        Is Answer &nbsp;
-                                                            <input type="radio" id="is_answer2" name="is_answer" value="2" class="form-check-input">
-                                                            
-                                                        </label>
-                                                    </div>
-                                                    <textarea id="option2" name="option2" class="form-control mb-2 @error('option2') is-invalid @enderror"></textarea>
-                                                    @error('option2')<div class="questions">{{ $message }}</div> @enderror
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!-- <div class="row mb-5  flex-grow justify-content-between">
+                                            <div class="col-lg-12 fv-row"> -->
+                                        <!-- Table Section -->
+                                        <table class="table table-bordered" id="questionsTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Topic</th>
+                                                    <th>Difficulty Level</th>
+                                                    <th>No. Of Questions</th>
 
-                                        <!-- Option 3 -->
-                                        <div class="row pe-0 pb-5">
-                                            <div class="col-lg-12">
-                                                <div class="fv-row mt-5">
-                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12 d-flex justify-content-between">
-                                                        <label class="required form-label">Option 3</label>
-                                                        <label for="is_answer3" class="form-check-label">
-                                                        Is Answer &nbsp;
-                                                            <input type="radio" id="is_answer3" name="is_answer" value="3" class="form-check-input">
-                                                            
-                                                        </label>
-                                                    </div>
-                                                    <textarea id="option3" name="option3" class="form-control mb-2 @error('option3') is-invalid @enderror"></textarea>
-                                                    @error('option3')<div class="questions">{{ $message }}</div> @enderror
-                                                </div>
-                                            </div>
-                                        </div>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Rows will be dynamically added here -->
+                                            </tbody>
+                                        </table>
+                                        <!-- </div>
 
-                                        <!-- Option 4 -->
-                                        <div class="row pe-0 pb-5">
-                                            <div class="col-lg-12">
-                                                <div class="fv-row mt-5">
-                                                    <div class="fs-6 fw-bold text-gray-700 col-lg-12 d-flex justify-content-between">
-                                                        <label class="required form-label">Option 4</label>
-                                                        <label for="is_answer4" class="form-check-label">
-                                                        Is Answer &nbsp;
-                                                            <input type="radio" id="is_answer4" name="is_answer" value="4" class="form-check-input">
-                                                            
-                                                        </label>
-                                                    </div>
-                                                    <textarea id="option4" name="option4" class="form-control mb-2 @error('option4') is-invalid @enderror"></textarea>
-                                                    @error('option4')<div class="questions">{{ $message }}</div> @enderror
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </div> -->
 
 
 
                                         <!-- Submit Button -->
                                         <div class="row pe-0 pb-5">
-                                            <div class="col-lg-12 text-end">
-                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            <div
+                                                class="col-lg-12 text-end d-flex justify-content-end border-top mt-10 pt-5">
+                                                <button type="submit" class="btn btn-primary">Save Configuration
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -206,42 +187,100 @@ input[type="radio"]:checked + .form-check-label {
 @endsection
 
 @section('pageScripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.0/katex.min.js"></script>
-<script>
-    document.getElementById('questions').addEventListener('input', function() {
-        var latex = this.value;
-        var output = document.getElementById('mathOutput');
-        output.innerHTML = ''; // Clear previous output
-        if (latex.trim() !== '') {
-            katex.render(latex, output, {
-                throwOnError: false
-            });
-        }
-    });
-</script>
+
 
 <script>
-    document.getElementById('q_subject').addEventListener('change', function() {
-        const subjectId = this.value;
-        const topicDropdown = document.getElementById('q_topic');
-        topicDropdown.innerHTML = '<option value="">Select Topic</option>'; // Reset topics
+document.getElementById('q_subject').addEventListener('change', function() {
+    const subjectId = this.value;
+    const topicDropdown = document.getElementById('q_topic');
+    topicDropdown.innerHTML = '<option value="">Select Topic</option>'; // Reset topics
 
-        if (subjectId) {
-            fetch(`/topics/${subjectId}`)
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(topic => {
-                        const option = document.createElement('option');
-                        option.value = topic.topic_id;
-                        option.textContent = topic.topic_name;
-                        topicDropdown.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching topics:', error);
+    if (subjectId) {
+        fetch(`/topics/${subjectId}`)
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(topic => {
+                    const option = document.createElement('option');
+                    option.value = topic.topic_id;
+                    option.textContent = topic.topic_name;
+                    topicDropdown.appendChild(option);
                 });
+            })
+            .catch(error => {
+                console.error('Error fetching topics:', error);
+            });
+    }
+});
+</script>
+<script>
+document.getElementById('addRowBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+
+    // Get input values
+    const topic = document.getElementById('q_topic').selectedOptions[0].text;
+    const difficultyLevel = document.getElementById('difficulty_level').selectedOptions[0].text;
+    const noOfQuestions = parseInt(document.getElementById('no_of_questions').value);
+
+    if (!topic || !difficultyLevel || isNaN(noOfQuestions)) {
+        alert('Please fill all fields.');
+        return;
+    }
+
+    // Find table and tbody
+    const table = document.getElementById('questionsTable');
+    const tbody = table.querySelector('tbody');
+    let rowExists = false;
+
+    // Check if a row with the same topic and difficulty level exists
+    tbody.querySelectorAll('tr').forEach((row) => {
+        const rowTopic = row.querySelector('td:nth-child(2)').innerText;
+        const rowDifficulty = row.querySelector('td:nth-child(3)').innerText;
+
+        if (rowTopic === topic && rowDifficulty === difficultyLevel) {
+            // Update the existing row
+            const currentQuestions = parseInt(row.querySelector('td:nth-child(4)').innerText);
+            const updatedQuestions = currentQuestions + noOfQuestions;
+            row.querySelector('td:nth-child(4)').innerText = updatedQuestions;
+
+            rowExists = true;
         }
     });
+
+    // If no matching row exists, add a new row
+    if (!rowExists) {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+                <td>${tbody.querySelectorAll('tr').length + 1}</td>
+                <td>${topic}</td>
+                <td>${difficultyLevel}</td>
+                <td>${noOfQuestions}</td>
+                <td><button class="btn btn-danger btn-sm remove-btn">Remove</button></td>
+            `;
+
+        tbody.appendChild(row);
+
+        // Add remove functionality to the new row
+        row.querySelector('.remove-btn').addEventListener('click', function() {
+            row.remove();
+            updateTableIndex(tbody);
+        });
+    }
+
+    // Clear input fields
+    // document.getElementById('q_topic').value = '';
+    document.getElementById('difficulty_level').value = '';
+    document.getElementById('no_of_questions').value = '';
+
+    updateTableIndex(tbody);
+});
+
+// Update table row indices
+function updateTableIndex(tbody) {
+    tbody.querySelectorAll('tr').forEach((row, index) => {
+        row.querySelector('td:first-child').innerText = index + 1;
+    });
+}
 </script>
+
 
 @endsection

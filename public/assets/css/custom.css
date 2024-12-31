@@ -64,6 +64,7 @@ padding: 3px !important;
     border-radius: 0%;
     width: 20px;
     height: 20px;
+    cursor: pointer;
 }
 .form-check-input:checked[type=radio] {
     background: url('/assets/images/tick.png');
@@ -71,4 +72,16 @@ padding: 3px !important;
     background-position: center center;
     background-size: 24px 24px !important;
     border: none !important;
+}
+.add-button-div
+{
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    align-items: end;
+}
+#questionsTable td
+{
+    vertical-align: middle;
 }
