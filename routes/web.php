@@ -27,3 +27,5 @@ Route::get('/topics/{subject}', [\App\Http\Controllers\resource\topic::class, 'g
 Route::get('/questionconfig', [App\Http\Controllers\resource\question::class, 'questionconfig'])->name('question.configure');
 Route::post('/question/config', [App\Http\Controllers\resource\question::class, 'storeQuestions'])->name('question.config');
 Route::get('/configiration', [App\Http\Controllers\resource\question::class, 'configirationlist'])->name('question.configiration');
+Route::get('/qspgeneration', [App\Http\Controllers\resource\question::class, 'qspgeneration'])->name('question.qspgeneration');
+

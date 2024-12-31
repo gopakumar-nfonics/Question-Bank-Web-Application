@@ -245,4 +245,20 @@ public function configirationlist()
         return view('question.configirations',compact('questionConfigs'));
     }
 
+    public function qspgeneration()
+    {
+
+        $difficultyLevels = DifficultyLevel::all();
+        //$subjects = Subject::all();
+        $addedSubjectIds = QuestionConfig::with('subject')
+        ->pluck('qc_subject_id')
+        ->toArray();
+
+    // Fetch subjects that are not in the list of added subjects
+    $subjects = Subject::whereNotIn('id', $addedSubjectIds)->get();
+
+        return view('question.qs_paper_generate',compact('difficultyLevels','subjects'));
+
+    }
+
 }
