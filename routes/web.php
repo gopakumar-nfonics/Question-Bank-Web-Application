@@ -24,4 +24,5 @@ Route::resource('subject',\App\Http\Controllers\resource\subject::class);
 Route::resource('topic',\App\Http\Controllers\resource\topic::class);
 Route::resource('question',\App\Http\Controllers\resource\question::class);
 Route::get('/topics/{subject}', [\App\Http\Controllers\resource\topic::class, 'getTopics']);
-Route::get('/qspapper', [App\Http\Controllers\resource\question::class, 'qspapper']);
+Route::get('/questionconfig', [App\Http\Controllers\resource\question::class, 'questionconfig']);
+Route::post('/question/config', [App\Http\Controllers\resource\question::class, 'storeQuestions'])->name('question.config');

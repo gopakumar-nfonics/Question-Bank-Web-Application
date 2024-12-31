@@ -8,6 +8,7 @@ use App\Models\DifficultyLevel;
 use App\Models\Subject;
 use App\Models\Question as Questions;
 use App\Models\QuestionOption;
+use App\Models\QuestionConfig;
 use Illuminate\Support\Facades\Auth;
 
 class question extends Controller
@@ -161,12 +162,38 @@ class question extends Controller
         //
     }
 
-    public function qspapper()
+    public function questionconfig()
     {
 
         $difficultyLevels = DifficultyLevel::all();
         $subjects = Subject::all();
-        return view('question.qs_papper',compact('difficultyLevels','subjects'));
+        return view('question.qs_papper_config',compact('difficultyLevels','subjects'));
 
     }
+
+    public function storeQuestions(Request $request)
+{
+   
+    $validated = $request->validate([
+        'questions' => 'required|json',  // Ensure questions are passed as JSON
+    ]);
+
+    // Decode the JSON data for questions
+    $questionsData = json_decode($request->input('questions'), true);
+
+   foreach ($questionsData as $question) {
+        
+        QuestionConfig::create([
+            'qc_subject_id' => $question['subject_id'],  // Save subject ID
+            'qc_topic_id' => $question['topic_id'],  // Save topic ID
+            'qc_difficulty_level' => $question['difficulty_level_id'],  // Save difficulty level ID
+            'qc_no_of_questions' => $question['no_of_questions'],  // Save number of questions
+            'created_by' => Auth::id(),  // Track the user who created the configuration
+        ]);
+    }
+
+    
+    return redirect()->route('question.index')->with('success', 'Question paper configuration saved successfully!');
+}
+
 }
