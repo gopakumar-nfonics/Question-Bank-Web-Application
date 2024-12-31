@@ -306,7 +306,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Create Subject</span>
+                                                <span class="menu-title">Add Subject</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
@@ -342,7 +342,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Topics List</span>
+                                                <span class="menu-title">Topic List</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
@@ -355,7 +355,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Create Topic</span>
+                                                <span class="menu-title">Add Topic</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
@@ -380,7 +380,7 @@
 
                                             <i class="fa-solid fa-gear p-0"></i>
                                         </span>
-                                        <span class="menu-title">Configure</span>
+                                        <span class="menu-title">Configuration</span>
                                         <span class="menu-arrow"></span>
                                     </span>
                                     <div class="menu-sub menu-sub-accordion">
@@ -392,7 +392,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">List</span>
+                                                <span class="menu-title">Configuration List</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
@@ -405,7 +405,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Create Question Config</span>
+                                                <span class="menu-title">Add Configuration</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
@@ -434,7 +434,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Questions</span>
+                                                <span class="menu-title">Question List</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
@@ -447,7 +447,50 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Create Question</span>
+                                                <span class="menu-title">Add Question</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+
+                                    </div>
+                                </div>
+
+                                <div data-kt-menu-trigger="click"
+                                    class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('question.index','question.create','question.edit'))) show @endif">
+                                    <!--begin:Menu link-->
+                                    <span class="menu-link">
+                                        <span class="menu-icon">
+
+
+                                            <i class="fa-solid fa-file-lines p-0"></i>
+                                        </span>
+                                        <span class="menu-title">Question Paper</span>
+                                        <span class="menu-arrow"></span>
+                                    </span>
+                                    <div class="menu-sub menu-sub-accordion">
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('question.index'))) active  @endif"
+                                                href="{{route('question.index')}}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Paper List</span>
+                                            </a>
+                                            <!--end:Menu link-->
+                                        </div>
+                                        <!--end:Menu item-->
+                                        <!--begin:Menu item-->
+                                        <div class="menu-item">
+                                            <!--begin:Menu link-->
+                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('question.create'))) active  @endif"
+                                                href="{{route('question.create')}}">
+                                                <span class="menu-bullet">
+                                                    <span class="bullet bullet-dot"></span>
+                                                </span>
+                                                <span class="menu-title">Generate</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
