@@ -12,6 +12,7 @@ class QuestionConfig extends Model
     protected $fillable = [
         'qc_subject_id',
         'qc_no_of_questions',
+        'qc_code',
         'created_by'
     ];
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class QuestionConfiginfo extends Model
 {
-    protected $table = 'tbl_question_config_info';
+    protected $table = 'tbl_question_config_details';
     protected $fillable = [
         'qi_config_id', 'qi_topic_id', 'qi_difficulty_level', 'qi_no_of_questions'
     ];
