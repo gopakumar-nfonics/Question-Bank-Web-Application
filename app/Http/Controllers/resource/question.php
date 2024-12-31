@@ -167,7 +167,14 @@ class question extends Controller
     {
 
         $difficultyLevels = DifficultyLevel::all();
-        $subjects = Subject::all();
+        //$subjects = Subject::all();
+        $addedSubjectIds = QuestionConfig::with('subject')
+        ->pluck('qc_subject_id')
+        ->toArray();
+
+    // Fetch subjects that are not in the list of added subjects
+    $subjects = Subject::whereNotIn('id', $addedSubjectIds)->get();
+
         return view('question.qs_papper_config',compact('difficultyLevels','subjects'));
 
     }
@@ -227,7 +234,7 @@ class question extends Controller
     }
 
     
-    return redirect()->route('question.index')->with('success', 'Question paper configuration saved successfully!');
+    return redirect()->route('question.configiration')->with('success', 'Question paper configuration saved successfully!');
 }
 
 public function configirationlist()
