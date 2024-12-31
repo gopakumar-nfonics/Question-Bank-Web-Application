@@ -73,12 +73,12 @@
                                             <div class="d-flex align-items-center flex-column mt-3 w-100 pt-10">
                                                 <div
                                                     class="d-flex justify-content-between fw-bold fs-6  w-100 mt-auto mb-2">
-                                                    <span>72/100</span>
-                                                    <span>72%</span>
+                                                    <span> <span id="progress-numerator">0</span>/<span id="progress-denominator">0</span></span>
+                                                    <span><span id="progress-percentage">0%</span></span>
                                                 </div>
                                                 <div class="h-8px mx-3 w-100 bg-light-danger rounded">
-                                                    <div class="bg-danger rounded h-8px" role="progressbar"
-                                                        style="width: 72%;" aria-valuenow="50" aria-valuemin="0"
+                                                    <div class="bg-danger rounded h-8px" id="progress-bar" role="progressbar"
+                                                        style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
                                                         aria-valuemax="100"></div>
                                                 </div>
                                             </div>
@@ -209,6 +209,25 @@ document.getElementById('q_subject').addEventListener('change', function() {
 });
 
 
+// Update progress bar
+function updateProgressBar() {
+    const totalQuestions = parseInt(document.getElementById('total_num_questions').value) || 0;
+    let addedQuestions = 0;
+
+    document.querySelectorAll('#questionsTable tbody tr').forEach(row => {
+        const questions = parseInt(row.querySelector('td:nth-child(4)').innerText) || 0;
+        addedQuestions += questions;
+    });
+
+    const percentage = totalQuestions > 0 ? (addedQuestions / totalQuestions) * 100 : 0;
+
+    document.getElementById('progress-numerator').innerText = addedQuestions;
+    document.getElementById('progress-denominator').innerText = totalQuestions;
+    document.getElementById('progress-percentage').innerText = `${Math.round(percentage)}%`;
+    document.getElementById('progress-bar').style.width = `${percentage}%`;
+}
+
+
 document.getElementById('addRowBtn').addEventListener('click', function(e) {
     e.preventDefault();
 
@@ -265,6 +284,8 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
 
         tbody.appendChild(row);
 
+       
+
         // Add remove functionality to the new row
         row.querySelector('.remove-btn').addEventListener('click', function() {
             row.remove();
@@ -273,6 +294,8 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
             if (tbody.querySelectorAll('tr').length === 0) {
                 table.style.display = 'none';
             }
+
+            updateProgressBar();
         });
     }
 
@@ -284,6 +307,8 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
     document.getElementById('no_of_questions').value = '';
 
     updateTableIndex(tbody);
+
+    updateProgressBar();
 });
 
 // Update table row indices
@@ -329,6 +354,14 @@ document.getElementById('kt_question_form').addEventListener('submit', function(
     // Set the rows data to the hidden input
     document.getElementById('questionsInput').value = JSON.stringify(rowsData);
 });
+
+// Update the denominator as the user types in total_num_questions
+document.getElementById('total_num_questions').addEventListener('input', function () {
+    const totalQuestions = parseInt(this.value) || 0;
+    document.getElementById('progress-denominator').innerText = totalQuestions;
+    updateProgressBar(); // Update the progress bar whenever the total changes
+});
+
 </script>
 
 @endsection
