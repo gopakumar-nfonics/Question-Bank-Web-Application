@@ -11,29 +11,23 @@ class QuestionConfig extends Model
 
     protected $fillable = [
         'qc_subject_id',
-        'qc_topic_id',
-        'qc_difficulty_level',
         'qc_no_of_questions',
         'created_by'
     ];
 
     // Define relationships if applicable
+    public function details()
+    {
+        return $this->hasMany(QuestionConfiginfo::class, 'id');
+    }
+
     public function subject()
     {
         return $this->belongsTo(Subject::class, 'qc_subject_id');
     }
 
-    public function topic()
-    {
-        return $this->belongsTo(Topic::class, 'qc_topic_id');
-    }
-    public function difficultylevel()
-    {
-        return $this->belongsTo(DifficultyLevel::class, 'qc_difficulty_level');
-    }
-
     public function createdBy()
     {
-        return $this->belongsTo(User::class, 'qc_created_by');
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

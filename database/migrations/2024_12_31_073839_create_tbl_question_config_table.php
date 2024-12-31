@@ -14,17 +14,13 @@ return new class extends Migration
         Schema::create('tbl_question_config', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('qc_subject_id');
-            $table->unsignedBigInteger('qc_topic_id');
-            $table->unsignedBigInteger('qc_difficulty_level');
             $table->integer('qc_no_of_questions');
             $table->unsignedBigInteger('created_by');
             $table->timestamps();
 
             // Foreign key constraints
             $table->foreign('qc_subject_id')->references('id')->on('tbl_subjects')->onDelete('cascade');
-            $table->foreign('qc_topic_id')->references('topic_id')->on('tbl_topics')->onDelete('cascade');
-            $table->foreign('qc_difficulty_level')->references('id')->on('tbl_difficulty_level')->onDelete('cascade');
-            $table->foreign('created_by')->references('id')->on('tbl_users')->onDelete('cascade');
+             $table->foreign('created_by')->references('id')->on('tbl_users')->onDelete('cascade');
         });
     }
 

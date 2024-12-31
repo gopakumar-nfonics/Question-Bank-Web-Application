@@ -61,10 +61,10 @@
                                             <div class="col-lg-12 fv-row">
                                                 <label class="col-lg-12 col-form-label required fw-semibold fs-6">Total
                                                     Questions</label>
-                                                <input type="number" name="sub_name"
-                                                    class="form-control form-control-lg @error('sub_name') is-invalid @enderror"
+                                                <input type="number" id="total_num_questions" name="total_num_questions"
+                                                    class="form-control form-control-lg @error('total_num_questions') is-invalid @enderror"
                                                     placeholder="Total Questions" />
-                                                @error('sub_name')
+                                                @error('total_num_questions')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -299,7 +299,9 @@ document.getElementById('kt_question_form').addEventListener('submit', function(
     const rows = document.querySelectorAll('#questionsTable tbody tr');
 
     rows.forEach(row => {
-        const subjectId = row.getAttribute('data-subject-id');
+        //const subjectId = row.getAttribute('data-subject-id');
+        const subjectId = document.getElementById('q_subject').value;
+        const total_num_quetion = document.getElementById('total_num_questions').value;
         const topicId = row.getAttribute('data-topic-id');
         const difficultyLevelId = row.getAttribute('data-difficulty-level-id');
         const topicName = row.querySelector('td:nth-child(2)').innerText;
@@ -308,6 +310,7 @@ document.getElementById('kt_question_form').addEventListener('submit', function(
 
         rowsData.push({
             subject_id: subjectId,
+            total_num_quetion: total_num_quetion,
             topic_id: topicId, // Save the topic ID
             difficulty_level_id: difficultyLevelId, // Save the difficulty level ID
             no_of_questions: noOfQuestions,

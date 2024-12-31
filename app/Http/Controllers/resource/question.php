@@ -9,6 +9,7 @@ use App\Models\Subject;
 use App\Models\Question as Questions;
 use App\Models\QuestionOption;
 use App\Models\QuestionConfig;
+use App\Models\QuestionConfiginfo;
 use Illuminate\Support\Facades\Auth;
 
 class question extends Controller
@@ -181,14 +182,20 @@ class question extends Controller
     // Decode the JSON data for questions
     $questionsData = json_decode($request->input('questions'), true);
 
-   foreach ($questionsData as $question) {
-        
-        QuestionConfig::create([
-            'qc_subject_id' => $question['subject_id'],  // Save subject ID
-            'qc_topic_id' => $question['topic_id'],  // Save topic ID
-            'qc_difficulty_level' => $question['difficulty_level_id'],  // Save difficulty level ID
-            'qc_no_of_questions' => $question['no_of_questions'],  // Save number of questions
-            'created_by' => Auth::id(),  // Track the user who created the configuration
+    // Store the QuestionConfig (the parent table)
+    $questionConfig = QuestionConfig::create([
+        'qc_subject_id' => $questionsData[0]['subject_id'],  // All topics belong to the same subject
+        'qc_no_of_questions' => $questionsData[0]['total_num_quetion'],
+        'created_by' => Auth::id(),
+    ]);
+
+    // Store QuestionDetails (the child table) for each question data
+    foreach ($questionsData as $question) {
+        QuestionConfiginfo::create([
+            'qi_config_id' => $questionConfig->id,
+            'qi_topic_id' => $question['topic_id'],
+            'qi_difficulty_level' => $question['difficulty_level_id'],
+            'qi_no_of_questions' => $question['no_of_questions'],
         ]);
     }
 
