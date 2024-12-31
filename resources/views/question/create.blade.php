@@ -50,7 +50,7 @@ input[type="radio"]:checked+.form-check-label {
                                                         <label class="required form-label">Subject</label>
                                                         <select name="q_subject" id="q_subject"
                                                             class="form-control mb-2 @error('q_subject') is-invalid @enderror">
-                                                            <option value="">Select Subject</option>
+                                                            <option>Select Subject</option>
                                                             @foreach($subjects as $sub)
                                                             <option value="{{ $sub->id }}">{{ $sub->sub_name }}</option>
                                                             @endforeach
@@ -69,7 +69,7 @@ input[type="radio"]:checked+.form-check-label {
                                                         <label class="required form-label">Topic</label>
                                                         <select name="q_topic" id="q_topic"
                                                             class="form-control mb-2 @error('q_topic') is-invalid @enderror">
-                                                            <option value="">Select Topic</option>
+                                                            <option >Select Topic</option>
                                                         </select>
                                                         @error('q_topic')
                                                         <div class="invalid-feedback">
@@ -86,7 +86,7 @@ input[type="radio"]:checked+.form-check-label {
                                                         <label class="required form-label">Difficulty Level</label>
                                                         <select name="difficulty_level"
                                                             class="form-control mb-2 @error('difficulty_level') is-invalid @enderror">
-                                                            <option value="">Select Difficulty Level</option>
+                                                            <option>Select Difficulty Level</option>
                                                             @foreach($difficultyLevels as $level)
                                                             <option value="{{ $level->id }}">
                                                                 {{ $level->difficulty_level }}</option>
@@ -225,7 +225,8 @@ input[type="radio"]:checked+.form-check-label {
 @section('pageScripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.0/katex.min.js"></script>
 <script>
-document.getElementsByClassName('questions').addEventListener('input', function() {
+document.querySelectorAll('.questions').forEach((element) => {
+    element.addEventListener('input', function() {
     var latex = this.value;
     var output = document.getElementById('mathOutput');
     output.innerHTML = ''; // Clear previous output
@@ -234,6 +235,7 @@ document.getElementsByClassName('questions').addEventListener('input', function(
             throwOnError: false
         });
     }
+});
 });
 </script>
 

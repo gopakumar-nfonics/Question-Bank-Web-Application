@@ -39,19 +39,30 @@ class question extends Controller
     {
 
        // print_r($request->is_answer);exit();
-        $request->validate([
-            'question' => 'required|string',
-            'q_subject' => 'nullable|exists:tbl_subjects,id',
-            'q_topic' => 'nullable|exists:tbl_topics,topic_id',
-            'difficulty_level' => 'nullable|exists:tbl_difficulty_level,id',
-            'option1' => 'required|string',
-            'option2' => 'required|string',
-            'option3' => 'required|string',
-            'option4' => 'required|string',
-            'is_answer' => 'required|string',
-            
-        ]);
-
+       $request->validate([
+        'question' => 'required|string',
+        'q_subject' => 'nullable|exists:tbl_subjects,id',
+        'q_topic' => 'nullable|exists:tbl_topics,topic_id',
+        'difficulty_level' => 'nullable|exists:tbl_difficulty_level,id',
+        'option1' => 'required|string',
+        'option2' => 'required|string',
+        'option3' => 'required|string',
+        'option4' => 'required|string',
+        'is_answer' => 'required|string',
+    ], [
+        'question.required' => 'The question field is required.',
+        'question.string' => 'The question must be a valid string.',
+        'q_subject.exists' => 'The selected subject is invalid.',
+        'q_topic.exists' => 'The selected topic is invalid.',
+        'difficulty_level.exists' => 'The selected difficulty level is invalid.',
+        'option1.required' => 'Option 1 is required.',
+        'option2.required' => 'Option 2 is required.',
+        'option3.required' => 'Option 3 is required.',
+        'option4.required' => 'Option 4 is required.',
+        'is_answer.required' => 'Please specify the correct answer.',
+        'is_answer.string' => 'The correct answer must be a valid string.',
+    ]);
+    
         try {
 
             $questionModel = new Questions();
