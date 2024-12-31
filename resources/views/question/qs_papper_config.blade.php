@@ -1,6 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
+<style>
+/* Hide the table initially */
+#questionsTable {
+    display: none;
+}
+</style>
 
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main" data-select2-id="select2-data-kt_app_main">
     <!--begin::Content wrapper-->
@@ -26,49 +32,73 @@
                                     <div class="loader"></div>
                                 </div>
                                 <!--begin::Form-->
-                                <form id="kt_question_form" method="POST" action="{{ route('question.config') }}" enctype="multipart/form-data">
+                                <form id="kt_question_form" method="POST" action="{{ route('question.config') }}"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="questions" id="questionsInput">
 
-                                    <div class="row mb-6">
-                                        <div class="col-lg-7">
+                                    <div class="row mb-5 flex-grow ">
+                                        <div class="col-lg-6">
                                             <div class="fv-row mt-5">
                                                 <div class="fs-6 fw-bold text-gray-700 col-lg-12">
                                                     <label class="required form-label">Subject</label>
-                                                    <select name="q_subject" id="q_subject" class="form-control mb-2 @error('q_subject') is-invalid @enderror">
+                                                    <select name="q_subject" id="q_subject"
+                                                        class="form-control mb-2 @error('q_subject') is-invalid @enderror">
                                                         <option value="">Select Subject</option>
                                                         @foreach($subjects as $sub)
-                                                            <option value="{{ $sub->id }}">{{ $sub->sub_name }}</option>
+                                                        <option value="{{ $sub->id }}">{{ $sub->sub_name }}</option>
                                                         @endforeach
                                                     </select>
                                                     @error('q_subject')
-                                                        <div class="questions">{{ $message }}</div>
+                                                    <div class="questions">{{ $message }}</div>
                                                     @enderror
+
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-3 fv-row">
                                             <div class="col-lg-12 fv-row">
-                                                <label class="col-lg-12 col-form-label required fw-semibold fs-6">No.Of Questions</label>
-                                                <input type="number" name="sub_name" class="form-control form-control-lg @error('sub_name') is-invalid @enderror" placeholder="No.Of Questions" />
+                                                <label class="col-lg-12 col-form-label required fw-semibold fs-6">Total
+                                                    Questions</label>
+                                                <input type="number" name="sub_name"
+                                                    class="form-control form-control-lg @error('sub_name') is-invalid @enderror"
+                                                    placeholder="Total Questions" />
                                                 @error('sub_name')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="col-lg-3 fv-row">
+                                            <div class="d-flex align-items-center flex-column mt-3 w-100 pt-10">
+                                                <div
+                                                    class="d-flex justify-content-between fw-bold fs-6  w-100 mt-auto mb-2">
+                                                    <span>72/100</span>
+                                                    <span>72%</span>
+                                                </div>
+                                                <div class="h-8px mx-3 w-100 bg-light-danger rounded">
+                                                    <div class="bg-danger rounded h-8px" role="progressbar"
+                                                        style="width: 72%;" aria-valuenow="50" aria-valuemin="0"
+                                                        aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="fs-7 text-muted mt-1">Select the subject and
+                                            specify the
+                                            total number of questions for it.</span>
                                     </div>
 
-                                    <div class="row mb-5 flex-grow justify-content-between">
-                                        <div class="col-lg-5">
+                                    <div class="row mb-5 flex-grow ">
+                                        <div class="col-lg-4">
                                             <div class="fv-row mt-5">
                                                 <div class="fs-6 fw-bold text-gray-700 col-lg-12">
                                                     <label class="required form-label">Topic</label>
-                                                    <select name="q_topic" id="q_topic" class="form-control mb-2 @error('q_topic') is-invalid @enderror">
+                                                    <select name="q_topic" id="q_topic"
+                                                        class="form-control mb-2 @error('q_topic') is-invalid @enderror">
                                                         <option value="">Select Topic</option>
                                                     </select>
                                                     @error('q_topic')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -78,14 +108,16 @@
                                             <div class="fv-row mt-5">
                                                 <div class="fs-6 fw-bold text-gray-700 col-lg-12">
                                                     <label class="required form-label">Difficulty Level</label>
-                                                    <select name="difficulty_level" id="difficulty_level" class="form-control mb-2 @error('difficulty_level') is-invalid @enderror">
+                                                    <select name="difficulty_level" id="difficulty_level"
+                                                        class="form-control mb-2 @error('difficulty_level') is-invalid @enderror">
                                                         <option value="">Select Level</option>
                                                         @foreach($difficultyLevels as $level)
-                                                            <option value="{{ $level->id }}">{{ $level->difficulty_level }}</option>
+                                                        <option value="{{ $level->id }}">{{ $level->difficulty_level }}
+                                                        </option>
                                                         @endforeach
                                                     </select>
                                                     @error('difficulty_level')
-                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -93,38 +125,49 @@
 
                                         <div class="col-lg-3 fv-row">
                                             <div class="col-lg-12 fv-row">
-                                                <label class="col-lg-12 col-form-label required fw-semibold fs-6">No.Of Questions</label>
-                                                <input type="number" name="no_of_questions" id="no_of_questions" class="form-control form-control-lg" placeholder="No. Of Questions" />
+                                                <label class="col-lg-12 col-form-label required fw-semibold fs-6">No.Of
+                                                    Questions</label>
+                                                <input type="number" name="no_of_questions" id="no_of_questions"
+                                                    class="form-control form-control-lg"
+                                                    placeholder="No. Of Questions" />
                                                 @error('sub_name')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
 
                                         <div class="col-lg-2 fv-row add-button-div">
-                                            <button class="btn btn-sm btn-success w-150px mt-0 mb-1" data-kt-element="add-item" id="addRowBtn">Add</button>
+                                            <button class="btn btn-sm btn-success w-150px mt-0 mb-1 ms-10"
+                                                data-kt-element="add-item" id="addRowBtn">Add</button>
+                                        </div>
+                                        <span class="fs-7 text-muted mt-1">Select the topic and difficulty level,
+                                            specify the total number of questions, and then click the 'Add' button to
+                                            include them in the configuration table.</span>
+
+                                    </div>
+                                    <div class="row mb-5 mt-10 flex-grow ">
+                                        <div class="col-lg-12">
+                                            <!-- Table Section -->
+                                            <table class="table table-bordered" id="questionsTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th class="w-350px">Topic</th>
+                                                        <th>Difficulty Level</th>
+                                                        <th>No. Of Questions</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Rows will be dynamically added here -->
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
-
-                                    <!-- Table Section -->
-                                    <table class="table table-bordered" id="questionsTable">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Topic</th>
-                                                <th>Difficulty Level</th>
-                                                <th>No. Of Questions</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- Rows will be dynamically added here -->
-                                        </tbody>
-                                    </table>
-
                                     <!-- Submit Button -->
                                     <div class="row pe-0 pb-5">
-                                        <div class="col-lg-12 text-end d-flex justify-content-end border-top mt-10 pt-5">
+                                        <div
+                                            class="col-lg-12 text-end d-flex justify-content-end border-top mt-10 pt-5">
                                             <button type="submit" class="btn btn-primary">Save Configuration</button>
                                         </div>
                                     </div>
@@ -164,6 +207,7 @@ document.getElementById('q_subject').addEventListener('change', function() {
             });
     }
 });
+
 
 document.getElementById('addRowBtn').addEventListener('click', function(e) {
     e.preventDefault();
@@ -211,7 +255,7 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
             <td>${topicName}</td>
             <td>${difficultyLevelName}</td>
             <td>${noOfQuestions}</td>
-            <td><button class="btn btn-danger btn-sm remove-btn">Remove</button></td>
+            <td><button class="remove-btn btn btn-outline btn-outline-dashed btn-outline-danger btn-active-light-danger">Remove</button></td>
         `;
 
         // Store the subject ID, topic ID, and difficulty level ID as custom attributes
@@ -225,8 +269,15 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
         row.querySelector('.remove-btn').addEventListener('click', function() {
             row.remove();
             updateTableIndex(tbody);
+            // Hide the table if no rows remain
+            if (tbody.querySelectorAll('tr').length === 0) {
+                table.style.display = 'none';
+            }
         });
     }
+
+    // Show the table if it's hidden
+    table.style.display = 'table';
 
     // Clear input fields
     document.getElementById('difficulty_level').value = '';
@@ -246,7 +297,7 @@ document.getElementById('kt_question_form').addEventListener('submit', function(
     // Collect all rows data
     const rowsData = [];
     const rows = document.querySelectorAll('#questionsTable tbody tr');
-    
+
     rows.forEach(row => {
         const subjectId = row.getAttribute('data-subject-id');
         const topicId = row.getAttribute('data-topic-id');
@@ -275,7 +326,6 @@ document.getElementById('kt_question_form').addEventListener('submit', function(
     // Set the rows data to the hidden input
     document.getElementById('questionsInput').value = JSON.stringify(rowsData);
 });
-
-
 </script>
+
 @endsection
