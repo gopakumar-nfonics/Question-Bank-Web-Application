@@ -255,7 +255,7 @@ public function configirationlist()
         ->toArray();
 
     // Fetch subjects that are not in the list of added subjects
-    $subjects = Subject::whereNotIn('id', $addedSubjectIds)->get();
+    $subjects = Subject::whereIn('id', $addedSubjectIds)->get();
 
         return view('question.qs_paper_generate',compact('difficultyLevels','subjects'));
 
