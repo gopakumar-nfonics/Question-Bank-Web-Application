@@ -17,7 +17,8 @@ class topic extends Controller
      */
     public function index()
     {
-        $subjects = Subject::with('topics')->get();
+       // $subjects = Subject::with('topics')->get();
+       $subjects = Subject::has('topics')->with('topics')->get();
         return view('topic.index',compact('subjects'));
     }
 
@@ -26,7 +27,9 @@ class topic extends Controller
      */
     public function create()
     {
-        $subjects=Subject::orderBy('id')->get();
+        //$subjects=Subject::orderBy('id')->get();
+        $subjects = Subject::doesntHave('topics')->get();
+
         return view('topic.create',['subjects'=>$subjects]);
     }
 
