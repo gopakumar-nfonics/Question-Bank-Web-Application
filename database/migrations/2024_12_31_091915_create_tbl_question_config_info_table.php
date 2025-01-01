@@ -11,18 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_question_config_info', function (Blueprint $table) {
+        Schema::create('tbl_question_template_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('qi_config_id');  // Reference to question_configs
-            $table->unsignedBigInteger('qi_topic_id');
-            $table->unsignedBigInteger('qi_difficulty_level');
-            $table->integer('qi_no_of_questions');
+            $table->unsignedBigInteger('qd_template_id');// Reference to question_configs
+            $table->unsignedBigInteger('qd_subject_id');  
+            $table->unsignedBigInteger('qd_topic_id');
+            $table->unsignedBigInteger('qd_difficulty_level');
+            $table->integer('qd_no_of_questions');
             $table->timestamps();
         
             // Foreign keys
-            $table->foreign('qi_config_id')->references('id')->on('tbl_question_config')->onDelete('cascade');
-            $table->foreign('qi_topic_id')->references('topic_id')->on('tbl_topics')->onDelete('cascade');
-            $table->foreign('qi_difficulty_level')->references('id')->on('tbl_difficulty_level')->onDelete('cascade');
+            $table->foreign('qd_template_id')->references('id')->on('tbl_question_template')->onDelete('cascade');
+            $table->foreign('qd_subject_id')->references('id')->on('tbl_subjects')->onDelete('cascade');
+            $table->foreign('qd_topic_id')->references('topic_id')->on('tbl_topics')->onDelete('cascade');
+            $table->foreign('qd_difficulty_level')->references('id')->on('tbl_difficulty_level')->onDelete('cascade');
           
         });
     }
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_question_config_info');
+        Schema::dropIfExists('tbl_question_template_details');
     }
 };

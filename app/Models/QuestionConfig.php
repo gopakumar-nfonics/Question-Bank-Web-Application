@@ -7,24 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class QuestionConfig extends Model
 {
-    protected $table = 'tbl_question_config';
+    protected $table = 'tbl_question_template';
 
     protected $fillable = [
-        'qc_subject_id',
-        'qc_no_of_questions',
-        'qc_code',
+        'qt_title',
+        'qt_no_of_questions',
         'created_by'
     ];
 
     // Define relationships if applicable
     public function details()
     {
-        return $this->hasMany(QuestionConfiginfo::class, 'id');
-    }
-
-    public function subject()
-    {
-        return $this->belongsTo(Subject::class, 'qc_subject_id');
+        return $this->hasMany(QuestionConfiginfo::class, 'qd_template_id');
     }
 
     public function createdBy()

@@ -168,12 +168,14 @@ class question extends Controller
 
         $difficultyLevels = DifficultyLevel::all();
         //$subjects = Subject::all();
-        $addedSubjectIds = QuestionConfig::with('subject')
+       /* $addedSubjectIds = QuestionConfig::with('subject')
         ->pluck('qc_subject_id')
         ->toArray();
 
     // Fetch subjects that are not in the list of added subjects
-    $subjects = Subject::whereNotIn('id', $addedSubjectIds)->get();
+    $subjects = Subject::whereNotIn('id', $addedSubjectIds)->get();*/
+
+    $subjects = Subject::all();
 
         return view('question.qs_papper_config',compact('difficultyLevels','subjects'));
 
@@ -189,8 +191,10 @@ class question extends Controller
     // Decode the JSON data for questions
     $questionsData = json_decode($request->input('questions'), true);
 
+    //print_r($questionsData);
+
       // Get the Subject Code (Assuming subject code is stored in the subjects table)
-      $subject = Subject::find($questionsData[0]['subject_id']); // Get subject based on the subject_id
+     /* $subject = Subject::find($questionsData[0]['subject_id']); // Get subject based on the subject_id
 
       if (!$subject) {
           return redirect()->back()->with('error', 'Subject not found!');
@@ -212,24 +216,24 @@ class question extends Controller
       }
   
       // Format the new qc_code
-      $qcCode = 'AM-' . strtoupper($subjectCode) . '-' . str_pad($increment, 3, '0', STR_PAD_LEFT);
+      $qcCode = 'AM-' . strtoupper($subjectCode) . '-' . str_pad($increment, 3, '0', STR_PAD_LEFT);*/
   
 
     // Store the QuestionConfig (the parent table)
     $questionConfig = QuestionConfig::create([
-        'qc_subject_id' => $questionsData[0]['subject_id'],  // All topics belong to the same subject
-        'qc_no_of_questions' => $questionsData[0]['total_num_quetion'],
+        'qt_title' => $questionsData[0]['paper_title'],  // All topics belong to the same subject
+        'qt_no_of_questions' => $questionsData[0]['total_num_quetion'],
         'created_by' => Auth::id(),
-        'qc_code' => $qcCode,
     ]);
 
     // Store QuestionDetails (the child table) for each question data
     foreach ($questionsData as $question) {
         QuestionConfiginfo::create([
-            'qi_config_id' => $questionConfig->id,
-            'qi_topic_id' => $question['topic_id'],
-            'qi_difficulty_level' => $question['difficulty_level_id'],
-            'qi_no_of_questions' => $question['no_of_questions'],
+            'qd_template_id' => $questionConfig->id,
+            'qd_subject_id' => $question['subject_id'],
+            'qd_topic_id' => $question['topic_id'],
+            'qd_difficulty_level' => $question['difficulty_level_id'],
+            'qd_no_of_questions' => $question['no_of_questions'],
         ]);
     }
 
@@ -239,8 +243,17 @@ class question extends Controller
 
 public function configirationlist()
     {
-        $questionConfigs = QuestionConfig::with('subject:id,sub_name') 
-            ->get();
+        $questionConfigs = QuestionConfig::with(['details.subject'])
+        ->get()
+        ->map(function ($config) {
+            return [
+                'qt_title' => $config->qt_title,
+                'subjects' => $config->details->pluck('subject.sub_name')->join(', '),
+                'qt_no_of_questions' => $config->qt_no_of_questions,
+            ];
+        });
+
+        //print_r($questionConfigs);exit();
 
         return view('question.configirations',compact('questionConfigs'));
     }
@@ -249,13 +262,13 @@ public function configirationlist()
     {
 
         $difficultyLevels = DifficultyLevel::all();
-        //$subjects = Subject::all();
-        $addedSubjectIds = QuestionConfig::with('subject')
+        $subjects = Subject::all();
+       /* $addedSubjectIds = QuestionConfig::with('subject')
         ->pluck('qc_subject_id')
         ->toArray();
 
     // Fetch subjects that are not in the list of added subjects
-    $subjects = Subject::whereIn('id', $addedSubjectIds)->get();
+    $subjects = Subject::whereIn('id', $addedSubjectIds)->get();*/
 
         return view('question.qs_paper_generate',compact('difficultyLevels','subjects'));
 

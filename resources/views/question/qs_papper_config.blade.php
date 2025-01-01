@@ -368,16 +368,18 @@ document.getElementById('kt_question_form').addEventListener('submit', function(
     const rows = document.querySelectorAll('#questionsTable tbody tr');
 
     rows.forEach(row => {
-        //const subjectId = row.getAttribute('data-subject-id');
-        const subjectId = document.getElementById('q_subject').value;
+        
+        const paper_title = document.getElementById('paper_title').value;
+        const subjectId = row.getAttribute('data-subject-id');
         const total_num_quetion = document.getElementById('total_num_questions').value;
         const topicId = row.getAttribute('data-topic-id');
         const difficultyLevelId = row.getAttribute('data-difficulty-level-id');
-        const topicName = row.querySelector('td:nth-child(2)').innerText;
-        const difficultyLevelName = row.querySelector('td:nth-child(3)').innerText;
-        const noOfQuestions = row.querySelector('td:nth-child(4)').innerText;
+        const topicName = row.querySelector('td:nth-child(3)').innerText;
+        const difficultyLevelName = row.querySelector('td:nth-child(4)').innerText;
+        const noOfQuestions = row.querySelector('td:nth-child(5)').innerText;
 
         rowsData.push({
+            paper_title:paper_title,
             subject_id: subjectId,
             total_num_quetion: total_num_quetion,
             topic_id: topicId, // Save the topic ID

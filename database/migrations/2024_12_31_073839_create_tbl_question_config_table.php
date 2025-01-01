@@ -11,16 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbl_question_config', function (Blueprint $table) {
+        Schema::create('tbl_question_template', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('qc_subject_id');
-            $table->integer('qc_no_of_questions');
+            $table->string('qt_title')->unique();
+            $table->integer('qt_no_of_questions');
             $table->unsignedBigInteger('created_by');
             $table->timestamps();
 
             // Foreign key constraints
-            $table->foreign('qc_subject_id')->references('id')->on('tbl_subjects')->onDelete('cascade');
-             $table->foreign('created_by')->references('id')->on('tbl_users')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('tbl_users')->onDelete('cascade');
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbl_question_config');
+        Schema::dropIfExists('tbl_question_template');
     }
 };

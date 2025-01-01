@@ -48,8 +48,8 @@
 							<thead>
 								<tr class="fw-bold">
 									<th class="w-50px">#</th>
-									<th class="min-w-200px">Code</th>
-									<th class="min-w-150px">Subject</th>
+									<th class="min-w-200px">Title</th>
+									<th class="min-w-150px">Subjects</th>
 									<th class="min-w-150px">Total Questions</th>
 									<th class="min-w-150px text-center">Actions</th>
 								</tr>
@@ -69,7 +69,7 @@
 										<div class="d-flex align-items-center">
 											<div class="d-flex justify-content-start flex-column">
 												<div class="fw-400 d-block fs-6">
-													{{ucfirst($config->qc_code)}}
+													{{ucfirst($config['qt_title'])}}
 												</div>
 											</div>
 										</div>
@@ -78,14 +78,14 @@
 									<td>
 										<div class="d-flex align-items-center">
 											<div class="fw-400 d-block fs-6">
-                                            {{ ucfirst($config->subject->sub_name ?? 'N/A') }}
+                                            {{ ucfirst($config['subjects'] ?? 'N/A') }}
 											</div>
 										</div>
 									</td>
 									<td>
 										<div class="d-flex align-items-center">
 											<div class="fw-400 d-block fs-6">
-                                            {{ ucfirst($config->qc_no_of_questions) }}
+                                            {{ ucfirst($config['qt_no_of_questions']) }}
 											</div>
 										</div>
 									</td>
