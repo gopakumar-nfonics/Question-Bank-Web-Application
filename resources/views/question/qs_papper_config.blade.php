@@ -43,8 +43,7 @@
                                                 <div class="fs-6 fw-bold text-gray-700 col-lg-12">
                                                     <label class="required form-label"> Question Paper Template
                                                         Title</label>
-                                                    <input type="text" id="total_num_questions"
-                                                        name="total_num_questions"
+                                                    <input type="text" id="paper_title" name="paper_title"
                                                         class="form-control  @error('total_num_questions') is-invalid @enderror"
                                                         placeholder="Question Paper Template Title" />
                                                     @error('q_subject')
@@ -233,7 +232,7 @@ function updateProgressBar() {
     let addedQuestions = 0;
 
     document.querySelectorAll('#questionsTable tbody tr').forEach(row => {
-        const questions = parseInt(row.querySelector('td:nth-child(4)').innerText) || 0;
+        const questions = parseInt(row.querySelector('td:nth-child(5)').innerText) || 0;
         addedQuestions += questions;
     });
 
