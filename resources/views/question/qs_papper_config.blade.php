@@ -168,10 +168,10 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Subject</th>
+                                                        <th class="w-350px">Subject</th>
                                                         <th class="w-350px">Topic</th>
-                                                        <th>Difficulty Level</th>
-                                                        <th>No. Of Questions</th>
+                                                        <th>Level</th>
+                                                        <th>Count</th>
                                                         <th>Actions</th>
                                                     </tr>
                                                 </thead>
