@@ -46,31 +46,28 @@
                                                 </label>
                                                 <input type="text" id="total_num_questions" name="total_num_questions"
                                                     class="form-control form-control-lg @error('total_num_questions') is-invalid @enderror"
-                                                    placeholder="Paper
-                                                    Code" />
+                                                    placeholder="Paper Code" />
                                                 @error('total_num_questions')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
                                         <div class="col-lg-8">
-                                            <div class="fv-row mt-5">
-                                                <div class="fs-6 fw-bold text-gray-700 col-lg-12">
-                                                    <label class="required form-label">Subject</label>
-                                                    <select name="q_subject" id="q_subject"
-                                                        class="form-control mb-2 @error('q_subject') is-invalid @enderror">
-                                                        <option value="">Select Subject</option>
-                                                        @foreach($subjects as $sub)
-                                                        <option value="{{ $sub->id }}">{{ $sub->sub_name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('q_subject')
-                                                    <div class="questions">{{ $message }}</div>
-                                                    @enderror
-
-                                                </div>
-                                            </div>
-                                        </div>
+    <div class="fv-row mt-5">
+        <div class="fs-6 fw-bold text-gray-700 col-lg-12">
+            <label class="required form-label">Subject</label>
+            <select name="q_subject[]" id="q_subject" multiple
+                class="form-control mb-2 @error('q_subject') is-invalid @enderror">
+                @foreach($subjects as $sub)
+                <option value="{{ $sub->id }}">{{ $sub->sub_name }}</option>
+                @endforeach
+            </select>
+            @error('q_subject')
+            <div class="questions">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+</div>
 
 
                                         <span class="fs-7 text-muted mt-1">Input question paper code and select the
@@ -122,6 +119,21 @@ document.getElementById('q_subject').addEventListener('change', function() {
             });
     }
 });
+</script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
+
+<!-- Include Select2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#q_subject').select2({
+            placeholder: "Select Subject",
+            allowClear: true,
+            closeOnSelect: false, // Ensures the dropdown doesn't close after a selection
+        });
+    });
 </script>
 
 @endsection
