@@ -39,6 +39,20 @@
 
                                     <div class="row mb-5 flex-grow ">
 
+                                        <div class="col-lg-8 fv-row">
+                                            <div class="col-lg-12 fv-row">
+                                                <label class="col-lg-12 col-form-label required fw-semibold fs-6">Paper
+                                                    Title
+                                                </label>
+                                                <input type="text" id="total_num_questions" name="total_num_questions"
+                                                    class="form-control form-control-lg @error('total_num_questions') is-invalid @enderror"
+                                                    placeholder="Paper Title" />
+                                                @error('total_num_questions')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
                                         <div class="col-lg-4 fv-row">
                                             <div class="col-lg-12 fv-row">
                                                 <label class="col-lg-12 col-form-label required fw-semibold fs-6">Paper
@@ -52,26 +66,52 @@
                                                 @enderror
                                             </div>
                                         </div>
+
+
+
+                                        <span class="fs-7 text-muted mt-1">Enter the question paper title and
+                                            code.</span>
+                                    </div>
+
+                                    <div class="row mb-5 flex-grow ">
+
                                         <div class="col-lg-8">
-    <div class="fv-row mt-5">
-        <div class="fs-6 fw-bold text-gray-700 col-lg-12">
-            <label class="required form-label">Subject</label>
-            <select name="q_subject[]" id="q_subject" multiple
-                class="form-control mb-2 @error('q_subject') is-invalid @enderror">
-                @foreach($subjects as $sub)
-                <option value="{{ $sub->id }}">{{ $sub->sub_name }}</option>
-                @endforeach
-            </select>
-            @error('q_subject')
-            <div class="questions">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-</div>
+                                            <div class="fv-row mt-5">
+                                                <div class="fs-6 fw-bold text-gray-700 col-lg-12">
+                                                    <label class="required form-label">Question Paper Template</label>
+                                                    <select name="q_subject[]" id="q_subject"
+                                                        class="form-control mb-2 @error('q_subject') is-invalid @enderror">
+                                                        @foreach($subjects as $sub)
+                                                        <option value="{{ $sub->id }}">{{ $sub->sub_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('q_subject')
+                                                    <div class="questions">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
 
 
-                                        <span class="fs-7 text-muted mt-1">Input question paper code and select the
-                                            subjects.</span>
+                                        <div class="col-lg-4 fv-row">
+                                            <div class="col-lg-12 fv-row">
+                                                <label
+                                                    class="col-lg-12 col-form-label required fw-semibold fs-6">Question
+                                                    Paper Count
+                                                </label>
+                                                <input type="text" id="total_num_questions" name=labell_num_questions"
+                                                    class="form-control form-control-lg @error('total_num_questions') is-invalid @enderror"
+                                                    placeholder="Question Paper Count" />
+                                                @error('total_num_questions')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+
+                                        <span class="fs-7 text-muted mt-1">Select a question paper template, specify the
+                                            number of question papers to be generated, and click the "Generate" button
+                                            to proceed.</span>
                                     </div>
 
 
@@ -79,8 +119,7 @@
                                     <div class="row pe-0 pb-5">
                                         <div
                                             class="col-lg-12 text-end d-flex justify-content-end border-top mt-10 pt-5">
-                                            <button type="submit" class="btn btn-primary">Generate
-                                                Question Paper</button>
+                                            <button type="submit" class="btn btn-primary">Generate</button>
                                         </div>
                                     </div>
                                 </form>
@@ -97,43 +136,5 @@
 
 @section('pageScripts')
 
-<script>
-document.getElementById('q_subject').addEventListener('change', function() {
-    const subjectId = this.value;
-    const topicDropdown = document.getElementById('q_topic');
-    topicDropdown.innerHTML = '<option value="">Select Topic</option>'; // Reset topics
-
-    if (subjectId) {
-        fetch(`/topics/${subjectId}`)
-            .then(response => response.json())
-            .then(data => {
-                data.forEach(topic => {
-                    const option = document.createElement('option');
-                    option.value = topic.topic_id;
-                    option.textContent = topic.topic_name;
-                    topicDropdown.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching topics:', error);
-            });
-    }
-});
-</script>
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
-
-<!-- Include Select2 JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
-
-<script>
-    $(document).ready(function() {
-        $('#q_subject').select2({
-            placeholder: "Select Subject",
-            allowClear: true,
-            closeOnSelect: false, // Ensures the dropdown doesn't close after a selection
-        });
-    });
-</script>
 
 @endsection

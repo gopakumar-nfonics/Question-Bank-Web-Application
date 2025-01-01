@@ -82,9 +82,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="fs-7 text-muted mt-1">Input the title and
-                                            specify the
-                                            total questions count for it.</span>
+                                        <span class="fs-7 text-muted mt-1">Enter the title and specify the total number
+                                            of questions for it.</span>
                                     </div>
 
                                     <div class="row mb-5 flex-grow ">
@@ -158,9 +157,8 @@
                                             <button class="btn btn-sm btn-success w-75px mt-0"
                                                 data-kt-element="add-item" id="addRowBtn">Add</button>
                                         </div>
-                                        <span class="fs-7 text-muted mt-1">Select the subject, topic and difficulty
-                                            level,
-                                            specify the questions count , and then click the 'Add' button to
+                                        <span class="fs-7 text-muted mt-1">Select the subject, topic, and difficulty
+                                            level, specify the number of questions, and click the 'Add' button to
                                             include them in the configuration table.</span>
 
                                     </div>
