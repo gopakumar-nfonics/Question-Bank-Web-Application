@@ -284,7 +284,7 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
     const noOfQuestions = parseInt(document.getElementById('no_of_questions').value);
 
     if (!subjectId || !topicId || !difficultyLevelId || isNaN(noOfQuestions)) {
-        alert('Please fill all fields.');
+        alert('Please complete all fields before proceeding.');
         return;
     }
 
