@@ -16,7 +16,7 @@
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Configure Question Paper
+                        Configure Question Paper Template
                     </h1>
                 </div>
             </div>
@@ -38,17 +38,15 @@
                                     <input type="hidden" name="questions" id="questionsInput">
 
                                     <div class="row mb-5 flex-grow ">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-7">
                                             <div class="fv-row mt-5">
                                                 <div class="fs-6 fw-bold text-gray-700 col-lg-12">
-                                                    <label class="required form-label">Subject</label>
-                                                    <select name="q_subject" id="q_subject"
-                                                        class="form-control mb-2 @error('q_subject') is-invalid @enderror">
-                                                        <option value="">Select Subject</option>
-                                                        @foreach($subjects as $sub)
-                                                        <option value="{{ $sub->id }}">{{ $sub->sub_name }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    <label class="required form-label"> Question Paper Template
+                                                        Title</label>
+                                                    <input type="text" id="total_num_questions"
+                                                        name="total_num_questions"
+                                                        class="form-control  @error('total_num_questions') is-invalid @enderror"
+                                                        placeholder="Question Paper Template Title" />
                                                     @error('q_subject')
                                                     <div class="questions">{{ $message }}</div>
                                                     @enderror
@@ -57,13 +55,13 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-3 fv-row">
+                                        <div class="col-lg-2 fv-row">
                                             <div class="col-lg-12 fv-row">
                                                 <label class="col-lg-12 col-form-label required fw-semibold fs-6">Total
-                                                    Questions</label>
+                                                    Count</label>
                                                 <input type="number" id="total_num_questions" name="total_num_questions"
-                                                    class="form-control form-control-lg @error('total_num_questions') is-invalid @enderror"
-                                                    placeholder="Total Questions" />
+                                                    class="form-control  @error('total_num_questions') is-invalid @enderror"
+                                                    placeholder="Total Count" />
                                                 @error('total_num_questions')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -84,12 +82,32 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="fs-7 text-muted mt-1">Select the subject and
+                                        <span class="fs-7 text-muted mt-1">Input the title and
                                             specify the
-                                            total number of questions for it.</span>
+                                            total questions count for it.</span>
                                     </div>
 
                                     <div class="row mb-5 flex-grow ">
+
+
+                                        <div class="col-lg-3">
+                                            <div class="fv-row mt-5">
+                                                <div class="fs-6 fw-bold text-gray-700 col-lg-12">
+                                                    <label class="required form-label">Subject</label>
+                                                    <select name="q_subject" id="q_subject"
+                                                        class="form-control mb-2 @error('q_subject') is-invalid @enderror">
+                                                        <option value="">Select Subject</option>
+                                                        @foreach($subjects as $sub)
+                                                        <option value="{{ $sub->id }}">{{ $sub->sub_name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    @error('q_subject')
+                                                    <div class="questions">{{ $message }}</div>
+                                                    @enderror
+
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-4">
                                             <div class="fv-row mt-5">
                                                 <div class="fs-6 fw-bold text-gray-700 col-lg-12">
@@ -108,10 +126,10 @@
                                         <div class="col-lg-2">
                                             <div class="fv-row mt-5">
                                                 <div class="fs-6 fw-bold text-gray-700 col-lg-12">
-                                                    <label class="required form-label">Difficulty Level</label>
+                                                    <label class="required form-label">Level</label>
                                                     <select name="difficulty_level" id="difficulty_level"
                                                         class="form-control mb-2 @error('difficulty_level') is-invalid @enderror">
-                                                        <option value="">Select Level</option>
+                                                        <option value="">Select</option>
                                                         @foreach($difficultyLevels as $level)
                                                         <option value="{{ $level->id }}">{{ $level->difficulty_level }}
                                                         </option>
@@ -124,25 +142,25 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-3 fv-row">
+                                        <div class="col-lg-2 fv-row">
                                             <div class="col-lg-12 fv-row">
-                                                <label class="col-lg-12 col-form-label required fw-semibold fs-6">No.Of
-                                                    Questions</label>
+                                                <label
+                                                    class="col-lg-12 col-form-label required fw-semibold fs-6">Count</label>
                                                 <input type="number" name="no_of_questions" id="no_of_questions"
-                                                    class="form-control form-control-lg"
-                                                    placeholder="No. Of Questions" />
+                                                    class="form-control" placeholder="Count" />
                                                 @error('sub_name')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-2 fv-row add-button-div">
-                                            <button class="btn btn-sm btn-success w-150px mt-0 mb-1 ms-10"
+                                        <div class="col-lg-1 fv-row add-button-div">
+                                            <button class="btn btn-sm btn-success w-75px mt-0"
                                                 data-kt-element="add-item" id="addRowBtn">Add</button>
                                         </div>
-                                        <span class="fs-7 text-muted mt-1">Select the topic and difficulty level,
-                                            specify the total number of questions, and then click the 'Add' button to
+                                        <span class="fs-7 text-muted mt-1">Select the subject, topic and difficulty
+                                            level,
+                                            specify the questions count , and then click the 'Add' button to
                                             include them in the configuration table.</span>
 
                                     </div>
@@ -153,6 +171,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
+                                                        <th>Subject</th>
                                                         <th class="w-350px">Topic</th>
                                                         <th>Difficulty Level</th>
                                                         <th>No. Of Questions</th>
@@ -256,13 +275,15 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
     e.preventDefault();
 
     // Get input values
-    const subjectId = document.getElementById('q_subject').value;
+    const subjectSelect = document.getElementById('q_subject');
+    const subjectId = subjectSelect.value;
+    const subjectName = subjectSelect.selectedOptions[0].text; // The displayed subject name
     const topicSelect = document.getElementById('q_topic');
-    const topicId = topicSelect.value; // The selected topic ID
-    const topicName = topicSelect.selectedOptions[0].text; // The displayed topic name
+    const topicId = topicSelect.value;
+    const topicName = topicSelect.selectedOptions[0].text;
     const difficultySelect = document.getElementById('difficulty_level');
-    const difficultyLevelId = difficultySelect.value; // The selected difficulty level ID
-    const difficultyLevelName = difficultySelect.selectedOptions[0].text; // The displayed difficulty level name
+    const difficultyLevelId = difficultySelect.value;
+    const difficultyLevelName = difficultySelect.selectedOptions[0].text;
     const noOfQuestions = parseInt(document.getElementById('no_of_questions').value);
 
     if (!subjectId || !topicId || !difficultyLevelId || isNaN(noOfQuestions)) {
@@ -275,16 +296,18 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
     const tbody = table.querySelector('tbody');
     let rowExists = false;
 
-    // Check if a row with the same topic and difficulty level exists
+    // Check if a row with the same subject, topic, and difficulty level exists
     tbody.querySelectorAll('tr').forEach((row) => {
-        const rowTopicName = row.querySelector('td:nth-child(2)').innerText;
-        const rowDifficultyLevelName = row.querySelector('td:nth-child(3)').innerText;
+        const rowSubjectName = row.querySelector('td:nth-child(2)').innerText;
+        const rowTopicName = row.querySelector('td:nth-child(3)').innerText;
+        const rowDifficultyLevelName = row.querySelector('td:nth-child(4)').innerText;
 
-        if (rowTopicName === topicName && rowDifficultyLevelName === difficultyLevelName) {
+        if (rowSubjectName === subjectName && rowTopicName === topicName && rowDifficultyLevelName ===
+            difficultyLevelName) {
             // Update the existing row
-            const currentQuestions = parseInt(row.querySelector('td:nth-child(4)').innerText);
+            const currentQuestions = parseInt(row.querySelector('td:nth-child(5)').innerText);
             const updatedQuestions = currentQuestions + noOfQuestions;
-            row.querySelector('td:nth-child(4)').innerText = updatedQuestions;
+            row.querySelector('td:nth-child(5)').innerText = updatedQuestions;
 
             rowExists = true;
         }
@@ -295,6 +318,7 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${tbody.querySelectorAll('tr').length + 1}</td>
+            <td>${subjectName}</td>
             <td>${topicName}</td>
             <td>${difficultyLevelName}</td>
             <td>${noOfQuestions}</td>
@@ -307,8 +331,6 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
         row.setAttribute('data-difficulty-level-id', difficultyLevelId);
 
         tbody.appendChild(row);
-
-
 
         // Add remove functionality to the new row
         row.querySelector('.remove-btn').addEventListener('click', function() {
@@ -341,6 +363,7 @@ function updateTableIndex(tbody) {
         row.querySelector('td:first-child').innerText = index + 1;
     });
 }
+
 
 document.getElementById('kt_question_form').addEventListener('submit', function(e) {
     // Collect all rows data
