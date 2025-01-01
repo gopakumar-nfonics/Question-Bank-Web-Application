@@ -154,7 +154,7 @@
 
                                         <div class="col-lg-1 fv-row add-button-div">
                                             <button class="btn btn-sm btn-success w-75px mt-0"
-                                                data-kt-element="add-item" id="addRowBtn">Add</button>
+                                                data-kt-element="add-item" id="addRowBtn" disabled>Add</button>
                                         </div>
                                         <span class="fs-7 text-muted mt-1">Select the subject, topic, and difficulty
                                             level, specify the number of questions, and click the 'Add' button to
@@ -185,7 +185,7 @@
                                     <div class="row pe-0 pb-5">
                                         <div
                                             class="col-lg-12 text-end d-flex justify-content-end border-top mt-10 pt-5">
-                                            <button type="submit" class="btn btn-primary">Save Configuration</button>
+                                            <button type="submit" class="btn btn-primary" disabled>Save Configuration</button>
                                         </div>
                                     </div>
                                 </form>
@@ -224,6 +224,32 @@ document.getElementById('q_subject').addEventListener('change', function() {
             });
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const fields = ['q_subject', 'q_topic', 'difficulty_level', 'no_of_questions'];
+    const addRowBtn = document.getElementById('addRowBtn');
+    const submitBtn = document.querySelector('button[type="submit"]');
+    const progressBar = document.getElementById('progress-bar');
+
+    // Enable the Add Row button if all fields are filled
+    fields.forEach(field => {
+        document.getElementById(field).addEventListener('input', validateFields);
+        document.getElementById(field).addEventListener('change', validateFields);
+    });
+
+    function validateFields() {
+        const subject = document.getElementById('q_subject').value;
+        const topic = document.getElementById('q_topic').value;
+        const level = document.getElementById('difficulty_level').value;
+        const count = document.getElementById('no_of_questions').value;
+
+        if (subject && topic && level && count) {
+            addRowBtn.disabled = false;
+        } else {
+            addRowBtn.disabled = true;
+        }
+    }
 
 
 // Update progress bar
@@ -265,6 +291,8 @@ function updateProgressBar() {
     }
 
     progressBar.style.width = `${percentage}%`;
+
+    submitBtn.disabled = Math.round(percentage) !== 100;
 }
 
 
@@ -348,10 +376,13 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
     // Clear input fields
     document.getElementById('difficulty_level').value = '';
     document.getElementById('no_of_questions').value = '';
+    addRowBtn.disabled = true;
 
     updateTableIndex(tbody);
 
     updateProgressBar();
+});
+
 });
 
 // Update table row indices

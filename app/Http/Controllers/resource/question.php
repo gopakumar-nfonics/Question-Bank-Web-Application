@@ -191,34 +191,7 @@ class question extends Controller
     // Decode the JSON data for questions
     $questionsData = json_decode($request->input('questions'), true);
 
-    //print_r($questionsData);
-
-      // Get the Subject Code (Assuming subject code is stored in the subjects table)
-     /* $subject = Subject::find($questionsData[0]['subject_id']); // Get subject based on the subject_id
-
-      if (!$subject) {
-          return redirect()->back()->with('error', 'Subject not found!');
-      }
-  
-      // Generate the unique qc_code
-      $subjectCode = $subject->sub_code; // Assuming `code` is a column in the subjects table
-      $lastCode = QuestionConfig::where('qc_subject_id', $questionsData[0]['subject_id'])
-          ->latest()
-          ->first();
-  
-      $increment = 1;
-      if ($lastCode) {
-          // Extract the last number from the qc_code
-          preg_match('/-(\d+)$/', $lastCode->qc_code, $matches);
-          if (isset($matches[1])) {
-              $increment = (int) $matches[1] + 1; 
-          }
-      }
-  
-      // Format the new qc_code
-      $qcCode = 'AM-' . strtoupper($subjectCode) . '-' . str_pad($increment, 3, '0', STR_PAD_LEFT);*/
-  
-
+    
     // Store the QuestionConfig (the parent table)
     $questionConfig = QuestionConfig::create([
         'qt_title' => $questionsData[0]['paper_title'],  // All topics belong to the same subject
