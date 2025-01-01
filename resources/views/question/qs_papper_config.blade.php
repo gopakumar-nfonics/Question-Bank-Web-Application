@@ -172,7 +172,7 @@
                                                         <th class="w-350px">Topic</th>
                                                         <th>Level</th>
                                                         <th>Count</th>
-                                                        <th>Actions</th>
+                                                        <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
