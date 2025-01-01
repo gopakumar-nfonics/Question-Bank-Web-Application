@@ -247,4 +247,13 @@ public function configirationlist()
 
     }
 
+    public function checkPaperTitleUnique(Request $request)
+{
+    $request->validate(['paper_title' => 'required|string']);
+
+    $isUnique = !QuestionConfig::where('qt_title', $request->input('paper_title'))->exists();
+
+    return response()->json(['isUnique' => $isUnique]);
+}
+
 }

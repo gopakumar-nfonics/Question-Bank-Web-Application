@@ -47,7 +47,7 @@
                                                         class="form-control  @error('total_num_questions') is-invalid @enderror"
                                                         placeholder="Question Paper Template Title" />
                                                     @error('q_subject')
-                                                    <div class="questions">{{ $message }}</div>
+                                                    <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
 
                                                 </div>
@@ -383,6 +383,14 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
     updateProgressBar();
 });
 
+
+// Update the denominator as the user types in total_num_questions
+document.getElementById('total_num_questions').addEventListener('input', function() {
+    const totalQuestions = parseInt(this.value) || 0;
+    document.getElementById('progress-denominator').innerText = totalQuestions;
+    updateProgressBar(); // Update the progress bar whenever the total changes
+});
+
 });
 
 // Update table row indices
@@ -393,10 +401,33 @@ function updateTableIndex(tbody) {
 }
 
 
-document.getElementById('kt_question_form').addEventListener('submit', function(e) {
+document.getElementById('kt_question_form').addEventListener('submit', async function(e) {
     // Collect all rows data
+    e.preventDefault();
     const rowsData = [];
     const rows = document.querySelectorAll('#questionsTable tbody tr');
+
+    const paperTitle = document.getElementById('paper_title').value.trim();
+    const totalQuestions = document.getElementById('total_num_questions').value.trim();
+
+    // Validate if paper_title is filled
+    if (!paperTitle) {
+        alert('Paper title is required.');
+        return;
+    }
+
+    // Validate if total number of questions is filled
+    if (!totalQuestions) {
+        alert('Total number of questions is required.');
+        return;
+    }
+
+    // Check if paper_title is unique via an AJAX request
+    const isUnique = await checkPaperTitleUnique(paperTitle);
+    if (!isUnique) {
+        alert('Paper title must be unique.');
+        return;
+    }
 
     rows.forEach(row => {
         
@@ -430,14 +461,33 @@ document.getElementById('kt_question_form').addEventListener('submit', function(
 
     // Set the rows data to the hidden input
     document.getElementById('questionsInput').value = JSON.stringify(rowsData);
+    e.target.submit();
 });
 
-// Update the denominator as the user types in total_num_questions
-document.getElementById('total_num_questions').addEventListener('input', function() {
-    const totalQuestions = parseInt(this.value) || 0;
-    document.getElementById('progress-denominator').innerText = totalQuestions;
-    updateProgressBar(); // Update the progress bar whenever the total changes
-});
+
+
+
+async function checkPaperTitleUnique(paperTitle) {
+
+    try {
+        const response = await fetch('/check-paper-title-unique', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+            },
+            body: JSON.stringify({ paper_title: paperTitle }),
+        });
+
+        const result = await response.json();
+        return result.isUnique;
+    } catch (error) {
+        console.error('Error checking paper title uniqueness:', error);
+        return false; // Default to false to prevent submission in case of error
+    }
+}
+
+
 </script>
 
 @endsection

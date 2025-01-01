@@ -29,3 +29,6 @@ Route::post('/question/config', [App\Http\Controllers\resource\question::class, 
 Route::get('/configiration', [App\Http\Controllers\resource\question::class, 'configirationlist'])->name('question.configiration');
 Route::get('/qspgeneration', [App\Http\Controllers\resource\question::class, 'qspgeneration'])->name('question.qspgeneration');
 
+Route::post('/check-paper-title-unique', [App\Http\Controllers\resource\question::class, 'checkPaperTitleUnique']);
+
+
