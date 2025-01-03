@@ -46,9 +46,9 @@
                                                     <input type="text" id="paper_title" name="paper_title"
                                                         class="form-control  @error('total_num_questions') is-invalid @enderror"
                                                         placeholder="Question Paper Template Title" />
-                                                    @error('q_subject')
-                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                    @enderror
+                                                    
+                                                    <div class="invalid-feedback" id="papper_ttl_error"></div>
+                                                    
 
                                                 </div>
                                             </div>
@@ -61,9 +61,9 @@
                                                 <input type="number" id="total_num_questions" name="total_num_questions"
                                                     class="form-control  @error('total_num_questions') is-invalid @enderror"
                                                     placeholder="Total Count" />
-                                                @error('total_num_questions')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                                @enderror
+                                               
+                                                <div class="invalid-feedback" id="question_ttl_error"></div>
+                                               
                                             </div>
                                         </div>
                                         <div class="col-lg-3 fv-row">
@@ -412,20 +412,26 @@ document.getElementById('kt_question_form').addEventListener('submit', async fun
 
     // Validate if paper_title is filled
     if (!paperTitle) {
-        alert('Paper title is required.');
+        //alert('Paper title is required.');
+         $('#papper_ttl_error').show();
+        $('#papper_ttl_error').text('Paper title is required.');
         return;
     }
 
     // Validate if total number of questions is filled
     if (!totalQuestions) {
-        alert('Total number of questions is required.');
+        //alert('Total number of questions is required.');
+        $('#question_ttl_error').show();
+        $('#question_ttl_error').text('Total number of questions is required.')
         return;
     }
 
     // Check if paper_title is unique via an AJAX request
     const isUnique = await checkPaperTitleUnique(paperTitle);
     if (!isUnique) {
-        alert('Paper title must be unique.');
+        //alert('Paper title must be unique.');
+        $('#papper_ttl_error').show();
+         $('#papper_ttl_error').text('Paper title must be unique.')
         return;
     }
 
@@ -486,6 +492,22 @@ async function checkPaperTitleUnique(paperTitle) {
         return false; // Default to false to prevent submission in case of error
     }
 }
+
+
+$(document).ready(function () {
+    // Clear question total error
+    $('#total_num_questions').on('input', function () {
+        $('#question_ttl_error').hide();
+        $('#question_ttl_error').text('');
+    });
+
+    // Clear paper title error
+    $('#paper_title').on('input', function () {
+        $('#papper_ttl_error').hide();
+        $('#papper_ttl_error').text('');
+    });
+});
+
 
 
 </script>

@@ -88,12 +88,13 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
-                                                <span class="text-dark fs-5">Computer Science</span> <span
-                                                    class="text-gray-700">[Java, C++, Os,
-                                                    Phython]</span><span
-                                                    class="badge badge-light-primary fs-7 p-0 ms-1">[20]</span></br>
-
-                                                <!-- {{ ucfirst($config['subjects'] ?? 'N/A') }} -->
+                                            @foreach ($config['subjects'] as $subject)
+                                                <span class="text-dark fs-5">{{ $subject['subject_name'] }}</span> <span
+                                                    class="text-gray-700"> [{{ implode(', ', $subject['topics']) }}]</span><span
+                                                    class="badge badge-light-primary fs-7 p-0 ms-1">[{{ $subject['total_questions'] }}]</span></br>
+                                                    
+                                                    @endforeach
+                                               
                                             </div>
                                         </div>
                                     </td>

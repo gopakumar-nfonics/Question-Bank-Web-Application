@@ -216,7 +216,7 @@ class question extends Controller
 
 public function configirationlist()
     {
-        $questionConfigs = QuestionConfig::with(['details.subject'])
+       /* $questionConfigs = QuestionConfig::with(['details.subject'])
         ->get()
         ->map(function ($config) {
             return [
@@ -224,9 +224,31 @@ public function configirationlist()
                 'subjects' => $config->details->pluck('subject.sub_name')->join(', '),
                 'qt_no_of_questions' => $config->qt_no_of_questions,
             ];
-        });
+        });*/
 
-        //print_r($questionConfigs);exit();
+        $questionConfigs = QuestionConfig::with(['details.subject', 'details.topic'])
+    ->get()
+    ->map(function ($config) {
+        return [
+            'qt_title' => $config->qt_title,
+            'qt_no_of_questions' => $config->qt_no_of_questions,
+            'subjects' => $config->details->groupBy('qd_subject_id')->map(function ($details, $subjectId) {
+                return [
+                    'subject_name' => $details->first()->subject->sub_name,
+                    'topics' => $details->map(function ($detail) {
+                        return $detail->topic->topic_name;
+                    })->unique()->values()->toArray(),
+                    'total_questions' => $details->sum('qd_no_of_questions'),
+                ];
+            })->values()->toArray(),
+        ];
+    });
+
+
+
+
+
+//print_r($questionConfigs);exit();
 
         return view('question.configirations',compact('questionConfigs'));
     }
