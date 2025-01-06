@@ -32,11 +32,10 @@
                                     <div class="loader"></div>
                                 </div>
                                 <!--begin::Form-->
-                                <form id="kt_question_form" method="POST" action="{{ route('question.config') }}"
+                                <form id="question_papper_form" method="POST" action="{{ route('question.generateQuestionPaper') }}"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <input type="hidden" name="questions" id="questionsInput">
-
+                             
                                     <div class="row mb-5 flex-grow ">
 
                                         <div class="col-lg-8 fv-row">
@@ -44,10 +43,10 @@
                                                 <label class="col-lg-12 col-form-label required fw-semibold fs-6">Paper
                                                     Title
                                                 </label>
-                                                <input type="text" id="total_num_questions" name="total_num_questions"
-                                                    class="form-control form-control-lg @error('total_num_questions') is-invalid @enderror"
-                                                    placeholder="Paper Title" />
-                                                @error('total_num_questions')
+                                                <input type="text" id="qp_title" name="qp_title"
+                                                    class="form-control form-control-lg @error('qp_title') is-invalid @enderror"
+                                                    placeholder="Paper Title"  value="{{ old('qp_title') }}"/>
+                                                @error('qp_title')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -58,10 +57,10 @@
                                                 <label class="col-lg-12 col-form-label required fw-semibold fs-6">Paper
                                                     Code
                                                 </label>
-                                                <input type="text" id="total_num_questions" name="total_num_questions"
-                                                    class="form-control form-control-lg @error('total_num_questions') is-invalid @enderror"
-                                                    placeholder="Paper Code" />
-                                                @error('total_num_questions')
+                                                <input type="text" id="qp_code" name="qp_code"
+                                                    class="form-control form-control-lg @error('qp_code') is-invalid @enderror"
+                                                    placeholder="Paper Code" value="{{ old('qp_code') }}" />
+                                                @error('qp_code')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -79,14 +78,15 @@
                                             <div class="fv-row mt-5">
                                                 <div class="fs-6 fw-bold text-gray-700 col-lg-12">
                                                     <label class="required form-label">Question Paper Template</label>
-                                                    <select name="q_subject[]" id="q_subject"
-                                                        class="form-control mb-2 @error('q_subject') is-invalid @enderror">
-                                                        @foreach($subjects as $sub)
-                                                        <option value="{{ $sub->id }}">{{ $sub->sub_name }}</option>
+                                                    <select name="qp_template" id="qp_template"
+                                                        class="form-control mb-2 @error('qp_template') is-invalid @enderror">
+                                                        <option>Select Template</option>
+                                                        @foreach($pappertemplate as $qusp)
+                                                        <option value="{{ $qusp->id }}" @if(old('qp_template') == $qusp->id) selected @endif>{{ $qusp->qt_title }}</option>
                                                         @endforeach
                                                     </select>
-                                                    @error('q_subject')
-                                                    <div class="questions">{{ $message }}</div>
+                                                    @error('qp_template')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
                                             </div>
@@ -99,10 +99,10 @@
                                                     class="col-lg-12 col-form-label required fw-semibold fs-6">Question
                                                     Paper Count
                                                 </label>
-                                                <input type="text" id="total_num_questions" name=labell_num_questions"
-                                                    class="form-control form-control-lg @error('total_num_questions') is-invalid @enderror"
-                                                    placeholder="Question Paper Count" />
-                                                @error('total_num_questions')
+                                                <input type="text" id="qp_count" name="qp_count"
+                                                    class="form-control form-control-lg @error('qp_count') is-invalid @enderror"
+                                                    placeholder="Question Paper Count" value="{{ old('qp_count') }}" />
+                                                @error('qp_count')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>

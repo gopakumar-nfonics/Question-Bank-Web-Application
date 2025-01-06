@@ -18,6 +18,7 @@ class Question extends Model
         'qs_difficulty_level',
         'qs_subject_id',
         'qs_topic_id',
+        'qs_usage_count',
         'created_by',
     ];
 
@@ -34,5 +35,10 @@ class Question extends Model
     public function correctAnswer()
     {
         return $this->belongsTo(QuestionOption::class, 'qs_answer', 'qo_id');
+    }
+
+    public function difficultylevel()
+    {
+        return $this->belongsTo(DifficultyLevel::class, 'qs_difficulty_level');
     }
 }

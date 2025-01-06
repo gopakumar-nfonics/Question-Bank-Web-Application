@@ -10,6 +10,9 @@ use App\Models\Question as Questions;
 use App\Models\QuestionOption;
 use App\Models\QuestionConfig;
 use App\Models\QuestionConfiginfo;
+use App\Models\QuestionPaper;
+use App\Models\QuestionPaperQuestion;
+use App\Jobs\GenerateQuestionPapersJob;
 use Illuminate\Support\Facades\Auth;
 
 class question extends Controller
@@ -19,7 +22,7 @@ class question extends Controller
      */
     public function index()
     {
-        $questions = Questions::with(['subject', 'topic', 'correctAnswer'])->get();
+        $questions = Questions::with(['subject', 'topic', 'correctAnswer','difficultylevel'])->get();
 
         return view('question.index',compact('questions'));
     }
@@ -216,15 +219,7 @@ class question extends Controller
 
 public function configirationlist()
     {
-       /* $questionConfigs = QuestionConfig::with(['details.subject'])
-        ->get()
-        ->map(function ($config) {
-            return [
-                'qt_title' => $config->qt_title,
-                'subjects' => $config->details->pluck('subject.sub_name')->join(', '),
-                'qt_no_of_questions' => $config->qt_no_of_questions,
-            ];
-        });*/
+       
 
         $questionConfigs = QuestionConfig::with(['details.subject', 'details.topic'])
     ->get()
@@ -255,17 +250,11 @@ public function configirationlist()
 
     public function qspgeneration()
     {
+      
+        $pappertemplate = QuestionConfig::all();
+       
 
-        $difficultyLevels = DifficultyLevel::all();
-        $subjects = Subject::all();
-       /* $addedSubjectIds = QuestionConfig::with('subject')
-        ->pluck('qc_subject_id')
-        ->toArray();
-
-    // Fetch subjects that are not in the list of added subjects
-    $subjects = Subject::whereIn('id', $addedSubjectIds)->get();*/
-
-        return view('question.qs_paper_generate',compact('difficultyLevels','subjects'));
+        return view('question.qs_paper_generate',compact('pappertemplate'));
 
     }
 
@@ -277,5 +266,25 @@ public function configirationlist()
 
     return response()->json(['isUnique' => $isUnique]);
 }
+
+public function generateQuestionPaper(Request $request)
+{
+    // Validate input
+    $request->validate([
+        'qp_title' => 'required|string|max:255',
+        'qp_code' => 'required|string|max:255',
+        'qp_template' => 'required|exists:tbl_question_template,id',
+        'qp_count' => 'required|integer|min:1',
+    ]);
+
+    // Dispatch the job to the queue
+    GenerateQuestionPapersJob::dispatch($request->all());
+
+    return back()->with('success', 'Question papers are being generated in the background.');
+}
+
+
+
+
 
 }

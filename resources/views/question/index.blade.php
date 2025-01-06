@@ -52,6 +52,7 @@
 									<th class="min-w-150px">Answer</th>
 									<th class="min-w-150px">Subject</th>
 									<th class="min-w-150px">Topic</th>
+									<th class="min-w-150px">Difficulty Level</th>
 									<th class="min-w-150px text-center">Actions</th>
 								</tr>
 							</thead>
@@ -94,6 +95,13 @@
 										<div class="d-flex align-items-center">
 											<div class="fw-400 d-block fs-6">
                                             {{ ucfirst($question->topic->topic_name) }}
+											</div>
+										</div>
+									</td>
+									<td>
+										<div class="d-flex align-items-center">
+											<div class="fw-400 d-block fs-6">
+                                            {{ ucfirst($question->difficultylevel->difficulty_level) }}
 											</div>
 										</div>
 									</td>
