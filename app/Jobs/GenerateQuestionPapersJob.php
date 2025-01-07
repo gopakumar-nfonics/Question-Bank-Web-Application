@@ -6,12 +6,15 @@ use App\Models\QuestionPaper;
 use App\Models\QuestionConfiginfo;
 use App\Models\QuestionPaperQuestion;
 use App\Models\Question as Questions;
+use App\Models\QuestionOption;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Auth;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\IOFactory;
 
 class GenerateQuestionPapersJob implements ShouldQueue
 {
@@ -38,8 +41,6 @@ class GenerateQuestionPapersJob implements ShouldQueue
     {
         $request = $this->request;
 
-        $globalSelectedQuestionIds = [];
-
         for ($i = 1; $i <= $request['qp_count']; $i++) {
             $qp_code = $this->generateUniqueCode($request['qp_code'], $i);
 
@@ -56,7 +57,8 @@ class GenerateQuestionPapersJob implements ShouldQueue
 
             $this->saveSelectedQuestions($selectedQuestionIds, $questionPaper->qp_id);
 
-            $globalSelectedQuestionIds = array_merge($globalSelectedQuestionIds, $selectedQuestionIds);
+            // Generate the question paper document
+            $this->generateQuestionPaperDoc($questionPaper, $selectedQuestionIds);
         }
     }
 
@@ -114,4 +116,61 @@ class GenerateQuestionPapersJob implements ShouldQueue
 
         Questions::whereIn('qs_id', $selectedQuestionIds)->increment('qs_usage_count');
     }
+
+    private function generateQuestionPaperDoc($questionPaper, $selectedQuestionIds)
+{
+    $phpWord = new PhpWord();
+    $section = $phpWord->addSection();
+
+    // Add the title of the question paper
+    $section->addText(
+        $questionPaper->qp_title, // Title text
+        ['bold' => true, 'size' => 16], // Title styling
+        ['alignment' => 'center'] // Title alignment
+    );
+
+    // Add a line break after the title
+    $section->addTextBreak(2);
+
+    // Fetch the questions from the database
+    $questions = Questions::whereIn('qs_id', $selectedQuestionIds)->get();
+
+    foreach ($questions as $index => $question) {
+        // Add the question text with numbering
+        $section->addText(
+            ($index + 1) . ". " . $question->qs_question,
+            ['size' => 12], // Question styling
+            ['alignment' => 'left'] // Question alignment
+        );
+
+        // Fetch and display the options
+        $options = QuestionOption::where('qo_question_id', $question->qs_id)->get();
+
+        foreach ($options as $key => $option) {
+            $section->addText(
+                chr(65 + $key) . ". " . $option->qo_options, // Option in A, B, C, D format
+                ['size' => 11], // Option styling
+                ['alignment' => 'left', 'indent' => 0.5] // Option alignment with slight indentation
+            );
+        }
+
+        // Add a line break after each question and its options
+        $section->addTextBreak(1);
+    }
+
+    // Generate the file name and ensure the directory exists
+    $directory = storage_path('app/question_papers');
+    if (!file_exists($directory)) {
+        mkdir($directory, 0777, true);
+    }
+
+    $fileName = $directory . '/' . $questionPaper->qp_code . '.docx';
+
+    // Save the document
+    $writer = IOFactory::createWriter($phpWord, 'Word2007');
+    $writer->save($fileName);
+
+    return $fileName; // Optionally return the file path
+}
+
 }
