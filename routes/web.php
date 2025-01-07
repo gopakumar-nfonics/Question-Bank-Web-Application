@@ -31,5 +31,6 @@ Route::get('/qspgeneration', [App\Http\Controllers\resource\question::class, 'qs
 
 Route::post('/check-paper-title-unique', [App\Http\Controllers\resource\question::class, 'checkPaperTitleUnique']);
 Route::post('/generate-question-paper', [App\Http\Controllers\resource\question::class, 'generateQuestionPaper'])->name('question.generateQuestionPaper');
+Route::get('/questionpaper', [App\Http\Controllers\resource\question::class, 'questionpaper'])->name('question.questionpaper');
 
 

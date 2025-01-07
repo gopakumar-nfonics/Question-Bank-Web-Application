@@ -457,7 +457,7 @@
                                 </div>
 
                                 <div data-kt-menu-trigger="click"
-                                    class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('question.index','question.create','question.edit'))) show @endif">
+                                    class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('question.questionpaper','question.qspgeneration'))) show @endif">
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
                                         <span class="menu-icon">
@@ -472,8 +472,8 @@
                                         <!--begin:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('question.index'))) active  @endif"
-                                                href="{{route('question.index')}}">
+                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('question.questionpaper'))) active  @endif"
+                                                href="{{route('question.questionpaper')}}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>

@@ -240,11 +240,6 @@ public function configirationlist()
     });
 
 
-
-
-
-//print_r($questionConfigs);exit();
-
         return view('question.configirations',compact('questionConfigs'));
     }
 
@@ -280,9 +275,17 @@ public function generateQuestionPaper(Request $request)
     // Dispatch the job to the queue
     GenerateQuestionPapersJob::dispatch($request->all());
 
-    return back()->with('success', 'Question papers are being generated in the background.');
+    //return back()->with('success', 'Question papers are being generated in the background.');
+    return redirect()->route('question.questionpaper')->with('success', 'Question papers generated Successfully');
 }
 
+public function questionpaper()
+    {
+       
+        $questionpapper = QuestionPaper::all();
+    
+        return view('question.questionpaper_list',compact('questionpapper'));
+    }
 
 
 
