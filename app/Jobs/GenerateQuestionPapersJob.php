@@ -143,6 +143,8 @@ class GenerateQuestionPapersJob implements ShouldQueue
             ['alignment' => 'left'] // Question alignment
         );
 
+        $section->addTextBreak(1);
+
         // Fetch and display the options
         $options = QuestionOption::where('qo_question_id', $question->qs_id)->get();
 

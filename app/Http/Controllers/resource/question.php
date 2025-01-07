@@ -273,7 +273,7 @@ public function generateQuestionPaper(Request $request)
     ]);
 
     // Dispatch the job to the queue
-    GenerateQuestionPapersJob::dispatch($request->all());
+    GenerateQuestionPapersJob::dispatch($request->all())->delay(now()->addMinute(1));
 
     //return back()->with('success', 'Question papers are being generated in the background.');
     return redirect()->route('question.questionpaper')->with('success', 'Question papers generated Successfully');
