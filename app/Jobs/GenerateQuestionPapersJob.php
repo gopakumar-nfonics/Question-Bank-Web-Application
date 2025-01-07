@@ -45,7 +45,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
             $qp_code = $this->generateUniqueCode($request['qp_code'], $i);
 
             $questionPaper = QuestionPaper::create([
-                'qp_title' => "{$request['qp_title']} {$i}",
+                'qp_title' => $request['qp_title'],
                 'qp_code' => $qp_code,
                 'qp_template' => $request['qp_template'],
                 'created_by' => Auth::id(),
