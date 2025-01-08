@@ -12,7 +12,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
 
@@ -21,6 +20,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $request;
+    protected $user_id;
 
     /**
      * Create a new job instance.
@@ -30,6 +30,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
     public function __construct($request)
     {
         $this->request = $request;
+        $this->user_id = $request['user_id'] ?? null;
     }
 
     /**
@@ -48,7 +49,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
                 'qp_title' => $request['qp_title'],
                 'qp_code' => $qp_code,
                 'qp_template' => $request['qp_template'],
-                'created_by' => Auth::id(),
+                'created_by' => $this->user_id,
             ]);
 
             $templateDetails = QuestionConfiginfo::where('qd_template_id', $request['qp_template'])->get();

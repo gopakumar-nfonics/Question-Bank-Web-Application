@@ -51,7 +51,8 @@
                                 <tr class="fw-bold">
                                     <th class="w-25px">#</th>
                                     <th class="min-w-200px">Code</th>
-                                    <th class="min-w-350px">Title</th>
+                                    <th class="min-w-300px">Title</th>
+                                    <th class="min-w-150px">Question Paper</th>
                                     <th class="min-w-100px text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -86,6 +87,18 @@
 											</div>
 										</div>
 									</td>
+                                    <td>
+										<div class="d-flex align-items-center">
+											<div class="d-flex justify-content-start flex-column">
+												<div class="fw-400 d-block fs-6">
+                                                 <a href="{{ url('/download/question-paper/' . $papper['qp_code'] . '.docx') }}"
+                                                    class="menu-link px-3"> <i class="fa fa-download" style="color: #056e7b;" aria-hidden="true"></i>
+                                                    Download</a>
+												</div>
+											</div>
+										</div>
+									</td>
+
 
                                     <td class="text-center">
                                         <a href="#" class="btn btn-sm btn-light btn-active-light-primary"
