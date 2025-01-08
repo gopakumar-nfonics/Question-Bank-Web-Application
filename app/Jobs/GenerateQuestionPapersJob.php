@@ -80,6 +80,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
     foreach ($templateDetails as $detail) {
         // Fetch unused questions excluding already selected ones.
         $unusedQuestions = Questions::where('qs_subject_id', $detail->qd_subject_id)
+            ->where('qs_topic_id', $detail->qd_topic_id)
             ->where('qs_difficulty_level', $detail->qd_difficulty_level)
             ->where('qs_usage_count', 0)
             ->whereNotIn('qs_id', $selectedQuestionIds) // Exclude already selected questions
@@ -93,6 +94,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
             $neededQuestions = $detail->qd_no_of_questions - count($unusedQuestions);
 
             $leastUsedQuestions = Questions::where('qs_subject_id', $detail->qd_subject_id)
+                ->where('qs_topic_id', $detail->qd_topic_id)
                 ->where('qs_difficulty_level', $detail->qd_difficulty_level)
                 ->whereNotIn('qs_id', array_merge($selectedQuestionIds, $unusedQuestions)) // Exclude already selected
                 ->orderBy('qs_usage_count', 'asc')
