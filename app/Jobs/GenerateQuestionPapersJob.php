@@ -130,45 +130,84 @@ class GenerateQuestionPapersJob implements ShouldQueue
     $phpWord = new PhpWord();
     $section = $phpWord->addSection();
 
-    // Add the title of the question paper
+    // Title of the question paper
     $section->addText(
-        $questionPaper->qp_title, // Title text
-        ['bold' => true, 'size' => 16], // Title styling
-        ['alignment' => 'center'] // Title alignment
+        $questionPaper->qp_title,
+        ['bold' => true, 'size' => 16],
+        ['alignment' => 'center']
     );
 
-    // Add a line break after the title
     $section->addTextBreak(2);
 
-    // Fetch the questions from the database
+    // Fetch questions from the database
     $questions = Questions::whereIn('qs_id', $selectedQuestionIds)->get();
 
     foreach ($questions as $index => $question) {
-        // Add the question text with numbering
-        $section->addText(
-            ($index + 1) . ". " . $question->qs_question,
-            ['size' => 12], // Question styling
-            ['alignment' => 'left'] // Question alignment
-        );
+        $topic = $question->topic()->first();
+        $subject = $question->subject()->first();
+        $difficultylevel = $question->difficultylevel()->first();
 
-        $section->addTextBreak(1);
+        // Create table for each question
+        $table = $section->addTable([
+            'borderSize' => 6,
+            'borderColor' => '000000',
+            'cellMargin' => 80,
+        ]);
 
-        // Fetch and display the options
+        $table->addRow(null, ['cantSplit' => true]);
+        $table->addCell(3000)->addText("QID", ['bold' => true, 'size' => 12]);
+        $table->addCell(3000)->addText("Test Section", ['bold' => true, 'size' => 12]);
+        $table->addCell(3000)->addText("Main Topic", ['bold' => true, 'size' => 12]);
+        $table->addCell(3000)->addText("Sub Topic", ['bold' => true, 'size' => 12]);
+        $table->addCell(4000)->addText("Difficulty Level", ['bold' => true, 'size' => 12]);
+
+        // Add question metadata
+        $table->addRow(null, ['cantSplit' => true]);
+        $table->addCell(3000)->addText($question->qs_id);
+        $table->addCell(3000)->addText($subject->sub_name ?? '');
+        $table->addCell(3000)->addText($topic->topic_name ?? '');
+        $table->addCell(3000)->addText(''); // Replace with actual subtopic if available
+        $table->addCell(3000)->addText($difficultylevel->difficulty_level);
+
+
+        // Add question row with label and value separated by a border
+        $table->addRow(null, ['cantSplit' => true]);
+        $table->addCell(3000, ['borderRightSize' => 6])->addText("Question", ['bold' => true,'size' => 12]);
+        //$table->addCell(8000)->addText($question->qs_question);
+        $table->addCell(10000, ['gridSpan' => 4])->addText($question->qs_question);
+
+        // Add options with label-value borders
         $options = QuestionOption::where('qo_question_id', $question->qs_id)->get();
 
         foreach ($options as $key => $option) {
-            $section->addText(
-                chr(65 + $key) . ". " . $option->qo_options, // Option in A, B, C, D format
-                ['size' => 11], // Option styling
-                ['alignment' => 'left', 'indent' => 0.5] // Option alignment with slight indentation
-            );
+            $table->addRow(null, ['cantSplit' => true]);
+            $table->addCell(3000, ['borderRightSize' => 6])->addText("Option " . chr(65 + $key), ['bold' => true,'size' => 12]);
+            //$table->addCell(8000)->addText($option->qo_options);
+            $table->addCell(10000, ['gridSpan' => 4])->addText($option->qo_options);
         }
 
-        // Add a line break after each question and its options
+        // Add correct answer row
+        $table->addRow(null, ['cantSplit' => true]);
+        $table->addCell(3000, ['borderRightSize' => 6])->addText("Correct Answer", ['bold' => true,'size' => 12]);
+        $table->addCell(10000, ['gridSpan' => 4])->addText(
+            chr(65 + $options->pluck('qo_id')->search($question->qs_answer))
+        );
+
+        // Add Solution/Workout/Explanation row
+        $table->addRow(null, ['cantSplit' => true]);
+        $table->addCell(3000, ['borderRightSize' => 6])->addText("Solution/Workout/Explanation", ['bold' => true,'size' => 12]);
+        $table->addCell(10000, ['gridSpan' => 4])->addText(""); // Placeholder for explanation
+
+        // Add References row
+        $table->addRow(null, ['cantSplit' => true]);
+        $table->addCell(3000, ['borderRightSize' => 6])->addText("Reference(s)", ['bold' => true,'size' => 12]);
+        $table->addCell(10000, ['gridSpan' => 4])->addText(""); // Placeholder for references
+
+        // Add space between questions
         $section->addTextBreak(1);
     }
 
-    // Generate the file name and ensure the directory exists
+    // Save the document
     $directory = storage_path('app/question_papers');
     if (!file_exists($directory)) {
         mkdir($directory, 0777, true);
@@ -176,11 +215,13 @@ class GenerateQuestionPapersJob implements ShouldQueue
 
     $fileName = $directory . '/' . $questionPaper->qp_code . '.docx';
 
-    // Save the document
     $writer = IOFactory::createWriter($phpWord, 'Word2007');
     $writer->save($fileName);
 
-    return $fileName; // Optionally return the file path
+    return $fileName;
 }
+
+    
+
 
 }
