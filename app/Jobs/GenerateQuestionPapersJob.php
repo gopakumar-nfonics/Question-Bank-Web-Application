@@ -74,37 +74,42 @@ class GenerateQuestionPapersJob implements ShouldQueue
     }
 
     private function selectQuestionsWithRepetition($templateDetails)
-    {
-        $selectedQuestionIds = [];
+{
+    $selectedQuestionIds = []; // To store all selected question IDs for this paper.
 
-        foreach ($templateDetails as $detail) {
-            $unusedQuestions = Questions::where('qs_subject_id', $detail->qd_subject_id)
+    foreach ($templateDetails as $detail) {
+        // Fetch unused questions excluding already selected ones.
+        $unusedQuestions = Questions::where('qs_subject_id', $detail->qd_subject_id)
+            ->where('qs_difficulty_level', $detail->qd_difficulty_level)
+            ->where('qs_usage_count', 0)
+            ->whereNotIn('qs_id', $selectedQuestionIds) // Exclude already selected questions
+            ->inRandomOrder()
+            ->limit($detail->qd_no_of_questions)
+            ->pluck('qs_id')
+            ->toArray();
+
+        // If not enough unused questions, fetch the least used ones.
+        if (count($unusedQuestions) < $detail->qd_no_of_questions) {
+            $neededQuestions = $detail->qd_no_of_questions - count($unusedQuestions);
+
+            $leastUsedQuestions = Questions::where('qs_subject_id', $detail->qd_subject_id)
                 ->where('qs_difficulty_level', $detail->qd_difficulty_level)
-                ->where('qs_usage_count', 0)
-                ->inRandomOrder()
-                ->limit($detail->qd_no_of_questions)
+                ->whereNotIn('qs_id', array_merge($selectedQuestionIds, $unusedQuestions)) // Exclude already selected
+                ->orderBy('qs_usage_count', 'asc')
+                ->limit($neededQuestions)
                 ->pluck('qs_id')
                 ->toArray();
 
-            if (count($unusedQuestions) < $detail->qd_no_of_questions) {
-                $neededQuestions = $detail->qd_no_of_questions - count($unusedQuestions);
-
-                $leastUsedQuestions = Questions::where('qs_subject_id', $detail->qd_subject_id)
-                    ->where('qs_difficulty_level', $detail->qd_difficulty_level)
-                    ->whereNotIn('qs_id', $unusedQuestions)
-                    ->orderBy('qs_usage_count', 'asc')
-                    ->limit($neededQuestions)
-                    ->pluck('qs_id')
-                    ->toArray();
-
-                $unusedQuestions = array_merge($unusedQuestions, $leastUsedQuestions);
-            }
-
-            $selectedQuestionIds = array_merge($selectedQuestionIds, $unusedQuestions);
+            $unusedQuestions = array_merge($unusedQuestions, $leastUsedQuestions);
         }
 
-        return $selectedQuestionIds;
+        // Add selected questions to the global list.
+        $selectedQuestionIds = array_merge($selectedQuestionIds, $unusedQuestions);
     }
+
+    return $selectedQuestionIds;
+}
+
 
     private function saveSelectedQuestions($selectedQuestionIds, $paperId)
     {
