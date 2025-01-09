@@ -39,39 +39,49 @@ class GenerateQuestionPapersJob implements ShouldQueue
      * @return void
      */
     public function handle()
-    {
-        $request = $this->request;
+{
+    $request = $this->request;
 
-        for ($i = 1; $i <= $request['qp_count']; $i++) {
-            $qp_code = $this->generateUniqueCode($request['qp_code'], $i);
+    // Get the next incrementing number for `qp_code`
+    $lastQuestionPaper = QuestionPaper::where('qp_code', 'LIKE', 'AMQP%')
+        ->orderBy('created_at', 'desc')
+        ->first();
 
-            $questionPaper = QuestionPaper::create([
-                'qp_title' => $request['qp_title'],
-                'qp_code' => $qp_code,
-                'qp_template' => $request['qp_template'],
-                'created_by' => $this->user_id,
-            ]);
+    // Extract the numeric part of the `qp_code` and increment it
+    $nextCount = $lastQuestionPaper ? ((int)substr($lastQuestionPaper->qp_code, 4, 5)) + 1 : 1;
 
-            $templateDetails = QuestionConfiginfo::where('qd_template_id', $request['qp_template'])->get();
+    for ($i = 1; $i <= $request['qp_count']; $i++) {
+        $qp_code = $this->generateUniqueCode('AMQP', $i, $nextCount, $request['qp_count']);
 
-            $selectedQuestionIds = $this->selectQuestionsWithRepetition($templateDetails);
+        $questionPaper = QuestionPaper::create([
+            'qp_title' => $request['qp_title'],
+            'qp_code' => $qp_code,
+            'qp_template' => $request['qp_template'],
+            'created_by' => $this->user_id,
+        ]);
 
-            $this->saveSelectedQuestions($selectedQuestionIds, $questionPaper->qp_id);
+        $templateDetails = QuestionConfiginfo::where('qd_template_id', $request['qp_template'])->get();
 
-            // Generate the question paper document
-            $this->generateQuestionPaperDoc($questionPaper, $selectedQuestionIds);
-        }
+        $selectedQuestionIds = $this->selectQuestionsWithRepetition($templateDetails);
+
+        $this->saveSelectedQuestions($selectedQuestionIds, $questionPaper->qp_id);
+
+        // Generate the question paper document
+        $this->generateQuestionPaperDoc($questionPaper, $selectedQuestionIds);
+    }
+}
+
+    private function generateUniqueCode($baseCode, $index, $currentCount, $totalCount)
+{
+    $formattedBaseCode = $baseCode . str_pad($currentCount, 5, '0', STR_PAD_LEFT);
+
+    // Append `_index` only if total count is greater than 1
+    if ($totalCount > 1) {
+        $formattedBaseCode .= "_{$index}";
     }
 
-    private function generateUniqueCode($baseCode, $index)
-    {
-        do {
-            $randomNumber = random_int(1, 100);
-            $qp_code = "{$baseCode}_{$index}_{$randomNumber}";
-        } while (QuestionPaper::where('qp_code', $qp_code)->exists());
-
-        return $qp_code;
-    }
+    return $formattedBaseCode;
+}
 
     private function selectQuestionsWithRepetition($templateDetails)
 {
@@ -132,9 +142,9 @@ class GenerateQuestionPapersJob implements ShouldQueue
 
     // Title of the question paper
     $section->addText(
-        $questionPaper->qp_title,
+        $questionPaper->qp_code.' : '.$questionPaper->qp_title,
         ['bold' => true, 'size' => 16],
-        ['alignment' => 'center']
+        ['alignment' => 'left']
     );
 
     $section->addTextBreak(2);

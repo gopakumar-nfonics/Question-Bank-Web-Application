@@ -247,9 +247,18 @@ public function configirationlist()
     {
       
         $pappertemplate = QuestionConfig::all();
+
+        $lastQuestionPaper = QuestionPaper::where('qp_code', 'LIKE', 'AMQP%')
+        ->orderBy('created_at', 'desc')
+        ->first();
+
+    // Determine the next base code
+    $nextCode = $lastQuestionPaper
+        ? 'AMQP' . str_pad(((int)substr($lastQuestionPaper->qp_code, 4, 5)) + 1, 5, '0', STR_PAD_LEFT)
+        : 'AMQP00001';
        
 
-        return view('question.qs_paper_generate',compact('pappertemplate'));
+        return view('question.qs_paper_generate',compact('pappertemplate','nextCode'));
 
     }
 

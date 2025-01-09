@@ -59,7 +59,7 @@
                                                 </label>
                                                 <input type="text" id="qp_code" name="qp_code"
                                                     class="form-control form-control-lg @error('qp_code') is-invalid @enderror"
-                                                    placeholder="Paper Code" value="{{ old('qp_code') }}" />
+                                                    placeholder="Paper Code" value="{{ $nextCode }}" readonly />
                                                 @error('qp_code')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
@@ -99,7 +99,7 @@
                                                     class="col-lg-12 col-form-label required fw-semibold fs-6">Question
                                                     Paper Count
                                                 </label>
-                                                <input type="text" id="qp_count" name="qp_count"
+                                                <input type="number" id="qp_count" name="qp_count"
                                                     class="form-control form-control-lg @error('qp_count') is-invalid @enderror"
                                                     placeholder="Question Paper Count" value="{{ old('qp_count') }}" />
                                                 @error('qp_count')
