@@ -20,7 +20,7 @@
             <!--end::Page title-->
             <!--begin::Button-->
             <div class="card-toolbar">
-            
+
                 <a href="{{ route('question.qspgeneration') }}" class="btn btn-sm btn-primary">
                     Generate
                 </a>
@@ -51,12 +51,12 @@
                             <thead>
                                 <tr class="fw-bold">
                                     <th class="w-25px no-sort">#</th>
-                                    <th class="w-25px no-sort" >
+                                    <th class="w-25px no-sort">
                                         <input type="checkbox" class="papper-check form-check-input" id="select-all">
                                     </th>
                                     <th class="min-w-200px">Code</th>
                                     <th class="min-w-300px">Title</th>
-                                    <th class="min-w-150px">Generated at</th>
+                                    <th class="min-w-150px">Generated On</th>
                                     <th class="min-w-100px text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -65,7 +65,7 @@
                             <tbody>
                                 @forelse($questionpapper as $key => $papper)
                                 <tr>
-                                    
+
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
@@ -74,7 +74,8 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <input type="checkbox" class="papper-check form-check-input select-paper" data-qp-code="{{ $papper['qp_code'] }}">
+                                        <input type="checkbox" class="papper-check form-check-input select-paper"
+                                            data-qp-code="{{ $papper['qp_code'] }}">
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
@@ -126,7 +127,8 @@
                                             </div>
 
                                             <div class="menu-item px-3">
-                                                <a href="{{ url('/download/question-paper/' . $papper['qp_code'] . '.docx') }}" class="menu-link px-3">Download</a>
+                                                <a href="{{ url('/download/question-paper/' . $papper['qp_code'] . '.docx') }}"
+                                                    class="menu-link px-3">Download</a>
                                             </div>
                                             <!--end::Menu item-->
                                         </div>
@@ -158,108 +160,104 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
-    $(document).ready(function() {
-        $('#subjecttable').DataTable({
-            "iDisplayLength": 10,
-            "searching": true,
-            "recordsTotal": 3615,
-            "pagingType": "full_numbers",
-            "columnDefs": [
-            {
-                "targets": "_all",
-                "orderable": false
-            }
-            ],
-            
-            dom: '<"d-flex justify-content-between"<"left-controls"l><"center-controls"c><"right-controls"f>>tip'
-            
-        });
+$(document).ready(function() {
+    $('#subjecttable').DataTable({
+        "iDisplayLength": 10,
+        "searching": true,
+        "recordsTotal": 3615,
+        "pagingType": "full_numbers",
+        "columnDefs": [{
+            "targets": "_all",
+            "orderable": false
+        }],
 
-        $("div.center-controls").html(`
+        dom: '<"d-flex justify-content-between"<"left-controls"l><"center-controls"c><"right-controls"f>>tip'
+
+    });
+
+    $("div.center-controls").html(`
         <button id="download-selected" class="btn btn-sm btn-primary" onclick="downloadSelected()" style="display: none;">
             Download Question Paper
         </button>
     `);
-    });
+});
 </script>
 <script>
-    function removeSub(subid) {
-        swal({
-                title: "Are you sure?",
-                text: "You want to remove this subject",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    $.ajax({
-                        url: "/subject/" + subid,
-                        type: 'DELETE', // Use DELETE HTTP method
-                        data: {
-                            _token: '{{ csrf_token() }}' // Include the CSRF token for security
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                swal(response.success, {
-                                    icon: "success",
-                                    buttons: false,
-                                });
-                                setTimeout(() => {
-                                    location.reload();
-                                }, 1000);
-                            } else {
-                                swal(response.error || 'Something went wrong.', {
-                                    icon: "warning",
-                                    buttons: false,
-                                });
-                                setTimeout(() => {
-                                    location.reload();
-                                }, 1000);
-                            }
-                        },
-                        error: function(xhr) {
-                            swal('Error: Something went wrong.', {
-                                icon: "error",
-                            }).then(() => {
-                                location.reload();
+function removeSub(subid) {
+    swal({
+            title: "Are you sure?",
+            text: "You want to remove this subject",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: "/subject/" + subid,
+                    type: 'DELETE', // Use DELETE HTTP method
+                    data: {
+                        _token: '{{ csrf_token() }}' // Include the CSRF token for security
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            swal(response.success, {
+                                icon: "success",
+                                buttons: false,
                             });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
+                        } else {
+                            swal(response.error || 'Something went wrong.', {
+                                icon: "warning",
+                                buttons: false,
+                            });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
                         }
-                    });
-                }
-            });
-    }
+                    },
+                    error: function(xhr) {
+                        swal('Error: Something went wrong.', {
+                            icon: "error",
+                        }).then(() => {
+                            location.reload();
+                        });
+                    }
+                });
+            }
+        });
+}
 </script>
 <script>
 $(document).ready(function() {
-    
+
     $('.select-paper').change(function() {
         toggleDownloadButton();
     });
 
-    
+
     $('#select-all').change(function() {
         var isChecked = $(this).prop('checked');
-        
-        
+
+
         $('.select-paper').prop('checked', isChecked);
-        
-        toggleDownloadButton();  
+
+        toggleDownloadButton();
     });
 
 
-function toggleDownloadButton() {
-    if ($('.select-paper:checked').length > 0) {
-        $('#download-selected').show();
-    } else {
-        $('#download-selected').hide();
+    function toggleDownloadButton() {
+        if ($('.select-paper:checked').length > 0) {
+            $('#download-selected').show();
+        } else {
+            $('#download-selected').hide();
+        }
     }
-}
 
-    
+
 });
-
-
 </script>
 
 <script>
