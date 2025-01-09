@@ -150,7 +150,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
     $section->addTextBreak(2);
 
     // Fetch questions from the database
-    $questions = Questions::whereIn('qs_id', $selectedQuestionIds)->get();
+    $questions = Questions::whereIn('qs_id', $selectedQuestionIds)->orderBy('qs_subject_id')->get();
 
     foreach ($questions as $index => $question) {
         $topic = $question->topic()->first();
