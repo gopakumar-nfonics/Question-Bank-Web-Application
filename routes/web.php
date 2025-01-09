@@ -42,3 +42,8 @@ Route::get('/download/question-paper/{filename}', function ($filename) {
     return response()->download($path);
 });
 
+Route::post('/bulk-download', [App\Http\Controllers\resource\question::class, 'bulkDownload'])->name('bulk-download');
+
+
+
+

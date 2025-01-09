@@ -71,7 +71,7 @@
 										<div class="d-flex align-items-center">
 											<div class="d-flex justify-content-start flex-column">
 												<div class="fw-400 d-block fs-6">
-													{{ucfirst($question->qs_question)}}
+												{!!ucfirst($question->qs_question)!!}
 												</div>
 											</div>
 										</div>
@@ -80,7 +80,7 @@
 									<td>
 										<div class="d-flex align-items-center">
 											<div class="fw-400 d-block fs-6">
-                                            {{ ucfirst($question->correctAnswer->qo_options) }}
+                                            {!! ucfirst($question->correctAnswer->qo_options) !!}
 											</div>
 										</div>
 									</td>

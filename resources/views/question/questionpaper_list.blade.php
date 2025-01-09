@@ -20,8 +20,9 @@
             <!--end::Page title-->
             <!--begin::Button-->
             <div class="card-toolbar">
+            <button id="download-selected" style="display: none;" class="btn btn-sm btn-primary" onclick="downloadSelected()">Download Question Paper</button>
                 <a href="{{ route('question.qspgeneration') }}" class="btn btn-sm btn-primary">
-                Generate
+                    Generate
                 </a>
             </div>
             <!--end::Button-->
@@ -49,10 +50,13 @@
                             <!--begin::Table head-->
                             <thead>
                                 <tr class="fw-bold">
-                                    <th class="w-25px">#</th>
+                                    <th class="w-25px no-sort">#</th>
+                                    <th class="w-25px no-sort" >
+                                        <input type="checkbox" class="form-check-input" id="select-all">
+                                    </th>
                                     <th class="min-w-200px">Code</th>
                                     <th class="min-w-300px">Title</th>
-                                    <th class="min-w-150px">Question Paper</th>
+                                    <th class="min-w-150px">Generated at</th>
                                     <th class="min-w-100px text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -61,43 +65,46 @@
                             <tbody>
                                 @forelse($questionpapper as $key => $papper)
                                 <tr>
+                                    
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
                                                 {{ $key+1 }}
                                             </div>
                                         </div>
-                                        <td>
-										<div class="d-flex align-items-center">
-											
-											<div class="d-flex justify-content-start flex-column">
-												<div class="fw-400 d-block fs-6">
-                                                {{ucfirst($papper['qp_code'])}}
-												</div>
-											</div>
-										</div>
-									</td>
+                                    </td>
                                     <td>
-										<div class="d-flex align-items-center">
-											
-											<div class="d-flex justify-content-start flex-column">
-												<div class="fw-400 d-block fs-6">
-                                                {{ucfirst($papper['qp_title'])}}
-												</div>
-											</div>
-										</div>
-									</td>
+                                        <input type="checkbox" class="form-check-input select-paper" data-qp-code="{{ $papper['qp_code'] }}">
+                                    </td>
                                     <td>
-										<div class="d-flex align-items-center">
-											<div class="d-flex justify-content-start flex-column">
-												<div class="fw-400 d-block fs-6">
-                                                 <a href="{{ url('/download/question-paper/' . $papper['qp_code'] . '.docx') }}"
-                                                    class="menu-link px-3"> <i class="fa fa-download" style="color: #056e7b;" aria-hidden="true"></i>
-                                                    Download</a>
-												</div>
-											</div>
-										</div>
-									</td>
+                                        <div class="d-flex align-items-center">
+
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <div class="fw-400 d-block fs-6">
+                                                    {{ucfirst($papper['qp_code'])}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <div class="fw-400 d-block fs-6">
+                                                    {{ucfirst($papper['qp_title'])}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <div class="fw-400 d-block fs-6">
+                                                    {{ \Carbon\Carbon::parse($papper['created_at'])->format('d-M-Y') }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
 
 
                                     <td class="text-center">
@@ -116,6 +123,10 @@
                                             <div class="menu-item px-3">
                                                 <a href="javascript:void(0)" class="menu-link px-3"
                                                     data-kt-customer-table-filter="delete_row">Delete</a>
+                                            </div>
+
+                                            <div class="menu-item px-3">
+                                                <a href="{{ url('/download/question-paper/' . $papper['qp_code'] . '.docx') }}" class="menu-link px-3">Download</a>
                                             </div>
                                             <!--end::Menu item-->
                                         </div>
@@ -147,62 +158,139 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    $('#subjecttable').DataTable({
-        "iDisplayLength": 10,
-        "searching": true,
-        "recordsTotal": 3615,
-        "pagingType": "full_numbers"
+    $(document).ready(function() {
+        $('#subjecttable').DataTable({
+            "iDisplayLength": 10,
+            "searching": true,
+            "recordsTotal": 3615,
+            "pagingType": "full_numbers",
+            "columnDefs": [
+            {
+                "targets": "_all",
+                "orderable": false
+            }
+            ]
+        });
     });
-});
 </script>
 <script>
-function removeSub(subid) {
-    swal({
-            title: "Are you sure?",
-            text: "You want to remove this subject",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                $.ajax({
-                    url: "/subject/" + subid,
-                    type: 'DELETE', // Use DELETE HTTP method
-                    data: {
-                        _token: '{{ csrf_token() }}' // Include the CSRF token for security
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            swal(response.success, {
-                                icon: "success",
-                                buttons: false,
-                            });
-                            setTimeout(() => {
+    function removeSub(subid) {
+        swal({
+                title: "Are you sure?",
+                text: "You want to remove this subject",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: "/subject/" + subid,
+                        type: 'DELETE', // Use DELETE HTTP method
+                        data: {
+                            _token: '{{ csrf_token() }}' // Include the CSRF token for security
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                swal(response.success, {
+                                    icon: "success",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            } else {
+                                swal(response.error || 'Something went wrong.', {
+                                    icon: "warning",
+                                    buttons: false,
+                                });
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            }
+                        },
+                        error: function(xhr) {
+                            swal('Error: Something went wrong.', {
+                                icon: "error",
+                            }).then(() => {
                                 location.reload();
-                            }, 1000);
-                        } else {
-                            swal(response.error || 'Something went wrong.', {
-                                icon: "warning",
-                                buttons: false,
                             });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1000);
                         }
-                    },
-                    error: function(xhr) {
-                        swal('Error: Something went wrong.', {
-                            icon: "error",
-                        }).then(() => {
-                            location.reload();
-                        });
-                    }
+                    });
+                }
+            });
+    }
+</script>
+<script>
+$(document).ready(function() {
+    
+    $('.select-paper').change(function() {
+        toggleDownloadButton();
+    });
+
+    
+    $('#select-all').change(function() {
+        var isChecked = $(this).prop('checked');
+        
+        
+        $('.select-paper').prop('checked', isChecked);
+        
+        toggleDownloadButton();  
+    });
+
+
+function toggleDownloadButton() {
+    if ($('.select-paper:checked').length > 0) {
+        $('#download-selected').show();
+    } else {
+        $('#download-selected').hide();
+    }
+}
+
+    
+});
+
+
+</script>
+
+<script>
+function downloadSelected() {
+    var selectedFiles = [];
+    $('.select-paper:checked').each(function() {
+        selectedFiles.push($(this).data('qp-code'));
+    });
+
+    if (selectedFiles.length === 0) {
+        alert('Please select at least one question paper to download.');
+        return;
+    }
+
+    $.ajax({
+        url: '{{ route("bulk-download") }}',
+        method: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',
+            files: selectedFiles
+        },
+        success: function(response) {
+            if (response.success) {
+                response.files.forEach(function(file) {
+                    var link = document.createElement('a');
+                    link.href = file.url;
+                    link.target = '_blank';
+                    link.download = file.name;
+                    link.click();
                 });
+            } else {
+                alert(response.message || 'Something went wrong.');
             }
-        });
+        },
+        error: function() {
+            alert('Error occurred while downloading files.');
+        }
+    });
 }
 </script>
+
 
 @endsection

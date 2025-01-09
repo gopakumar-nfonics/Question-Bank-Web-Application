@@ -295,12 +295,39 @@ public function generateQuestionPaper(Request $request)
 public function questionpaper()
     {
        
-        $questionpapper = QuestionPaper::all();
+        //$questionpapper = QuestionPaper::all();
+        $questionpapper = QuestionPaper::orderBy('qp_id', 'desc')->get();
+
     
         return view('question.questionpaper_list',compact('questionpapper'));
     }
 
+    public function bulkDownload(Request $request)
+    {
+        $files = $request->input('files', []);
 
+        if (empty($files)) {
+            return response()->json(['success' => false, 'message' => 'No files selected.']);
+        }
+
+        $responseFiles = [];
+        foreach ($files as $filename) {
+            $filePath = storage_path('app/question_papers/' . $filename . '.docx');
+            
+            if (file_exists($filePath)) {
+                $responseFiles[] = [
+                    'url' => url('/download/question-paper/' . $filename . '.docx'),
+                    'name' => $filename . '.docx'
+                ];
+            }
+        }
+
+        if (empty($responseFiles)) {
+            return response()->json(['success' => false, 'message' => 'No valid files found.']);
+        }
+
+        return response()->json(['success' => true, 'files' => $responseFiles]);
+    }
 
 
 }
