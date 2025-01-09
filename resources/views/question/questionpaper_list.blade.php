@@ -52,7 +52,7 @@
                                 <tr class="fw-bold">
                                     <th class="w-25px no-sort">#</th>
                                     <th class="w-25px no-sort" >
-                                        <input type="checkbox" class="form-check-input" id="select-all">
+                                        <input type="checkbox" class="papper-check form-check-input" id="select-all">
                                     </th>
                                     <th class="min-w-200px">Code</th>
                                     <th class="min-w-300px">Title</th>
@@ -74,7 +74,7 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <input type="checkbox" class="form-check-input select-paper" data-qp-code="{{ $papper['qp_code'] }}">
+                                        <input type="checkbox" class="papper-check form-check-input select-paper" data-qp-code="{{ $papper['qp_code'] }}">
                                     </td>
                                     <td>
                                         <div class="d-flex align-items-center">
