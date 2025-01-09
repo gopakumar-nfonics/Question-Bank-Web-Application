@@ -77,7 +77,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
 
     // Append `_index` only if total count is greater than 1
     if ($totalCount > 1) {
-        $formattedBaseCode .= "_{$index}";
+        $formattedBaseCode .= "-{$index}";
     }
 
     return $formattedBaseCode;
