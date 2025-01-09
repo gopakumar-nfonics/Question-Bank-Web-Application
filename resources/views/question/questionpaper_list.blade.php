@@ -20,7 +20,7 @@
             <!--end::Page title-->
             <!--begin::Button-->
             <div class="card-toolbar">
-            <button id="download-selected" style="display: none;" class="btn btn-sm btn-primary" onclick="downloadSelected()">Download Question Paper</button>
+            
                 <a href="{{ route('question.qspgeneration') }}" class="btn btn-sm btn-primary">
                     Generate
                 </a>
@@ -169,8 +169,17 @@
                 "targets": "_all",
                 "orderable": false
             }
-            ]
+            ],
+            
+            dom: '<"d-flex justify-content-between"<"left-controls"l><"center-controls"c><"right-controls"f>>tip'
+            
         });
+
+        $("div.center-controls").html(`
+        <button id="download-selected" class="btn btn-sm btn-primary" onclick="downloadSelected()" style="display: none;">
+            Download Question Paper
+        </button>
+    `);
     });
 </script>
 <script>
