@@ -143,11 +143,15 @@ class GenerateQuestionPapersJob implements ShouldQueue
     // Title of the question paper
     $section->addText(
         $questionPaper->qp_code.' : '.$questionPaper->qp_title,
-        ['bold' => true, 'size' => 16],
-        ['alignment' => 'left']
+        ['bold' => true, 'size' => 14],
+        ['alignment' => 'left','spaceAfter' => 150,
+        'indentation' => [
+            'left' => 100,     // Left indentation (in twips; 720 = 0.5 inch)
+            'right' => 0,      // No right indentation
+        ],]
     );
 
-    $section->addTextBreak(2);
+    $section->addTextBreak(0);
 
     // Fetch questions from the database
     $questions = Questions::whereIn('qs_id', $selectedQuestionIds)->orderBy('qs_subject_id')->get();
