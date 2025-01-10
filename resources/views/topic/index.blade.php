@@ -20,7 +20,7 @@
 			<!--begin::Button-->
 			<div class="card-toolbar">
 				<a href="{{ route('topic.create') }}" class="btn btn-sm btn-primary">
-					Add
+					Add Topic
 				</a>
 			</div>
 			<!--end::Button-->
