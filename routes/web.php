@@ -44,6 +44,9 @@ Route::get('/download/question-paper/{filename}', function ($filename) {
 
 Route::post('/bulk-download', [App\Http\Controllers\resource\question::class, 'bulkDownload'])->name('bulk-download');
 
+Route::resource('user',\App\Http\Controllers\resource\user::class);
+Route::post('/user/deleteUser', [\App\Http\Controllers\resource\user::class, 'deleteUser'])->name('user.deleteUser');
+
 
 
 
