@@ -56,7 +56,6 @@
                                 <h3 class="card-title align-items-start flex-column text-white pt-15">
                                     <span class="fw-bold fs-1 mb-3">Curriculum Summary</span>
                                     <div class="fs-4 text-white">
-                                        <span class="opacity-75">You have</span>
                                         <span class="position-relative d-inline-block">
                                             <a href="../../demo1/dist/pages/user-profile/projects.html"
                                                 class="link-white opacity-75-hover fw-bold d-block mb-1">2224 </a>
@@ -65,8 +64,8 @@
                                                 class="position-absolute opacity-50 bottom-0 start-0 border-2 border-body border-bottom w-100"></span>
                                             <!--end::Separator-->
                                         </span>
-                                        <span class="opacity-75">unutilized
-                                            questions</span>
+                                        <span class="opacity-75">Unutilized
+                                            Questions</span>
                                     </div>
                                 </h3>
                                 <!--end::Title-->
@@ -95,7 +94,7 @@
                                                 <div class="m-0">
                                                     <!--begin::Number-->
                                                     <span
-                                                        class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">37</span>
+                                                        class="text-gray-700 fw-bolder d-block fs-2x lh-1 ls-n1 mb-1">37</span>
                                                     <!--end::Number-->
                                                     <!--begin::Desc-->
                                                     <span class="text-gray-500 fw-semibold fs-6">
@@ -123,7 +122,7 @@
                                                 <div class="m-0">
                                                     <!--begin::Number-->
                                                     <span
-                                                        class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">85</span>
+                                                        class="text-gray-700 fw-bolder d-block fs-2x lh-1 ls-n1 mb-1">85</span>
                                                     <!--end::Number-->
                                                     <!--begin::Desc-->
                                                     <span class="text-gray-500 fw-semibold fs-6">Topics</span>
@@ -149,7 +148,7 @@
                                                 <div class="m-0">
                                                     <!--begin::Number-->
                                                     <span
-                                                        class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">15,247</span>
+                                                        class="text-gray-700 fw-bolder d-block fs-2x lh-1 ls-n1 mb-1">15,247</span>
                                                     <!--end::Number-->
                                                     <!--begin::Desc-->
                                                     <span class="text-gray-500 fw-semibold fs-6">Questions</span>
@@ -175,7 +174,7 @@
                                                 <div class="m-0">
                                                     <!--begin::Number-->
                                                     <span
-                                                        class="text-gray-700 fw-bolder d-block fs-2qx lh-1 ls-n1 mb-1">82</span>
+                                                        class="text-gray-700 fw-bolder d-block fs-2x lh-1 ls-n1 mb-1">82</span>
                                                     <!--end::Number-->
                                                     <!--begin::Desc-->
                                                     <span class="text-gray-500 fw-semibold fs-6">Configurations</span>
@@ -209,7 +208,7 @@
                                 </h3>
                                 <!--begin::Toolbar-->
                                 <div class="card-toolbar">
-                                    <a href="#" class="btn btn-sm btn-light">Add Topic</a>
+                                    <a href="#" class="btn btn-sm btn-light">Add</a>
                                 </div>
                                 <!--end::Toolbar-->
                             </div>
@@ -409,7 +408,7 @@
                                 </h3>
                                 <!--begin::Toolbar-->
                                 <div class="card-toolbar">
-                                    <a href="#" class="btn btn-sm btn-light">Add Configuration</a>
+                                    <a href="#" class="btn btn-sm btn-light">Add</a>
                                 </div>
                                 <!--end::Toolbar-->
                             </div>
