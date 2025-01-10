@@ -9,7 +9,7 @@
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                 <!--begin::Title-->
                 <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                    Configuration List</h1>
+                    Template List</h1>
                 <!--end::Title-->
                 <!--begin::Breadcrumb-->
                 <!-- <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
@@ -21,7 +21,7 @@
             <!--begin::Button-->
             <div class="card-toolbar">
                 <a href="{{ route('question.configure') }}" class="btn btn-sm btn-primary">
-                    Add Configuration
+                    Add Template
                 </a>
             </div>
             <!--end::Button-->
@@ -88,13 +88,14 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
-                                            @foreach ($config['subjects'] as $subject)
+                                                @foreach ($config['subjects'] as $subject)
                                                 <span class="text-dark fs-5">{{ $subject['subject_name'] }}</span> <span
-                                                    class="text-gray-700"> [{{ implode(', ', $subject['topics']) }}]</span><span
+                                                    class="text-gray-700">
+                                                    [{{ implode(', ', $subject['topics']) }}]</span><span
                                                     class="badge badge-light-primary fs-7 p-0 ms-1">[{{ $subject['total_questions'] }}]</span></br>
-                                                    
-                                                    @endforeach
-                                               
+
+                                                @endforeach
+
                                             </div>
                                         </div>
                                     </td>

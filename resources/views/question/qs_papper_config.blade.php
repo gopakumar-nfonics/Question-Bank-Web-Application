@@ -16,7 +16,7 @@
             <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
                 <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
                     <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">
-                        Configure Question Paper Template
+                        Add Question Paper Template
                     </h1>
                 </div>
             </div>
@@ -46,9 +46,9 @@
                                                     <input type="text" id="paper_title" name="paper_title"
                                                         class="form-control  @error('total_num_questions') is-invalid @enderror"
                                                         placeholder="Question Paper Template Title" />
-                                                    
+
                                                     <div class="invalid-feedback" id="papper_ttl_error"></div>
-                                                    
+
 
                                                 </div>
                                             </div>
@@ -61,9 +61,9 @@
                                                 <input type="number" id="total_num_questions" name="total_num_questions"
                                                     class="form-control  @error('total_num_questions') is-invalid @enderror"
                                                     placeholder="Total Count" />
-                                               
+
                                                 <div class="invalid-feedback" id="question_ttl_error"></div>
-                                               
+
                                             </div>
                                         </div>
                                         <div class="col-lg-3 fv-row">
@@ -158,7 +158,7 @@
                                         </div>
                                         <span class="fs-7 text-muted mt-1">Select the subject, topic, and difficulty
                                             level, specify the number of questions, and click the 'Add' button to
-                                            include them in the configuration table.</span>
+                                            include them in the Template table.</span>
 
                                     </div>
                                     <div class="row mb-5 mt-10 flex-grow ">
@@ -185,7 +185,8 @@
                                     <div class="row pe-0 pb-5">
                                         <div
                                             class="col-lg-12 text-end d-flex justify-content-end border-top mt-10 pt-5">
-                                            <button type="submit" class="btn btn-primary" disabled>Save Configuration</button>
+                                            <button type="submit" class="btn btn-primary" disabled>Save
+                                                Template</button>
                                         </div>
                                     </div>
                                 </form>
@@ -252,96 +253,98 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-// Update progress bar
-function updateProgressBar() {
-    const totalQuestions = parseInt(document.getElementById('total_num_questions').value) || 0;
-    let addedQuestions = 0;
+    // Update progress bar
+    function updateProgressBar() {
+        const totalQuestions = parseInt(document.getElementById('total_num_questions').value) || 0;
+        let addedQuestions = 0;
 
-    document.querySelectorAll('#questionsTable tbody tr').forEach(row => {
-        const questions = parseInt(row.querySelector('td:nth-child(5)').innerText) || 0;
-        addedQuestions += questions;
-    });
+        document.querySelectorAll('#questionsTable tbody tr').forEach(row => {
+            const questions = parseInt(row.querySelector('td:nth-child(5)').innerText) || 0;
+            addedQuestions += questions;
+        });
 
-    const percentage = totalQuestions > 0 ? (addedQuestions / totalQuestions) * 100 : 0;
+        const percentage = totalQuestions > 0 ? (addedQuestions / totalQuestions) * 100 : 0;
 
-    document.getElementById('progress-numerator').innerText = addedQuestions;
-    document.getElementById('progress-denominator').innerText = totalQuestions;
-    document.getElementById('progress-percentage').innerText = `${Math.round(percentage)}%`;
+        document.getElementById('progress-numerator').innerText = addedQuestions;
+        document.getElementById('progress-denominator').innerText = totalQuestions;
+        document.getElementById('progress-percentage').innerText = `${Math.round(percentage)}%`;
 
-    const progressBar = document.getElementById('progress-bar');
-    const progressContainer = progressBar.parentElement;
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = progressBar.parentElement;
 
-    // Remove existing classes
-    progressBar.classList.remove('bg-danger', 'bg-warning', 'bg-info');
-    progressContainer.classList.remove('bg-light-danger', 'bg-light-warning', 'bg-light-info');
+        // Remove existing classes
+        progressBar.classList.remove('bg-danger', 'bg-warning', 'bg-info');
+        progressContainer.classList.remove('bg-light-danger', 'bg-light-warning', 'bg-light-info');
 
-    // Add classes based on percentage
-    if (percentage < 25) {
-        progressBar.classList.add('bg-danger');
-        progressContainer.classList.add('bg-light-danger');
-    } else if (percentage < 50) {
-        progressBar.classList.add('bg-warning');
-        progressContainer.classList.add('bg-light-warning');
-    } else if (percentage < 75) {
-        progressBar.classList.add('bg-info');
-        progressContainer.classList.add('bg-light-info');
-    } else {
-        progressBar.classList.add('bg-success'); // Optional for >= 75%
-        progressContainer.classList.add('bg-light-success'); // Optional for >= 75%
-    }
-
-    progressBar.style.width = `${percentage}%`;
-
-    submitBtn.disabled = Math.round(percentage) !== 100;
-}
-
-
-document.getElementById('addRowBtn').addEventListener('click', function(e) {
-    e.preventDefault();
-
-    // Get input values
-    const subjectSelect = document.getElementById('q_subject');
-    const subjectId = subjectSelect.value;
-    const subjectName = subjectSelect.selectedOptions[0].text; // The displayed subject name
-    const topicSelect = document.getElementById('q_topic');
-    const topicId = topicSelect.value;
-    const topicName = topicSelect.selectedOptions[0].text;
-    const difficultySelect = document.getElementById('difficulty_level');
-    const difficultyLevelId = difficultySelect.value;
-    const difficultyLevelName = difficultySelect.selectedOptions[0].text;
-    const noOfQuestions = parseInt(document.getElementById('no_of_questions').value);
-
-    if (!subjectId || !topicId || !difficultyLevelId || isNaN(noOfQuestions)) {
-        alert('Please complete all fields before proceeding.');
-        return;
-    }
-
-    // Find table and tbody
-    const table = document.getElementById('questionsTable');
-    const tbody = table.querySelector('tbody');
-    let rowExists = false;
-
-    // Check if a row with the same subject, topic, and difficulty level exists
-    tbody.querySelectorAll('tr').forEach((row) => {
-        const rowSubjectName = row.querySelector('td:nth-child(2)').innerText;
-        const rowTopicName = row.querySelector('td:nth-child(3)').innerText;
-        const rowDifficultyLevelName = row.querySelector('td:nth-child(4)').innerText;
-
-        if (rowSubjectName === subjectName && rowTopicName === topicName && rowDifficultyLevelName ===
-            difficultyLevelName) {
-            // Update the existing row
-            const currentQuestions = parseInt(row.querySelector('td:nth-child(5)').innerText);
-            const updatedQuestions = currentQuestions + noOfQuestions;
-            row.querySelector('td:nth-child(5)').innerText = updatedQuestions;
-
-            rowExists = true;
+        // Add classes based on percentage
+        if (percentage < 25) {
+            progressBar.classList.add('bg-danger');
+            progressContainer.classList.add('bg-light-danger');
+        } else if (percentage < 50) {
+            progressBar.classList.add('bg-warning');
+            progressContainer.classList.add('bg-light-warning');
+        } else if (percentage < 75) {
+            progressBar.classList.add('bg-info');
+            progressContainer.classList.add('bg-light-info');
+        } else {
+            progressBar.classList.add('bg-success'); // Optional for >= 75%
+            progressContainer.classList.add('bg-light-success'); // Optional for >= 75%
         }
-    });
 
-    // If no matching row exists, add a new row
-    if (!rowExists) {
-        const row = document.createElement('tr');
-        row.innerHTML = `
+        progressBar.style.width = `${percentage}%`;
+
+        submitBtn.disabled = Math.round(percentage) !== 100;
+    }
+
+
+    document.getElementById('addRowBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // Get input values
+        const subjectSelect = document.getElementById('q_subject');
+        const subjectId = subjectSelect.value;
+        const subjectName = subjectSelect.selectedOptions[0].text; // The displayed subject name
+        const topicSelect = document.getElementById('q_topic');
+        const topicId = topicSelect.value;
+        const topicName = topicSelect.selectedOptions[0].text;
+        const difficultySelect = document.getElementById('difficulty_level');
+        const difficultyLevelId = difficultySelect.value;
+        const difficultyLevelName = difficultySelect.selectedOptions[0].text;
+        const noOfQuestions = parseInt(document.getElementById('no_of_questions').value);
+
+        if (!subjectId || !topicId || !difficultyLevelId || isNaN(noOfQuestions)) {
+            alert('Please complete all fields before proceeding.');
+            return;
+        }
+
+        // Find table and tbody
+        const table = document.getElementById('questionsTable');
+        const tbody = table.querySelector('tbody');
+        let rowExists = false;
+
+        // Check if a row with the same subject, topic, and difficulty level exists
+        tbody.querySelectorAll('tr').forEach((row) => {
+            const rowSubjectName = row.querySelector('td:nth-child(2)').innerText;
+            const rowTopicName = row.querySelector('td:nth-child(3)').innerText;
+            const rowDifficultyLevelName = row.querySelector('td:nth-child(4)').innerText;
+
+            if (rowSubjectName === subjectName && rowTopicName === topicName &&
+                rowDifficultyLevelName ===
+                difficultyLevelName) {
+                // Update the existing row
+                const currentQuestions = parseInt(row.querySelector('td:nth-child(5)')
+                    .innerText);
+                const updatedQuestions = currentQuestions + noOfQuestions;
+                row.querySelector('td:nth-child(5)').innerText = updatedQuestions;
+
+                rowExists = true;
+            }
+        });
+
+        // If no matching row exists, add a new row
+        if (!rowExists) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
             <td>${tbody.querySelectorAll('tr').length + 1}</td>
             <td>${subjectName}</td>
             <td>${topicName}</td>
@@ -350,46 +353,46 @@ document.getElementById('addRowBtn').addEventListener('click', function(e) {
             <td><button class="remove-btn btn btn-outline btn-outline-dashed btn-outline-danger btn-active-light-danger">Remove</button></td>
         `;
 
-        // Store the subject ID, topic ID, and difficulty level ID as custom attributes
-        row.setAttribute('data-subject-id', subjectId);
-        row.setAttribute('data-topic-id', topicId);
-        row.setAttribute('data-difficulty-level-id', difficultyLevelId);
+            // Store the subject ID, topic ID, and difficulty level ID as custom attributes
+            row.setAttribute('data-subject-id', subjectId);
+            row.setAttribute('data-topic-id', topicId);
+            row.setAttribute('data-difficulty-level-id', difficultyLevelId);
 
-        tbody.appendChild(row);
+            tbody.appendChild(row);
 
-        // Add remove functionality to the new row
-        row.querySelector('.remove-btn').addEventListener('click', function() {
-            row.remove();
-            updateTableIndex(tbody);
-            // Hide the table if no rows remain
-            if (tbody.querySelectorAll('tr').length === 0) {
-                table.style.display = 'none';
-            }
+            // Add remove functionality to the new row
+            row.querySelector('.remove-btn').addEventListener('click', function() {
+                row.remove();
+                updateTableIndex(tbody);
+                // Hide the table if no rows remain
+                if (tbody.querySelectorAll('tr').length === 0) {
+                    table.style.display = 'none';
+                }
 
-            updateProgressBar();
-        });
-    }
+                updateProgressBar();
+            });
+        }
 
-    // Show the table if it's hidden
-    table.style.display = 'table';
+        // Show the table if it's hidden
+        table.style.display = 'table';
 
-    // Clear input fields
-    document.getElementById('difficulty_level').value = '';
-    document.getElementById('no_of_questions').value = '';
-    addRowBtn.disabled = true;
+        // Clear input fields
+        document.getElementById('difficulty_level').value = '';
+        document.getElementById('no_of_questions').value = '';
+        addRowBtn.disabled = true;
 
-    updateTableIndex(tbody);
+        updateTableIndex(tbody);
 
-    updateProgressBar();
-});
+        updateProgressBar();
+    });
 
 
-// Update the denominator as the user types in total_num_questions
-document.getElementById('total_num_questions').addEventListener('input', function() {
-    const totalQuestions = parseInt(this.value) || 0;
-    document.getElementById('progress-denominator').innerText = totalQuestions;
-    updateProgressBar(); // Update the progress bar whenever the total changes
-});
+    // Update the denominator as the user types in total_num_questions
+    document.getElementById('total_num_questions').addEventListener('input', function() {
+        const totalQuestions = parseInt(this.value) || 0;
+        document.getElementById('progress-denominator').innerText = totalQuestions;
+        updateProgressBar(); // Update the progress bar whenever the total changes
+    });
 
 });
 
@@ -413,7 +416,7 @@ document.getElementById('kt_question_form').addEventListener('submit', async fun
     // Validate if paper_title is filled
     if (!paperTitle) {
         //alert('Paper title is required.');
-         $('#papper_ttl_error').show();
+        $('#papper_ttl_error').show();
         $('#papper_ttl_error').text('Paper title is required.');
         return;
     }
@@ -431,12 +434,12 @@ document.getElementById('kt_question_form').addEventListener('submit', async fun
     if (!isUnique) {
         //alert('Paper title must be unique.');
         $('#papper_ttl_error').show();
-         $('#papper_ttl_error').text('Paper title must be unique.')
+        $('#papper_ttl_error').text('Paper title must be unique.')
         return;
     }
 
     rows.forEach(row => {
-        
+
         const paper_title = document.getElementById('paper_title').value;
         const subjectId = row.getAttribute('data-subject-id');
         const total_num_quetion = document.getElementById('total_num_questions').value;
@@ -447,7 +450,7 @@ document.getElementById('kt_question_form').addEventListener('submit', async fun
         const noOfQuestions = row.querySelector('td:nth-child(5)').innerText;
 
         rowsData.push({
-            paper_title:paper_title,
+            paper_title: paper_title,
             subject_id: subjectId,
             total_num_quetion: total_num_quetion,
             topic_id: topicId, // Save the topic ID
@@ -482,7 +485,9 @@ async function checkPaperTitleUnique(paperTitle) {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': '{{ csrf_token() }}',
             },
-            body: JSON.stringify({ paper_title: paperTitle }),
+            body: JSON.stringify({
+                paper_title: paperTitle
+            }),
         });
 
         const result = await response.json();
@@ -494,22 +499,19 @@ async function checkPaperTitleUnique(paperTitle) {
 }
 
 
-$(document).ready(function () {
+$(document).ready(function() {
     // Clear question total error
-    $('#total_num_questions').on('input', function () {
+    $('#total_num_questions').on('input', function() {
         $('#question_ttl_error').hide();
         $('#question_ttl_error').text('');
     });
 
     // Clear paper title error
-    $('#paper_title').on('input', function () {
+    $('#paper_title').on('input', function() {
         $('#papper_ttl_error').hide();
         $('#papper_ttl_error').text('');
     });
 });
-
-
-
 </script>
 
 @endsection

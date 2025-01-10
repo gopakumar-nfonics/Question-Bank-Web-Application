@@ -177,7 +177,7 @@
                                                         class="text-gray-700 fw-bolder d-block fs-2x lh-1 ls-n1 mb-1">82</span>
                                                     <!--end::Number-->
                                                     <!--begin::Desc-->
-                                                    <span class="text-gray-500 fw-semibold fs-6">Configurations</span>
+                                                    <span class="text-gray-500 fw-semibold fs-6">Templates</span>
                                                     <!--end::Desc-->
                                                 </div>
                                                 <!--end::Stats-->
@@ -403,8 +403,8 @@
                             <!--begin::Header-->
                             <div class="card-header border-0 pt-5">
                                 <h3 class="card-title align-items-start flex-column">
-                                    <span class="card-label fw-bold text-dark">Configurations</span>
-                                    <span class="text-muted mt-1 fw-semibold fs-7">82 configurations available</span>
+                                    <span class="card-label fw-bold text-dark">Templates</span>
+                                    <span class="text-muted mt-1 fw-semibold fs-7">82 Templates available</span>
                                 </h3>
                                 <!--begin::Toolbar-->
                                 <div class="card-toolbar">
