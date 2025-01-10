@@ -364,6 +364,8 @@
                                     </div>
                                 </div>
 
+                                @endif
+
                                 <div class="menu-item pt-5">
                                     <!--begin:Menu content-->
                                     <div class="menu-content">
@@ -498,7 +500,7 @@
 
                                     </div>
                                 </div>
-                                @endif
+                               
 
                                 <!--end:Menu item-->
                                  
