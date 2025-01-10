@@ -364,6 +364,8 @@
                                     </div>
                                 </div>
 
+                                @endif
+
                                 <div class="menu-item pt-5">
                                     <!--begin:Menu content-->
                                     <div class="menu-content">
@@ -498,10 +500,11 @@
 
                                     </div>
                                 </div>
-                                @endif
+                               
 
                                 <!--end:Menu item-->
-
+                                 
+                                @if( !empty(Auth::user()->isAdmin()) )
 
                                 <div class="menu-item pt-5">
                                     <!--begin:Menu content-->
@@ -511,7 +514,7 @@
                                     <!--end:Menu content-->
                                 </div>
                                 <!--begin:Menu item-->
-                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion  ">
+                                <div data-kt-menu-trigger="click" class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('user.index','user.create','user.edit'))) show @endif">
                                     <!--begin:Menu link-->
                                     <span class="menu-link">
                                         <span class="menu-icon">
@@ -526,7 +529,7 @@
                                         <!--begin:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link " href="">
+                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('user.index'))) active  @endif" href="{{route('user.index')}}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
@@ -538,7 +541,7 @@
                                         <!--begin:Menu item-->
                                         <div class="menu-item">
                                             <!--begin:Menu link-->
-                                            <a class="menu-link " href="">
+                                            <a class="menu-link @if(in_array(Route::currentRouteName(),array('user.create'))) active  @endif" href="{{route('user.create')}}">
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
@@ -553,6 +556,10 @@
                                 </div>
 
                                 <!--end:Menu item-->
+
+                                @endif
+
+                                
 
                             </div>
                             <!--end::Menu-->
