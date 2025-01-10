@@ -58,14 +58,14 @@
                                     <div class="fs-4 text-white">
                                         <span class="position-relative d-inline-block">
                                             <a href="../../demo1/dist/pages/user-profile/projects.html"
-                                                class="link-white opacity-75-hover fw-bold d-block mb-1">2224 </a>
+                                                class="link-white opacity-75-hover fw-bold d-block mb-1">2,224 </a>
                                             <!--begin::Separator-->
                                             <span
                                                 class="position-absolute opacity-50 bottom-0 start-0 border-2 border-body border-bottom w-100"></span>
                                             <!--end::Separator-->
                                         </span>
-                                        <span class="opacity-75">Unutilized
-                                            Questions</span>
+                                        <span class="opacity-75">Question Papers Generated
+                                        </span>
                                     </div>
                                 </h3>
                                 <!--end::Title-->
