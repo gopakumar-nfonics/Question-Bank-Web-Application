@@ -563,11 +563,6 @@
                     <!--begin::Footer-->
                     <div class="app-sidebar-footer flex-column-auto pt-2 pb-6 px-6" id="kt_app_sidebar_footer">
 
-                        <span class="footer-label">2024© Amrita Vishwa Vidyapeetham</span>
-                        <!--begin::Svg Icon | path: icons/duotune/general/gen005.svg-->
-
-                        <!--end::Svg Icon-->
-                        </a>
                     </div>
                     <!--end::Footer-->
                 </div>
