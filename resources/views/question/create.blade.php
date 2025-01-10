@@ -105,7 +105,7 @@ input[type="radio"]:checked+.form-check-label {
                                                 <div class="fv-row mt-5">
                                                     <div class="fs-6 fw-bold text-gray-700 col-lg-12">
                                                         <label class="required form-label">Question</label>
-                                                        <textarea id="summernote" name="question"
+                                                        <textarea id="editor" name="question"
                                                             class="form-control mb-2 @error('question') is-invalid @enderror questions"></textarea>
                                                         @error('question')<div class="invalid-feedback">
                                                             {{ $message }}
@@ -261,6 +261,25 @@ document.getElementById('q_subject').addEventListener('change', function() {
             });
     }
 });
+</script>
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+                toolbar: ['bold', 'italic', 'link', 'undo', 'redo'],
+            })
+            .then(editor => {
+                console.log('Editor initialized', editor);
+            })
+            .catch(error => {
+                console.error('Error initializing editor:', error);
+            });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        MathJax.typesetPromise();
+    });
 </script>
 
 @endsection
