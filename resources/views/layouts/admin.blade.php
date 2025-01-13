@@ -234,7 +234,7 @@
                                 <!--begin:Menu item-->
                                 <div data-kt-menu-trigger="click" class="menu-item here show menu-accordion">
                                     <!--begin:Menu link-->
-                                    <a href="">
+                                    <a href="{{route('dashboard')}}">
                                         <span
                                             class="menu-link @if(in_array(Route::currentRouteName(),array('dashboard'))) active  @endif">
                                             <span class="menu-icon">
