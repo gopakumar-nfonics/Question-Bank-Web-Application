@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Subject as subjects;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Topic;
 
 class subject extends Controller
 {
@@ -101,10 +102,16 @@ class subject extends Controller
         try {
             // Find the subject by ID
             $subject = subjects::findOrFail($id);
-    
+
             // Check if the subject is already soft-deleted
             if ($subject) {
+
+                $topicCount = Topic::where('subject_id', $subject->id)->count();
                 // Permanently delete the subject
+                if ($topicCount > 0) {
+                    return response()->json(['error' => 'Cannot delete subject associated with a topic.']);
+                }
+
                 $subject->forceDelete();
                 return response()->json(['success' => 'The Subject has been deleted!']);
             }
