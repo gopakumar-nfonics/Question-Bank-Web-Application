@@ -24,6 +24,11 @@ input[type="radio"]:checked+.form-check-label {
                         Add Question
                     </h1>
                 </div>
+                <div class="card-toolbar me-10">
+                    <a href="{{ route('question.index') }}" class="btn btn-sm btn-primary">
+                        Back to List
+                    </a>
+                </div>
             </div>
         </div>
         <!--end::Toolbar-->
@@ -105,8 +110,8 @@ input[type="radio"]:checked+.form-check-label {
                                                 <div class="fv-row mt-5">
                                                     <div class="fs-6 fw-bold text-gray-700 col-lg-12">
                                                         <label class="required form-label">Question</label>
-                                                        <textarea id="editor" name="question"
-                                                            class="form-control mb-2 @error('question') is-invalid @enderror questions"></textarea>
+                                                        <textarea id="" name="question"
+                                                            class=" editor form-control mb-2 @error('question') is-invalid @enderror questions">{{ old('question') }}</textarea>
                                                         @error('question')<div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div> @enderror
@@ -128,7 +133,7 @@ input[type="radio"]:checked+.form-check-label {
                                                         </label>
                                                     </div>
                                                     <textarea id="option1" name="option1"
-                                                        class="form-control mb-2 @error('option1') is-invalid @enderror questions"></textarea>
+                                                        class="editor form-control mb-2 @error('option1') is-invalid @enderror questions"></textarea>
                                                     @error('option1')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -150,7 +155,7 @@ input[type="radio"]:checked+.form-check-label {
                                                         </label>
                                                     </div>
                                                     <textarea id="option2" name="option2"
-                                                        class="form-control mb-2 @error('option2') is-invalid @enderror questions"></textarea>
+                                                        class="editor form-control mb-2 @error('option2') is-invalid @enderror questions"></textarea>
                                                     @error('option2')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -172,7 +177,7 @@ input[type="radio"]:checked+.form-check-label {
                                                         </label>
                                                     </div>
                                                     <textarea id="option3" name="option3"
-                                                        class="form-control mb-2 @error('option3') is-invalid @enderror questions"></textarea>
+                                                        class="editor form-control mb-2 @error('option3') is-invalid @enderror questions"></textarea>
                                                     @error('option3')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -194,7 +199,7 @@ input[type="radio"]:checked+.form-check-label {
                                                         </label>
                                                     </div>
                                                     <textarea id="option4" name="option4"
-                                                        class="form-control mb-2 @error('option4') is-invalid @enderror questions"></textarea>
+                                                        class="editor form-control mb-2 @error('option4') is-invalid @enderror questions"></textarea>
                                                     @error('option4')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -263,20 +268,23 @@ document.getElementById('q_subject').addEventListener('change', function() {
 });
 </script>
 <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
 <script>
+    document.querySelectorAll('.editor').forEach(textarea => {
         ClassicEditor
-            .create(document.querySelector('#editor'), {
+            .create(textarea, {
                 toolbar: ['bold', 'italic', 'link', 'undo', 'redo'],
             })
             .then(editor => {
-                console.log('Editor initialized', editor);
+                console.log('Editor initialized for:', textarea.name, editor);
             })
             .catch(error => {
-                console.error('Error initializing editor:', error);
+                console.error('Error initializing editor for:', textarea.name, error);
             });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
     document.addEventListener('DOMContentLoaded', function () {
         MathJax.typesetPromise();
     });

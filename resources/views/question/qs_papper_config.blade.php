@@ -19,6 +19,11 @@
                         Add Question Paper Template
                     </h1>
                 </div>
+                <div class="card-toolbar me-10">
+                    <a href="{{ route('question.configiration') }}" class="btn btn-sm btn-primary">
+                        Back to List
+                    </a>
+                </div>
             </div>
         </div>
         <!--end::Toolbar-->

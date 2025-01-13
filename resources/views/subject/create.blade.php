@@ -13,13 +13,18 @@
 									<!--begin::Page title-->
 									<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 										<!--begin::Title-->
-										<!-- <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Create Company</h1> -->
+										<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Add Subject</h1>
 										<!--end::Title-->
 										<!--begin::Breadcrumb-->
-										<ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
+										<!-- <ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
 											
-										</ul>
+										</ul> -->
 										<!--end::Breadcrumb-->
+									</div>
+									<div class="card-toolbar">
+										<a href="{{ route('subject.index') }}" class="btn btn-sm btn-primary">
+											Back to List
+										</a>
 									</div>
 									<!--end::Page title-->
 									
@@ -34,13 +39,13 @@
 									<!--begin::Basic info-->
 									<div class="card mb-5 mb-xl-10">
 										<!--begin::Card header-->
-										<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
-											<!--begin::Card title-->
+										<!-- <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+											
 											<div class="card-title m-0">
 												<h3 class="fw-bold m-0">Add Subject</h3>
 											</div>
-											<!--end::Card title-->
-										</div>
+											
+										</div> -->
 										<!--begin::Card header-->
 										<!--begin::Content-->
 										<div id="kt_account_settings_profile_details" class="collapse show">
@@ -48,7 +53,7 @@
 											<form id="kt_account_profile_details_form" class="form" method="POST" action="{{route('subject.store')}}" enctype="multipart/form-data">
                                             @csrf
 												<!--begin::Card body-->
-												<div class="card-body border-top p-9">
+												<div class="card-body border-top p-12">
 													
 													<!--begin::Input group-->
 													<div class="row mb-6">

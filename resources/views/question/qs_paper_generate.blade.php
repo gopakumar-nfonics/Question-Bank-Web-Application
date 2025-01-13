@@ -19,6 +19,11 @@
                         Generate Question Paper
                     </h1>
                 </div>
+                <div class="card-toolbar me-10">
+                    <a href="{{ route('question.questionpaper') }}" class="btn btn-sm btn-primary">
+                        Back to List
+                    </a>
+                </div>
             </div>
         </div>
         <!--end::Toolbar-->
