@@ -548,7 +548,7 @@
                                                 <span class="menu-bullet">
                                                     <span class="bullet bullet-dot"></span>
                                                 </span>
-                                                <span class="menu-title">Create User</span>
+                                                <span class="menu-title">Add User</span>
                                             </a>
                                             <!--end:Menu link-->
                                         </div>
