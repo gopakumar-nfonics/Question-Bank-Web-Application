@@ -17,7 +17,7 @@
 			<!--end::Page title-->
 			<div class="card-toolbar">
 				<a href="{{route('user.create')}}" class="btn btn-sm btn-primary">
-					Create
+					Add
 				</a>
 			</div>
 		</div>

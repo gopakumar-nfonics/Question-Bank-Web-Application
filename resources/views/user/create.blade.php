@@ -17,7 +17,7 @@
 				<!--begin::Page title-->
 				<div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
 					<!--begin::Title-->
-					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Create User</h1>
+					<h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Add User</h1>
 					<!--end::Title-->
 					<!--begin::Breadcrumb-->
 					<ul class="breadcrumb fw-semibold fs-7 my-0 pt-1">
@@ -41,7 +41,7 @@
 					<div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
 						<!--begin::Card title-->
 						<div class="card-title m-0">
-							<h3 class="fw-bold m-0">Create User</h3>
+							<h3 class="fw-bold m-0">Add User</h3>
 						</div>
 						<!--end::Card title-->
 					</div>

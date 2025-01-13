@@ -229,7 +229,7 @@
                                 @foreach ($topics as $index => $topic)
                                 <div class="d-flex flex-stack">
                                     <!--begin::Symbol-->
-                                    <div class="symbol symbol-40px symbol-circle me-4">
+                                    <div class="symbol symbol-40px me-4">
                                         <div class="symbol-label fs-2 fw-semibold {{ $colors[$index % count($colors)] }} text-inverse-{{ str_replace('bg-', '', $colors[$index % count($colors)]) }}">{{ strtoupper(substr($topic->topic_name, 0, 1)) }}</div>
                                     </div>
                                     <!--end::Symbol-->
@@ -242,12 +242,7 @@
                                             <span class="text-muted fw-semibold d-block fs-7">{{ $topic->questions_count }} Questions</span>
                                         </div>
                                         <!--end:Author-->
-                                        <!--begin::Actions-->
-                                        <a href="{{ route('topic.index') }}"
-                                            class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
-                                            <i class="fa-solid fa-arrow-right p-0"></i>
-                                        </a>
-                                        <!--begin::Actions-->
+                                        
                                     </div>
                                     <!--end::Section-->
                                 </div>
@@ -300,12 +295,7 @@
                                             <span class="text-muted fw-semibold d-block fs-7">{{ $template->qt_no_of_questions }} Questions</span>
                                         </div>
                                         <!--end:Author-->
-                                        <!--begin::Actions-->
-                                        <a href="{{ route('question.configiration') }}"
-                                            class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px">
-                                            <i class="fa-solid fa-arrow-right p-0"></i>
-                                        </a>
-                                        <!--begin::Actions-->
+                                       
                                     </div>
                                     <!--end::Section-->
                                 </div>
