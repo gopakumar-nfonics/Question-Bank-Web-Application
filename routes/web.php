@@ -25,6 +25,10 @@ Route::resource('topic',\App\Http\Controllers\resource\topic::class);
 Route::resource('question',\App\Http\Controllers\resource\question::class);
 Route::get('/topics/{subject}', [\App\Http\Controllers\resource\topic::class, 'getTopics']);
 Route::get('/questionconfig', [App\Http\Controllers\resource\question::class, 'questionconfig'])->name('question.configure');
+
+Route::get('/questionconfig/edit/{id}', [App\Http\Controllers\resource\question::class, 'questionConfigEdit'])->name('question.questionconfigedit');
+Route::post('/questionconfig/update/{id}', [App\Http\Controllers\resource\question::class, 'questionConfigUpdate'])->name('questionconfig.update');
+
 Route::post('/question/config', [App\Http\Controllers\resource\question::class, 'storeQuestions'])->name('question.config');
 Route::get('/configiration', [App\Http\Controllers\resource\question::class, 'configirationlist'])->name('question.configiration');
 Route::get('/qspgeneration', [App\Http\Controllers\resource\question::class, 'qspgeneration'])->name('question.qspgeneration');

@@ -174,17 +174,26 @@ class question extends Controller
     {
 
         $difficultyLevels = DifficultyLevel::all();
-        //$subjects = Subject::all();
-       /* $addedSubjectIds = QuestionConfig::with('subject')
-        ->pluck('qc_subject_id')
-        ->toArray();
-
-    // Fetch subjects that are not in the list of added subjects
-    $subjects = Subject::whereNotIn('id', $addedSubjectIds)->get();*/
-
-    $subjects = Subject::all();
+        $subjects = Subject::all();
 
         return view('question.qs_papper_config',compact('difficultyLevels','subjects'));
+
+    }
+
+    public function questionConfigEdit($id)
+    {
+
+        $difficultyLevels = DifficultyLevel::all();
+       $subjects = Subject::all();
+       $config = QuestionConfig::findOrFail($id);
+
+       $templatedetails = QuestionConfiginfo::with(['subject', 'topic', 'difficultyLevel'])
+    ->where('qd_template_id', $id)
+    ->get();
+
+
+
+        return view('question.qs_papper_config_edit',compact('difficultyLevels','subjects','config','templatedetails'));
 
     }
 
@@ -220,6 +229,42 @@ class question extends Controller
     
     return redirect()->route('question.configiration')->with('success', 'Question paper configuration saved successfully!');
 }
+public function questionConfigUpdate(Request $request, $id){
+
+    
+   
+    $validated = $request->validate([
+        'questions' => 'required|json',  // Ensure questions are passed as JSON
+    ]);
+
+    // Decode the JSON data for questions
+    $questionsData = json_decode($request->input('questions'), true);
+
+    $questionConfig = QuestionConfig::findOrFail($id);
+
+    
+    $questionConfig->update([
+        'qt_title' => $questionsData[0]['paper_title'],
+        'qt_no_of_questions' => $questionsData[0]['total_num_quetion'],
+    ]);
+
+    QuestionConfiginfo::where('qd_template_id', $questionConfig->id)->delete();
+
+    foreach ($questionsData as $question) {
+        QuestionConfiginfo::create([
+            'qd_template_id' => $questionConfig->id,
+            'qd_subject_id' => $question['subject_id'],
+            'qd_topic_id' => $question['topic_id'],
+            'qd_difficulty_level' => $question['difficulty_level_id'],
+            'qd_no_of_questions' => $question['no_of_questions'],
+        ]);
+    }
+
+    
+    return redirect()->route('question.configiration')->with('success', 'Question paper configuration saved successfully!');
+
+
+}
 
 public function configirationlist()
     {
@@ -229,6 +274,7 @@ public function configirationlist()
     ->get()
     ->map(function ($config) {
         return [
+            'tid'=>$config->id,
             'qt_title' => $config->qt_title,
             'qt_no_of_questions' => $config->qt_no_of_questions,
             'subjects' => $config->details->groupBy('qd_subject_id')->map(function ($details, $subjectId) {
@@ -270,7 +316,12 @@ public function configirationlist()
 {
     $request->validate(['paper_title' => 'required|string']);
 
-    $isUnique = !QuestionConfig::where('qt_title', $request->input('paper_title'))->exists();
+    $id = $request->input('tid');
+    if ($id) {
+    $isUnique = !QuestionConfig::where('qt_title', $request->input('paper_title'))->where('id', '!=', $id)->exists();
+    }else{
+    $isUnique = !QuestionConfig::where('qt_title', $request->input('paper_title'))->exists();   
+    }
 
     return response()->json(['isUnique' => $isUnique]);
 }
