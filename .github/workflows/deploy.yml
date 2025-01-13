@@ -1,1 +1,34 @@
+name: Deploy to Ubuntu Server
 
+on:
+  push:
+    branches:
+      - main  # Change this to your desired branch
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install SSH client and sshpass
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y openssh-client sshpass
+
+    - name: Copy files via rsync
+      env:
+        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      run: |
+        rsync -az --exclude '/storage' --exclude '/bootstrap/cache' -e "sshpass -p $SSH_PASSWORD ssh -p 3591 -o StrictHostKeyChecking=no" ./ admissions@103.10.27.59:/var/www/html/
+        
+    - name: Execute remote commands using SSH
+      env:
+        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      run: |
+        sshpass -p $SSH_PASSWORD ssh -o StrictHostKeyChecking=no -p 3591 admissions@103.10.27.59 << 'EOF'
+        # Add more commands as needed
+        EOF
