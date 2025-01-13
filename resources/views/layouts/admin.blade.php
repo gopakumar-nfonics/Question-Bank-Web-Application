@@ -366,7 +366,7 @@
                                     </div>
                                 </div>
 
-                                
+
 
                                 <div class="menu-item pt-5">
                                     <!--begin:Menu content-->
@@ -502,19 +502,13 @@
 
                                     </div>
                                 </div>
-                                  
+
                                 @endif
 
                                 <!--end:Menu item-->
                                 @if( !empty(Auth::user()->isPapersetter()) )
 
-                                <div class="menu-item pt-5">
-                                    <!--begin:Menu content-->
-                                    <div class="menu-content">
-                                        <span class="menu-heading fw-bold text-uppercase fs-7">Questions</span>
-                                    </div>
-                                    <!--end:Menu content-->
-                                </div>
+
 
                                 <div data-kt-menu-trigger="click"
                                     class="menu-item menu-accordion @if(in_array(Route::currentRouteName(),array('question.index','question.create','question.edit'))) show @endif">
@@ -524,7 +518,7 @@
 
                                             <i class="fa-solid fa-clipboard-question p-0"></i>
                                         </span>
-                                        <span class="menu-title">Questions</span>
+                                        <span class="menu-title">Manage Questions</span>
                                         <span class="menu-arrow"></span>
                                     </span>
                                     <div class="menu-sub menu-sub-accordion">
