@@ -17,7 +17,9 @@
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-6 my-0 ">
                     <!--begin::Item-->
                     <li class="breadcrumb-item text-muted pt-3">
-                        <a class="text-primary"> You added <span class="text-primary"> {{ $questions->count() }} </span>
+                        <a class="text-primary"> You are managing <span class="text-primary fw-bold">
+                                {{ $questions->count() }}
+                            </span>
                             questions.</a>
                     </li>
                     <!--end::Item-->
