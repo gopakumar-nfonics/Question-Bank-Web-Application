@@ -50,7 +50,5 @@ Route::post('/bulk-download', [App\Http\Controllers\resource\question::class, 'b
 
 Route::resource('user',\App\Http\Controllers\resource\user::class);
 Route::post('/user/deleteUser', [\App\Http\Controllers\resource\user::class, 'deleteUser'])->name('user.deleteUser');
-
-
-
+Route::post('/question/deleteQuestionPaper', [\App\Http\Controllers\resource\question::class, 'deleteQuestionPaper'])->name('question.deleteQuestionPaper');
 

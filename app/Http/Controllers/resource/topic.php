@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Subject;
 use App\Models\Topic as topics; 
+use App\Models\QuestionConfiginfo;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -156,7 +157,52 @@ class topic extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            // Find the subject by ID
+            $subject = Subject::findOrFail($id);
+    
+            // Get all topics associated with the subject
+            $topics = topics::where('subject_id', $subject->id)->get();
+    
+            // Initialize counters for success and failure
+            $deletedTopics = [];
+            $skippedTopics = [];
+    
+            // Iterate through each topic to check associations and delete if allowed
+            foreach ($topics as $topic) {
+                $infoCount = QuestionConfiginfo::where('qd_topic_id', $topic->topic_id)->count();
+    
+                if ($infoCount > 0) {
+                    // Skip the topic if it's associated with a template
+                    $skippedTopics[] = $topic->topic_name;
+                    continue;
+                }
+    
+                // Delete the topic if no association is found
+                $topic->forceDelete();
+                $deletedTopics[] = $topic->topic_name;
+            }
+
+             // Handle cases where all topics are associated with a template
+            if (empty($deletedTopics) && !empty($skippedTopics)) {
+                return response()->json(['error' => 'Cannot delete topics associated with a template.']);
+            }
+    
+            // Prepare response message
+            $responseMessage = '';
+            if (!empty($deletedTopics)) {
+                $responseMessage .= 'Topics has been deleted.';
+            }
+            // if (!empty($skippedTopics)) {
+            //     $responseMessage .= ' Skipped topics ' . implode(', ', $skippedTopics) . '.';
+            // }
+    
+            return response()->json(['success' => true, 'message' => $responseMessage]);
+    
+        } catch (\Exception $e) {
+            // Handle errors
+            return response()->json(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
     }
 
     public function getTopics($subjectId)

@@ -167,7 +167,28 @@ class question extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            // Find the subject by ID
+            $question = Questions::findOrFail($id);
+
+            // Check if the subject is already soft-deleted
+            if ($question) {
+
+                $paperCount = QuestionPaperQuestion::where('qpq_question_id', $question->qs_id)->count();
+                
+                if ($paperCount > 0) {
+                    return response()->json(['error' => 'Cannot delete question associated with a question paper.']);
+                }
+
+                $question->forceDelete();
+                return response()->json(['success' => 'The Question has been deleted!']);
+            }
+    
+          
+        } catch (\Exception $e) {
+            // Handle errors
+            return response()->json(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
     }
 
     public function questionconfig()
@@ -382,6 +403,16 @@ public function questionpaper()
         }
 
         return response()->json(['success' => true, 'files' => $responseFiles]);
+    }
+
+    public function deleteQuestionPaper(Request $request)
+    {
+
+        $questionPaper = QuestionPaper::findOrFail($request->input('qp_id'));
+
+        $questionPaper->forceDelete(); 
+        return response()->json(['success' => 'The QuestionPaper has been deleted!']);
+        
     }
 
 

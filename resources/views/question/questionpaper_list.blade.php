@@ -122,7 +122,7 @@
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="javascript:void(0)" class="menu-link px-3"
+                                                <a href="javascript:void(0)" onclick="removePaper('{{$papper->qp_id}}')" class="menu-link px-3"
                                                     data-kt-customer-table-filter="delete_row">Delete</a>
                                             </div>
 
@@ -183,7 +183,7 @@ $(document).ready(function() {
 });
 </script>
 <script>
-function removeSub(subid) {
+function removePaper(paperId) {
     swal({
             title: "Are you sure?",
             text: "You want to remove this subject",
@@ -194,10 +194,11 @@ function removeSub(subid) {
         .then((willDelete) => {
             if (willDelete) {
                 $.ajax({
-                    url: "/subject/" + subid,
-                    type: 'DELETE', // Use DELETE HTTP method
+                    url: "{{ route('question.deleteQuestionPaper') }}",
+                    type: 'POST', // Use DELETE HTTP method
                     data: {
-                        _token: '{{ csrf_token() }}' // Include the CSRF token for security
+                        _token: '{{ csrf_token() }}' ,
+                        qp_id: paperId,
                     },
                     success: function(response) {
                         if (response.success) {
