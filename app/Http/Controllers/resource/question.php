@@ -22,7 +22,11 @@ class question extends Controller
      */
     public function index()
     {
-        $questions = Questions::with(['subject', 'topic', 'correctAnswer','difficultylevel'])->get();
+        if (Auth::user()->isPapersetter()) {
+        $questions = Questions::with(['subject', 'topic', 'correctAnswer','difficultylevel'])->where('created_by',Auth::id())->get();
+        }else{
+            $questions = Questions::with(['subject', 'topic', 'correctAnswer','difficultylevel'])->get();
+        }
 
         return view('question.index',compact('questions'));
     }

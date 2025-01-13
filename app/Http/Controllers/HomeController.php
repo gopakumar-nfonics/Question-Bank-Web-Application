@@ -8,6 +8,7 @@ use App\Models\Topic;
 use App\Models\Question;
 use App\Models\QuestionConfig;
 use App\Models\QuestionPaper;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -28,6 +29,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->isPapersetter()) {
+
+            return redirect()->route('question.index');
+        }else{
+
+        
         $subjectCount   = Subject::count();
         $topicCount     = Topic::count();
         $questionCount  = Question::count();
@@ -38,5 +45,6 @@ class HomeController extends Controller
                ->get();
         $templates = QuestionConfig::orderBy('qt_no_of_questions', 'desc')->get();
         return view('home',compact('subjectCount','topicCount','questionCount','templateCount','qpaperCount','topics','templates'));
+        }
     }
 }
