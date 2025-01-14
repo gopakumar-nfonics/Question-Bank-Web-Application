@@ -38,7 +38,7 @@
                             </div>
 
                             <div class="col-md-2">
-                                <select id=" difficultyFilter" class="form-select">
+                                <select id="difficultyFilter" class="form-select">
                                     <option value="">All Level</option>
                                     @foreach($difficultyLevels as $level)
                                     <option value="{{ $level->id }}">{{ $level->difficulty_level }}</option>
@@ -52,7 +52,7 @@
                         <!-- Filters -->
                         <div class="row mb-4 pt-5">
                             <div class="col-md-5">
-                                <select id="subjectFilter" class="form-select">
+                                <select id="" class="form-select">
                                     <option value="">All QP Managers</option>
                                     @foreach($subjects as $subject)
                                     <option value="{{ $subject->id }}">{{ $subject->sub_name }}</option>
@@ -61,7 +61,7 @@
                             </div>
 
                             <div class="col-md-5">
-                                <select id="topicFilter" class="form-select">
+                                <select id="" class="form-select">
                                     <option value="">All</option>
                                     <option value="">Used</option>
                                     <option value="">Not Used</option>
