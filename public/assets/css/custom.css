@@ -147,3 +147,8 @@ button:disabled {
     {
         cursor: pointer;
     }
+    .answer-border
+    {
+        border: 2px solid #45ab48;
+    border-radius: 8px;
+    }
