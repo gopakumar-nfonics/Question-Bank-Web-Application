@@ -59,22 +59,23 @@
                             id="subjecttable">
                             <!--begin::Table head-->
                             <thead>
-                                <tr class="fw-bold">
+                                <tr class="fw-bold fs-6">
                                     <th class="w-50px">#</th>
-                                    <th class="min-w-200px">Question</th>
-                                    <th class="min-w-150px">Answer</th>
-                                    <th class="min-w-150px">Subject</th>
-                                    <th class="min-w-150px">Topic</th>
+                                    <th class="min-w-200px">Question & Answer</th>
+                                    <!-- <th class="min-w-150px">Answer</th> -->
+                                    <th class="min-w-150px">Subject & Topic</th>
+                                    <!-- <th class="min-w-150px"></th>
                                     <th class="min-w-100px">Level</th>
-                                    @if( !empty(Auth::user()->isAdmin()) )
-                                        <th class="min-w-100px">Added By</th>
-                                    @endif
+                                     @if( !empty(Auth::user()->isAdmin()) )
+                                    <th class="min-w-100px">Added By</th>
+                                    @endif -->
                                     <th class="min-w-150px text-center">Actions</th>
                                 </tr>
                             </thead>
                             <!--end::Table head-->
                             <!--begin::Table body-->
                             <tbody>
+
                                 @forelse($questions as $key => $question)
                                 <tr>
                                     <td>
@@ -86,28 +87,54 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex justify-content-start flex-column">
-                                                <div class="fw-400 d-block fs-6">
+                                                <div class="fw-400 d-block fs-6 text-gray-800 fw-bold ">
                                                     {!!ucfirst($question->qs_question)!!}
                                                 </div>
+                                                <div class="fw-400 d-block fs-6 text-primary">
+                                                    {!! ucfirst($question->correctAnswer->qo_options) !!}
+                                                </div>
+
+                                                <div class="fw-400 d-block text-muted mt-1 fw-bold fs-7">
+                                                    @if( !empty(Auth::user()->isAdmin()) )
+                                                    <i class="fa-solid fa-user fs-8 p-0 me-1"></i>
+                                                    {{ ucfirst($question->creator->name) }} &nbsp;&nbsp;
+                                                    @endif
+                                                    <i class="fa-solid fa-calendar-days fs-8 p-0 me-1 ms-0"></i>
+
+                                                    {{ \Carbon\Carbon::parse($question->created_at)->format('d-M-Y') }}
+                                                </div>
+
                                             </div>
                                         </div>
                                     </td>
 
-                                    <td>
+                                    <!-- <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
                                                 {!! ucfirst($question->correctAnswer->qo_options) !!}
                                             </div>
                                         </div>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <div class="d-flex align-items-center">
-                                            <div class="fw-400 d-block fs-6">
-                                                {{ ucfirst($question->subject->sub_name) }}
+                                            <div class="d-flex justify-content-start flex-column">
+                                                <div class="fw-400 d-block fs-6 text-gray-800 fw-bold ">
+                                                    {{ ucfirst($question->subject->sub_name) }}
+                                                </div>
+                                                <div class="fw-400 d-block fs-6 text-muted ">
+                                                    {{ ucfirst($question->topic->topic_name) }}
+                                                </div>
+                                                <div class="fw-400 d-block fs-6">
+
+                                                    <span
+                                                        class="badge badge-light-{{$question->difficultylevel->difficulty_level_color}} fs-7 ps-0">
+                                                        {{ ucfirst($question->difficultylevel->difficulty_level) }}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
                                                 {{ ucfirst($question->topic->topic_name) }}
@@ -121,7 +148,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    @if( !empty(Auth::user()->isAdmin()) )
+                                     @if( !empty(Auth::user()->isAdmin()) )
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="fw-400 d-block fs-6">
@@ -129,7 +156,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    @endif
+                                    @endif -->
                                     <td class="text-center">
                                         <a href="#" class="btn btn-sm btn-light btn-active-light-primary"
                                             data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
@@ -139,12 +166,15 @@
                                             data-kt-menu="true">
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="{{route('question.edit',$question->qs_id)}}" class="menu-link px-3">Edit</a>
+                                                <a href="{{route('question.edit',$question->qs_id)}}"
+                                                    class="menu-link px-3">Edit</a>
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="javascript:void(0)" onclick="removeQuestion('{{$question->qs_id}}')" class="menu-link px-3"
+                                                <a href="javascript:void(0)"
+                                                    onclick="removeQuestion('{{$question->qs_id}}')"
+                                                    class="menu-link px-3"
                                                     data-kt-customer-table-filter="delete_row">Delete</a>
                                             </div>
                                             <!--end::Menu item-->

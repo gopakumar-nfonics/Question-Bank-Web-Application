@@ -68,15 +68,19 @@
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8 fv-row">
-										<div class="input-group">
-											<input type="password" id="password" name="password" class="form-control form-control-lg form-control-solid @error('password') is-invalid @enderror" placeholder="Password" value="{{ old('password') }}" />
-											<span class="input-group-text" onclick="togglePasswordVisibility()">
-												<i class="fas fa-eye" id="togglePasswordIcon"></i>
-											</span>
-                                            @error('password')<div class="invalid-feedback">{{ $message }}</div> @enderror
-										</div>
-										
-									</div>
+                                        <div class="input-group">
+                                            <input type="password" id="password" name="password"
+                                                class="form-control form-control-lg form-control-solid @error('password') is-invalid @enderror"
+                                                placeholder="Password" value="{{ old('password') }}" />
+                                            <span class="input-group-text border-0"
+                                                onclick="togglePasswordVisibility()">
+                                                <i class="fas fa-eye" id="togglePasswordIcon"></i>
+                                            </span>
+                                            @error('password')<div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                    </div>
                                     <!--end::Col-->
                                 </div>
                                 <!--end::Input group-->
@@ -106,11 +110,11 @@
 
     @endsection
     @section('pageScripts')
-	<script>
+    <script>
     function togglePasswordVisibility() {
         const passwordField = document.getElementById("password");
         const toggleIcon = document.getElementById("togglePasswordIcon");
-        
+
         if (passwordField.type === "password") {
             passwordField.type = "text";
             toggleIcon.classList.remove("fa-eye");
@@ -121,5 +125,5 @@
             toggleIcon.classList.add("fa-eye");
         }
     }
-</script>
-@endsection
+    </script>
+    @endsection
