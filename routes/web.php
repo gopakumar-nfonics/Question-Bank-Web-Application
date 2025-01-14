@@ -55,3 +55,5 @@ Route::post('/question/deleteQuestionPaper', [\App\Http\Controllers\resource\que
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 Route::put('/profileupdate', [App\Http\Controllers\HomeController::class, 'profileupdate'])->name('profileupdate');
 
+Route::post('/question/deleteQuestionTemplate', [\App\Http\Controllers\resource\question::class, 'deleteQuestionTemplate'])->name('question.deleteQuestionTemplate');
+

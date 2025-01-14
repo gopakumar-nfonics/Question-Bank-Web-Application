@@ -45,7 +45,7 @@
                     <div class="table-responsive">
                         <!--begin::Table-->
                         <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
-                            id="subjecttable">
+                            id="templatetable">
                             <!--begin::Table head-->
                             <thead>
                                 <tr class="fw-bold">
@@ -114,7 +114,7 @@
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="javascript:void(0)" class="menu-link px-3"
+                                                <a href="javascript:void(0)"  onclick="removetemplate('{{$config['tid']}}')" class="menu-link px-3"
                                                     data-kt-customer-table-filter="delete_row">Delete</a>
                                             </div>
                                             <!--end::Menu item-->
@@ -148,7 +148,7 @@
 
 <script>
 $(document).ready(function() {
-    $('#subjecttable').DataTable({
+    $('#templatetable').DataTable({
         "iDisplayLength": 10,
         "searching": true,
         "recordsTotal": 3615,
@@ -156,11 +156,12 @@ $(document).ready(function() {
     });
 });
 </script>
+
 <script>
-function removeSub(subid) {
+	function removetemplate(temid) {
     swal({
             title: "Are you sure?",
-            text: "You want to remove this subject",
+            text: "You want to remove this Template",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -168,10 +169,11 @@ function removeSub(subid) {
         .then((willDelete) => {
             if (willDelete) {
                 $.ajax({
-                    url: "/subject/" + subid,
-                    type: 'DELETE', // Use DELETE HTTP method
+                    url: "{{ route('question.deleteQuestionTemplate') }}",
+                    type: 'POST', // Use DELETE HTTP method
                     data: {
-                        _token: '{{ csrf_token() }}' // Include the CSRF token for security
+                        _token: '{{ csrf_token() }}' ,
+                        t_id: temid,
                     },
                     success: function(response) {
                         if (response.success) {

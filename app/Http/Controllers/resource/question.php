@@ -420,6 +420,34 @@ public function questionpaper()
         return response()->json(['success' => 'The QuestionPaper has been deleted!']);
         
     }
+    
+    public function deleteQuestionTemplate(Request $request)
+    {
+        $id = $request->input('t_id');
 
+        try {
+            // Find the subject by ID
+            $template = QuestionConfig::findOrFail($id);
+
+            // Check if the subject is already soft-deleted
+            if ($template) {
+
+                $pappercount = QuestionPaper::where('qp_template', $template->id)->count();
+                // Permanently delete the subject
+                if ($pappercount > 0) {
+                    return response()->json(['error' => 'Cannot delete template associated with a question paper.']);
+                }
+
+                $template->forceDelete();
+                return response()->json(['success' => 'The Template has been deleted!']);
+            }
+    
+          
+        } catch (\Exception $e) {
+            // Handle errors
+            return response()->json(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()], 500);
+        }
+        
+    }
 
 }
