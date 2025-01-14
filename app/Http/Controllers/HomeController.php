@@ -63,13 +63,11 @@ class HomeController extends Controller
 
         $request->validate([
             'fname' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:tbl_users,email,'.$id,
             'password' => 'nullable|string|min:8',
         ]);
         try{
            $user = User::findOrFail($id);
            $user->name = $request->fname;
-           $user->email = $request->email;
            if($request->filled('password')){
            $user->password = bcrypt($request->password);
            }
