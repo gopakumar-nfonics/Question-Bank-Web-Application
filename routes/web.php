@@ -57,3 +57,6 @@ Route::put('/profileupdate', [App\Http\Controllers\HomeController::class, 'profi
 
 Route::post('/question/deleteQuestionTemplate', [\App\Http\Controllers\resource\question::class, 'deleteQuestionTemplate'])->name('question.deleteQuestionTemplate');
 
+Route::resource('report',\App\Http\Controllers\resource\report::class);
+Route::post('/report/fetchdata', [App\Http\Controllers\resource\report::class, 'fetchdata'])->name('report.fetchdata');
+
