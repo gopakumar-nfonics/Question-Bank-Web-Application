@@ -5,18 +5,10 @@
     <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
         <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
             <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
-                <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Report</h1>
+                <h1 class="page-heading d-flex text-dark fw-bold fs-3 flex-column justify-content-center my-0">Question
+                    Report
+                </h1>
 
-                @if( !empty(Auth::user()->isPapersetter()) )
-                <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-6 my-0 ">
-                    <li class="breadcrumb-item text-muted pt-3">
-                        <a class="text-primary"> You are managing <span class="text-primary fw-bold">
-                                {{ $questions->count() }}
-                            </span>
-                            questions.</a>
-                    </li>
-                </ul>
-                @endif
             </div>
         </div>
     </div>
@@ -28,8 +20,8 @@
                     <div class="table-responsive">
 
                         <!-- Filters -->
-                        <div class="row mb-4">
-                            <div class="col-md-3">
+                        <div class="row mb-4 mt-10">
+                            <div class="col-md-5">
                                 <select id="subjectFilter" class="form-select">
                                     <option value="">All Subjects</option>
                                     @foreach($subjects as $subject)
@@ -38,31 +30,57 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-5">
                                 <select id="topicFilter" class="form-select">
                                     <option value="">All Topics</option>
-                                  
+
                                 </select>
                             </div>
 
-                            <div class="col-md-3">
-                                <select id="difficultyFilter" class="form-select">
-                                    <option value="">All Difficulty Levels</option>
+                            <div class="col-md-2">
+                                <select id=" difficultyFilter" class="form-select">
+                                    <option value="">All Level</option>
                                     @foreach($difficultyLevels as $level)
                                     <option value="{{ $level->id }}">{{ $level->difficulty_level }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
-                            <div class="col-md-3">
-                                <button id="exportBtn" class="btn btn-success">
-                                    <i class="fa fa-file-excel"></i> Export
+
+                        </div>
+
+                        <!-- Filters -->
+                        <div class="row mb-4 pt-5">
+                            <div class="col-md-5">
+                                <select id="subjectFilter" class="form-select">
+                                    <option value="">All QP Managers</option>
+                                    @foreach($subjects as $subject)
+                                    <option value="{{ $subject->id }}">{{ $subject->sub_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-5">
+                                <select id="topicFilter" class="form-select">
+                                    <option value="">All</option>
+                                    <option value="">Used</option>
+                                    <option value="">Not Used</option>
+
+                                </select>
+                            </div>
+
+
+                            <div class="col-md-2">
+                                <button id="exportBtn" class="btn btn-success w-100">
+                                    <i class="fa fa-file-excel"></i> Export as Excel
                                 </button>
                             </div>
                         </div>
 
+
                         <!-- Table -->
-                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4" id="subjecttable">
+                        <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4"
+                            id="subjecttable">
                             <thead>
                                 <tr class="fw-bold fs-6">
                                     <th class="w-50px">#</th>
@@ -70,7 +88,7 @@
                                     <th class="min-w-150px">Subject & Topic</th>
                                 </tr>
                             </thead>
-                            
+
                         </table>
                     </div>
                 </div>
@@ -107,7 +125,7 @@ document.getElementById('subjectFilter').addEventListener('change', function() {
 </script>
 
 <script>
-   $(document).ready(function() {
+$(document).ready(function() {
     $('#subjecttable').DataTable({
         processing: true,
         serverSide: true,
@@ -121,12 +139,22 @@ document.getElementById('subjectFilter').addEventListener('change', function() {
                 d.difficulty = $('#difficultyFilter').val();
             }
         },
-        columns: [
-            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-            { data: 'formatted_question', name: 'formatted_question' },
-            { data: 'subject_topic', name: 'subject_topic' }
+        columns: [{
+                data: 'DT_RowIndex',
+                name: 'DT_RowIndex',
+                orderable: false,
+                searchable: false
+            },
+            {
+                data: 'formatted_question',
+                name: 'formatted_question'
+            },
+            {
+                data: 'subject_topic',
+                name: 'subject_topic'
+            }
         ],
-        searching: true,  // ✅ Enable searching
+        searching: true, // ✅ Enable searching
         paging: true,
         ordering: true,
         iDisplayLength: 10,
@@ -141,7 +169,5 @@ document.getElementById('subjectFilter').addEventListener('change', function() {
         $('#subjecttable').DataTable().draw();
     });
 });
-
-
 </script>
 @endsection
