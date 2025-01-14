@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DifficultyLevel;
 use App\Models\Subject;
+use App\Models\Topic;
 use App\Models\Question as Questions;
 use App\Models\QuestionOption;
 use App\Models\QuestionConfig;
@@ -151,7 +152,12 @@ class question extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $question =Questions::with(['subject', 'topic', 'correctAnswer','difficultylevel'])->find($id);
+        $difficultyLevels = DifficultyLevel::all();
+        $subjects = Subject::all();
+        $topics = Topic::where('subject_id', $question->qs_subject_id)->get();
+        // print_r($topics);exit();
+        return view('question.edit',compact('question', 'difficultyLevels', 'subjects', 'topics'));
     }
 
     /**
