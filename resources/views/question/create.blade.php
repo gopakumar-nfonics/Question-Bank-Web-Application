@@ -134,10 +134,12 @@ input[type="radio"]:checked+.form-check-label {
 
                                                         </label>
                                                     </div>
-                                                    <textarea id="option1" name="option1"
-                                                    class="editor form-control mb-2 @error('option1') is-invalid @enderror questions">
-                                                        {{ old('option1') }}
-                                                    </textarea>
+                                                    <div class="@error('option1') is-invalid @enderror questions">
+                                                        <textarea id="option1" name="option1"
+                                                        class="editor form-control mb-2">
+                                                            {{ old('option1') }}
+                                                        </textarea>
+                                                    </div>
                                                     @error('option1')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -158,10 +160,12 @@ input[type="radio"]:checked+.form-check-label {
 
                                                         </label>
                                                     </div>
-                                                    <textarea id="option2" name="option2"
-                                                    class="editor form-control mb-2 @error('option2') is-invalid @enderror questions">
-                                                        {{ old('option2') }}
-                                                    </textarea>
+                                                    <div class="@error('option2') is-invalid @enderror questions">
+                                                        <textarea id="option2" name="option2"
+                                                        class="editor form-control mb-2">
+                                                            {{ old('option2') }}
+                                                        </textarea>
+                                                    </div>
                                                     @error('option2')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -182,10 +186,12 @@ input[type="radio"]:checked+.form-check-label {
 
                                                         </label>
                                                     </div>
-                                                    <textarea id="option3" name="option3"
-                                                    class="editor form-control mb-2 @error('option3') is-invalid @enderror questions">
-                                                        {{ old('option3') }}
-                                                    </textarea>
+                                                    <div class="@error('option3') is-invalid @enderror questions">
+                                                        <textarea id="option3" name="option3"
+                                                        class="editor form-control mb-2">
+                                                            {{ old('option3') }}
+                                                        </textarea>
+                                                    </div>
                                                     @error('option3')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -206,10 +212,12 @@ input[type="radio"]:checked+.form-check-label {
 
                                                         </label>
                                                     </div>
-                                                    <textarea id="option4" name="option4"
-                                                    class="editor form-control mb-2 @error('option4') is-invalid @enderror questions">
-                                                        {{ old('option4') }}
-                                                    </textarea>
+                                                    <div class="@error('option4') is-invalid @enderror questions">
+                                                        <textarea id="option4" name="option4"
+                                                        class="editor form-control mb-2 ">
+                                                            {{ old('option4') }}
+                                                        </textarea>
+                                                    </div>
                                                     @error('option4')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -298,6 +306,113 @@ document.getElementById('q_subject').addEventListener('change', function() {
     document.addEventListener('DOMContentLoaded', function () {
         MathJax.typesetPromise();
     });
+</script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Select all form controls that have error messages
+        const formControls = document.querySelectorAll('.form-control');
+
+        // Loop through each form control and add event listeners
+        formControls.forEach(control => {
+            // Check if the control is a textarea or an input
+            const isTextarea = control.tagName.toLowerCase() === 'textarea';
+
+            control.addEventListener('input', function () {
+                const errorMessage = this.closest('.fv-row').querySelector('.invalid-feedback');
+                // Check the value of the textarea or input
+                const value = isTextarea ? this.value.trim() : this.value.trim();
+
+                if (value !== '') {
+                    // If the input or textarea is not empty, hide the error message
+                    if (errorMessage) {
+                        errorMessage.style.display = 'none';
+                    }
+                    this.classList.remove('is-invalid'); // Remove invalid class
+                } else {
+                    // Show error if the input or textarea is still empty
+                    if (errorMessage) {
+                        errorMessage.style.display = 'block';
+                    }
+                    this.classList.add('is-invalid'); // Add invalid class
+                }
+            });
+        });
+    });
+
+</script>
+<script>
+
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     // Get all radio buttons with name "is_answer"
+    //     const radioButtons = document.querySelectorAll('input[name="is_answer"]');
+
+    //     // Add event listener to each radio button
+    //     radioButtons.forEach(radio => {
+    //         radio.addEventListener('change', function () {
+    //             // Remove the 'answer-border' class from all parent divs
+    //             document.querySelectorAll('.answer-border').forEach(div => {
+    //                 div.classList.remove('answer-border');
+    //             });
+
+    //             // Add 'answer-border' to the corresponding parent div of the textarea
+    //             const optionId = `option${this.value}`;
+    //             const textarea = document.getElementById(optionId);
+    //             if (textarea) {
+    //                 const parentDiv = textarea.parentElement; // Get the parent <div>
+    //                 if (parentDiv) {
+    //                     parentDiv.classList.add('answer-border');
+    //                 }
+    //             }
+    //         });
+    //     });
+    // });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Function to set the answer-border class for the default checked radio button
+        function setDefaultChecked() {
+            const checkedRadio = document.querySelector('input[name="is_answer"]:checked');
+            if (checkedRadio) {
+                const optionId = `option${checkedRadio.value}`;
+                const textarea = document.getElementById(optionId);
+                if (textarea) {
+                    const parentDiv = textarea.parentElement; // Get the parent <div>
+                    if (parentDiv) {
+                        parentDiv.classList.add('answer-border');
+                    }
+                }
+            }
+        }
+
+        // Get all radio buttons with name "is_answer"
+        const radioButtons = document.querySelectorAll('input[name="is_answer"]');
+
+        // Add event listener to each radio button
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', function () {
+                // Remove the 'answer-border' class from all parent divs
+                document.querySelectorAll('.answer-border').forEach(div => {
+                    div.classList.remove('answer-border');
+                });
+
+                // Add 'answer-border' to the corresponding parent div of the textarea
+                const optionId = `option${this.value}`;
+                const textarea = document.getElementById(optionId);
+                if (textarea) {
+                    const parentDiv = textarea.parentElement; // Get the parent <div>
+                    if (parentDiv) {
+                        parentDiv.classList.add('answer-border');
+                    }
+                }
+            });
+        });
+
+        // Set the class for the default checked option on page load
+        setDefaultChecked();
+    });
+
+
 </script>
 
 @endsection
