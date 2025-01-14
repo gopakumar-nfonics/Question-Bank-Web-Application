@@ -5,6 +5,7 @@ namespace App\Http\Controllers\resource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User as userauthenticate;
+use App\Models\Question;
 use Illuminate\Support\Facades\Auth;
 
 class user extends Controller
@@ -117,6 +118,10 @@ class user extends Controller
         $user = userauthenticate::findOrFail($request->input('id'));
         if (!$user) {
         return response()->json(['error' => 'User not found.'], 404);
+        }
+        $questioncount = Question::where('created_by', $request->input('id'))->count();
+        if ($questioncount > 0) {
+            return response()->json(['error' => 'Cannot delete this user because they are associated with questions.']);
         }
         $user->forceDelete(); 
         return response()->json(['success' => 'The user has been deleted!']);
