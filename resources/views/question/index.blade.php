@@ -66,6 +66,9 @@
                                     <th class="min-w-150px">Subject</th>
                                     <th class="min-w-150px">Topic</th>
                                     <th class="min-w-100px">Level</th>
+                                    @if( !empty(Auth::user()->isAdmin()) )
+                                        <th class="min-w-100px">Added By</th>
+                                    @endif
                                     <th class="min-w-150px text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -118,6 +121,15 @@
                                             </div>
                                         </div>
                                     </td>
+                                    @if( !empty(Auth::user()->isAdmin()) )
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="fw-400 d-block fs-6">
+                                                {{ ucfirst($question->creator->name) }}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    @endif
                                     <td class="text-center">
                                         <a href="#" class="btn btn-sm btn-light btn-active-light-primary"
                                             data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
@@ -127,7 +139,7 @@
                                             data-kt-menu="true">
                                             <!--begin::Menu item-->
                                             <div class="menu-item px-3">
-                                                <a href="" class="menu-link px-3">Edit</a>
+                                                <a href="{{route('question.edit',$question->qs_id)}}" class="menu-link px-3">Edit</a>
                                             </div>
                                             <!--end::Menu item-->
                                             <!--begin::Menu item-->

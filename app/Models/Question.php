@@ -41,4 +41,8 @@ class Question extends Model
     {
         return $this->belongsTo(DifficultyLevel::class, 'qs_difficulty_level');
     }
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

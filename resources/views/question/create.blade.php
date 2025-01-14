@@ -111,7 +111,9 @@ input[type="radio"]:checked+.form-check-label {
                                                     <div class="fs-6 fw-bold text-gray-700 col-lg-12">
                                                         <label class="required form-label">Question</label>
                                                         <textarea id="" name="question"
-                                                            class=" editor form-control mb-2 @error('question') is-invalid @enderror questions">{{ old('question') }}</textarea>
+                                                        class=" editor form-control mb-2 @error('question') is-invalid @enderror questions">
+                                                            {{ old('question') }}
+                                                        </textarea>
                                                         @error('question')<div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div> @enderror
@@ -133,7 +135,9 @@ input[type="radio"]:checked+.form-check-label {
                                                         </label>
                                                     </div>
                                                     <textarea id="option1" name="option1"
-                                                        class="editor form-control mb-2 @error('option1') is-invalid @enderror questions"></textarea>
+                                                    class="editor form-control mb-2 @error('option1') is-invalid @enderror questions">
+                                                        {{ old('option1') }}
+                                                    </textarea>
                                                     @error('option1')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -155,7 +159,9 @@ input[type="radio"]:checked+.form-check-label {
                                                         </label>
                                                     </div>
                                                     <textarea id="option2" name="option2"
-                                                        class="editor form-control mb-2 @error('option2') is-invalid @enderror questions"></textarea>
+                                                    class="editor form-control mb-2 @error('option2') is-invalid @enderror questions">
+                                                        {{ old('option2') }}
+                                                    </textarea>
                                                     @error('option2')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -177,7 +183,9 @@ input[type="radio"]:checked+.form-check-label {
                                                         </label>
                                                     </div>
                                                     <textarea id="option3" name="option3"
-                                                        class="editor form-control mb-2 @error('option3') is-invalid @enderror questions"></textarea>
+                                                    class="editor form-control mb-2 @error('option3') is-invalid @enderror questions">
+                                                        {{ old('option3') }}
+                                                    </textarea>
                                                     @error('option3')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -199,7 +207,9 @@ input[type="radio"]:checked+.form-check-label {
                                                         </label>
                                                     </div>
                                                     <textarea id="option4" name="option4"
-                                                        class="editor form-control mb-2 @error('option4') is-invalid @enderror questions"></textarea>
+                                                    class="editor form-control mb-2 @error('option4') is-invalid @enderror questions">
+                                                        {{ old('option4') }}
+                                                    </textarea>
                                                     @error('option4')<div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
                                                 </div>
