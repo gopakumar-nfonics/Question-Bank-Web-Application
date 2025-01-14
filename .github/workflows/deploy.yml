@@ -14,21 +14,23 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install SSH client and sshpass
+    - name: Install sshpass
       run: |
         sudo apt-get update
-        sudo apt-get install -y openssh-client sshpass
+        sudo apt-get install -y sshpass
 
     - name: Copy files via rsync
       env:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD_QB }}
       run: |
-        rsync -az -e "sshpass -p $SSH_PASSWORD ssh -p 3591 -o StrictHostKeyChecking=no" ./ admissions@103.10.27.59:/var/www/html/
-        
+        sshpass -p "$SSH_PASSWORD" rsync -az --delete -e "ssh -p 3591 -o StrictHostKeyChecking=no" . admissions@103.10.27.59:/var/www/html/
+
     - name: Execute remote commands using SSH
       env:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD_QB }}
       run: |
-        sshpass -p $SSH_PASSWORD ssh -o StrictHostKeyChecking=no -p 3591 admissions@103.10.27.59 << 'EOF'
-        # Add more commands as needed
+        sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no -p 3591 admissions@103.10.27.59 <<EOF
+        # Commands to execute after deployment
+        cd /var/www/html/
+        echo "Deployment complete!"
         EOF
