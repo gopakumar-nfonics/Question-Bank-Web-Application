@@ -48,15 +48,15 @@
                                 <!--begin::Input group-->
                                 <div class="row mb-6">
                                     <!--begin::Label-->
-                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Full Name</label>
+                                    <label class="col-lg-4 col-form-label required fw-semibold fs-6">Name</label>
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8">
 
-                                        <input type="text" name="fname"
-                                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('fname') is-invalid @enderror"
-                                            placeholder="First name" value="{{ old('fname', $user->name) }}" />
-                                        @error('fname')<div class="invalid-feedback">{{ $message }}</div> @enderror
+                                        <input type="text" name="name"
+                                            class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('name') is-invalid @enderror"
+                                            placeholder="Name" value="{{ old('name', $user->name) }}" />
+                                        @error('name')<div class="invalid-feedback">{{ $message }}</div> @enderror
                                     </div>
 
                                 </div>
@@ -68,11 +68,15 @@
                                     <!--end::Label-->
                                     <!--begin::Col-->
                                     <div class="col-lg-8 fv-row">
-                                        <input type="password" name="password"
-                                            class="form-control form-control-lg form-control-solid @error('password') is-invalid @enderror"
-                                            placeholder="Password" value="{{ old('password') }}" />
-                                        @error('password')<div class="invalid-feedback">{{ $message }}</div> @enderror
-                                    </div>
+										<div class="input-group">
+											<input type="password" id="password" name="password" class="form-control form-control-lg form-control-solid @error('password') is-invalid @enderror" placeholder="Password" value="{{ old('password') }}" />
+											<span class="input-group-text" onclick="togglePasswordVisibility()">
+												<i class="fas fa-eye" id="togglePasswordIcon"></i>
+											</span>
+                                            @error('password')<div class="invalid-feedback">{{ $message }}</div> @enderror
+										</div>
+										
+									</div>
                                     <!--end::Col-->
                                 </div>
                                 <!--end::Input group-->
@@ -101,3 +105,21 @@
     <!--end::Content wrapper-->
 
     @endsection
+    @section('pageScripts')
+	<script>
+    function togglePasswordVisibility() {
+        const passwordField = document.getElementById("password");
+        const toggleIcon = document.getElementById("togglePasswordIcon");
+        
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
+        }
+    }
+</script>
+@endsection

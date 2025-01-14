@@ -62,12 +62,12 @@ class HomeController extends Controller
         $id = Auth::user()->id;
 
         $request->validate([
-            'fname' => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'password' => 'nullable|string|min:8',
         ]);
         try{
            $user = User::findOrFail($id);
-           $user->name = $request->fname;
+           $user->name = $request->name;
            if($request->filled('password')){
            $user->password = bcrypt($request->password);
            }
