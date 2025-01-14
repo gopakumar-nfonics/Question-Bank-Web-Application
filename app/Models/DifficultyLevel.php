@@ -12,6 +12,7 @@ class DifficultyLevel extends Model
 
     protected $fillable = [
         'difficulty_level',
+        'difficulty_level_color',
         'created_by',
     ];
 
