@@ -156,8 +156,9 @@ class question extends Controller
         $difficultyLevels = DifficultyLevel::all();
         $subjects = Subject::all();
         $topics = Topic::where('subject_id', $question->qs_subject_id)->get();
-        // print_r($topics);exit();
-        return view('question.edit',compact('question', 'difficultyLevels', 'subjects', 'topics'));
+        $questionOptions = QuestionOption::where('qo_question_id', $question->qs_id)->get();
+        
+        return view('question.edit',compact('question', 'difficultyLevels', 'subjects', 'topics', 'questionOptions'));
     }
 
     /**
@@ -165,8 +166,69 @@ class question extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Validate the incoming request
+        $request->validate([
+            'question' => 'required|string',
+            'q_subject' => 'nullable|exists:tbl_subjects,id',
+            'q_topic' => 'nullable|exists:tbl_topics,topic_id',
+            'difficulty_level' => 'nullable|exists:tbl_difficulty_level,id',
+            'option1' => 'required|string',
+            'option2' => 'required|string',
+            'option3' => 'required|string',
+            'option4' => 'required|string',
+            'is_answer' => 'required|string',
+        ], [
+            'question.required' => 'The question field is required.',
+            'question.string' => 'The question must be a valid string.',
+            'q_subject.exists' => 'The selected subject is invalid.',
+            'q_topic.exists' => 'The selected topic is invalid.',
+            'difficulty_level.exists' => 'The selected difficulty level is invalid.',
+            'option1.required' => 'Option 1 is required.',
+            'option2.required' => 'Option 2 is required.',
+            'option3.required' => 'Option 3 is required.',
+            'option4.required' => 'Option 4 is required.',
+            'is_answer.required' => 'Please specify the correct answer.',
+            'is_answer.string' => 'The correct answer must be a valid string.',
+        ]);
+        
+        try {
+            // Find the question by its ID
+            $questionModel = Questions::findOrFail($id);
+            
+            // Update the question's main fields
+            $questionModel->qs_question = $request->question;
+            $questionModel->qs_difficulty_level = $request->difficulty_level;
+            $questionModel->qs_subject_id = $request->q_subject;
+            $questionModel->qs_topic_id = $request->q_topic;
+            $questionModel->created_by = Auth::id();
+            $questionModel->save();
+
+            // Retrieve or create the question options
+            $questionOptions = QuestionOption::where('qo_question_id', $questionModel->qs_id)->get();
+
+            // Update or create options for the question
+            foreach (['option1', 'option2', 'option3', 'option4'] as $index => $option) {
+                $questionOption = $questionOptions[$index] ?? new QuestionOption();
+                $questionOption->qo_question_id = $questionModel->qs_id;
+                $questionOption->qo_options = $request->$option;
+                $questionOption->qo_created_by = Auth::id();
+                $questionOption->save();
+            }
+
+            // Set the correct answer based on the selected radio button
+            $correctAnswerOption = $questionOptions->firstWhere('qo_id', $request->is_answer);
+            $questionModel->qs_answer = $correctAnswerOption ? $correctAnswerOption->qo_id : null;
+            $questionModel->save();
+
+            // Redirect with success message
+            return redirect()->route('question.index')->with('success', 'Question Updated Successfully');
+        } catch (\Exception $e) {
+            // Log the error and return back with an error message
+            Log::error('Error updating question: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred while updating the question.');
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.

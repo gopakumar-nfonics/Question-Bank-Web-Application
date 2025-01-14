@@ -186,7 +186,7 @@ $(document).ready(function() {
 function removePaper(paperId) {
     swal({
             title: "Are you sure?",
-            text: "You want to remove this subject",
+            text: "You want to remove this question paper",
             icon: "warning",
             buttons: true,
             dangerMode: true,
