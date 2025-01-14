@@ -22,8 +22,10 @@ jobs:
     - name: Copy files via rsync
       env:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD_QB }}
-      run: |
-        sshpass -p "$SSH_PASSWORD" rsync -az --delete -e "ssh -p 3591 -o StrictHostKeyChecking=no" . admissions@103.10.27.59:/var/www/html/
+
+     run: |
+     rsync -az --exclude '/storage' --exclude '/bootstrap/cache' -e "sshpass -p $SSH_PASSWORD ssh -p 3591 -o StrictHostKeyChecking=no" ./ admissions@103.10.27.59:/var/www/html/
+        
 
     - name: Execute remote commands using SSH
       env:
