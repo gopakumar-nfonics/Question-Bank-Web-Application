@@ -14,6 +14,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\IOFactory;
+use HTMLPurifier;
+use HTMLPurifier_Config;
 
 class GenerateQuestionPapersJob implements ShouldQueue
 {
@@ -191,7 +193,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
         //$table->addCell(10000, ['gridSpan' => 4])->addText(htmlspecialchars($question->qs_question));
         \PhpOffice\PhpWord\Shared\Html::addHtml(
             $table->addCell(10000, ['gridSpan' => 4]),
-            $question->qs_question
+            $this->sanitizeHtml($question->qs_question)
         );
 
         // Add options with label-value borders
@@ -204,7 +206,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
            // $table->addCell(10000, ['gridSpan' => 4])->addText(htmlspecialchars($option->qo_options));
            \PhpOffice\PhpWord\Shared\Html::addHtml(
             $table->addCell(10000, ['gridSpan' => 4]),
-            $option->qo_options
+            $this->sanitizeHtml($option->qo_options)
         );
         }
 
@@ -242,6 +244,16 @@ class GenerateQuestionPapersJob implements ShouldQueue
 
     return $fileName;
 }
+private function sanitizeHtml($html)
+{
+    // Initialize HTMLPurifier
+    $config = HTMLPurifier_Config::createDefault();
+    $purifier = new HTMLPurifier($config);
+
+    // Clean the HTML content
+    return $purifier->purify($html);
+}
+
 
     
 
