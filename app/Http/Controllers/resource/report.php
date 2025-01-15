@@ -8,6 +8,7 @@ use App\Models\Question;
 use App\Models\DifficultyLevel;
 use App\Models\Subject;
 use App\Models\Topic;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class report extends Controller
@@ -26,8 +27,9 @@ class report extends Controller
             $subjects = Subject::all();
             $topics = Topic::all();
             $difficultyLevels = DifficultyLevel::all();
+            $qpmanagers = User::all();
 
-        return view('report.index',compact('questions','subjects', 'topics', 'difficultyLevels'));
+        return view('report.index',compact('questions','subjects', 'topics', 'difficultyLevels','qpmanagers'));
     }
 
     /**
@@ -92,6 +94,17 @@ class report extends Controller
             if ($request->has('difficulty') && $request->difficulty != '') {
                 $query->where('qs_difficulty_level', $request->difficulty);
             }
+            if ($request->has('qp_managers') && $request->qp_managers != '') {
+                $query->where('created_by', $request->qp_managers);
+            }
+            if ($request->has('used_status') && $request->used_status !== '') {
+                if ($request->used_status == 'used') {
+                    $query->where('qs_usage_count', '>', 0);  // ✅ Used questions
+                } elseif ($request->used_status == 'notused') {
+                    $query->where('qs_usage_count', '=', 0);  // ✅ Unused questions
+                }
+            }
+            
     
             // Search functionality
             if (!empty($request->search['value'])) {
@@ -106,6 +119,8 @@ class report extends Controller
                       });
                 });
             }
+
+            $query->orderBy('qs_usage_count', 'desc');
     
             // Pagination logic
             $perPage = $request->get('length', 10);  // Rows per page
@@ -138,6 +153,8 @@ class report extends Controller
                                     ' : '') . '
                                     <i class="fa-solid fa-calendar-days fs-8 p-0 me-1 ms-0"></i>
                                     ' . \Carbon\Carbon::parse($question->created_at)->format('d-M-Y') . '
+                                    &nbsp;&nbsp;Used Count : ' . $question->qs_usage_count. '
+
                                 </div>
                             </div>
                         </div>',
