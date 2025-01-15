@@ -151,9 +151,9 @@ class report extends Controller
                                         <i class="fa-solid fa-user fs-8 p-0 me-1"></i>
                                         ' . ucfirst(optional($question->creator)->name) . ' &nbsp;&nbsp;
                                     ' : '') . '
-                                    <i class="fa-solid fa-calendar-days fs-8 p-0 me-1 ms-0"></i>
+                                    <i class="fa-solid fa-calendar-days fs-8 p-0 me-1 ms-2"></i>
                                     ' . \Carbon\Carbon::parse($question->created_at)->format('d-M-Y') . '
-                                    &nbsp;&nbsp;Used Count : ' . $question->qs_usage_count. '
+                                    &nbsp;&nbsp;<i class="fa-solid fa-list-check fs-8 p-0 ms-2 me-1"></i>Usage : ' . $question->qs_usage_count. '
 
                                 </div>
                             </div>
