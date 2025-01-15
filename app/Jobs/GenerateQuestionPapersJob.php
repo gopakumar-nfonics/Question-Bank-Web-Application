@@ -250,7 +250,7 @@ private function sanitizeHtml($html)
     $config = HTMLPurifier_Config::createDefault();
 
     // Allow all necessary tags including img with src attributes (base64 encoded)
-    $config->set('HTML.Allowed', 'div,p,br,strong,em,a[href|target],img[src|alt|width|height],ul,ol,li'); // allows img with src, alt, width, and height
+    $config->set('HTML.Allowed', 'div,p,br,strong,em,a[href|target],img[src|alt|width|height],table,tr,td,th,tbody,span,sup,sub');
 
     // Define allowed protocols to handle base64 and other valid protocols
     $config->set('URI.AllowedSchemes', [
