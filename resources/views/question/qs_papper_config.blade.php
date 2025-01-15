@@ -417,6 +417,7 @@ function addRowToTable(subjectSelect, topicSelect, difficultySelect, noOfQuestio
                 table.style.display = 'none';
             }
         });
+        updateProgressBar();
     }
 
     table.style.display = 'table';
