@@ -27,6 +27,7 @@
     <link href="{{ url('/') }}/assets/css/custom.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ url('/') }}/assets/css/alertify/alertify.min.css" />
     <link rel="stylesheet" href="{{ url('/') }}/assets/css/alertify/default.min.css" />
+    <link rel="stylesheet" href="{{ url('/') }}/assets/css/sweet-alert/sweetalert.min.css" />
     <link id="theme-style" rel="stylesheet" href="{{ url('/') }}/assets/css/style.css">
 
     <!--end::Global Stylesheets Bundle-->
@@ -706,6 +707,7 @@
                     src="{{ url('/') }}/assets/plugins/custom/bootstrap-datepicker/bootstrap-datepicker.min599c.js?v4.0.2">
                 </script>
                 <script src="{{ url('/') }}/assets/js/custom/custom.js"></script>
+                <script src="{{ url('/') }}/assets/js/sweet-alert/sweetalert.min.js"></script>
                 <!--end::Custom Javascript-->
                 <!--end::Javascript-->
                 <script>
