@@ -241,28 +241,16 @@ class GenerateQuestionPapersJob implements ShouldQueue
 
 private function addTextOrImage($table, $content)
 {
-    if (preg_match('/<img\s+src="data:image\/[^;]+;base64,([^"]+)"/', $content, $matches)) {
-        // Extract base64 image data
-        $base64Image = $matches[1];
-        $imageData = base64_decode($base64Image);
-
-        // Temporary image path
-        $tempImagePath = storage_path('app/temp_image.png');
-        file_put_contents($tempImagePath, $imageData);
-
-        // Add image to the cell
-        $table->addCell(10000, ['gridSpan' => 4])->addImage($tempImagePath, [
-            'width' => 200,
-            'height' => 200,
-            'wrappingStyle' => 'inline',
-        ]);
-
-        // Delete the temporary image
-        unlink($tempImagePath);
+    if ($this->isBase64Image($content)) {
+        $table->addCell(10000, ['gridSpan' => 4])->addImage($content);
     } else {
-        // If no image, add plain text
-        $table->addCell(10000, ['gridSpan' => 4])->addText(strip_tags($content));
+        $table->addCell(10000, ['gridSpan' => 4])->addText(htmlspecialchars($content));
     }
+}
+
+private function isBase64Image($content)
+{
+    return preg_match('/^data:image\/(png|jpg|jpeg|gif);base64,/', $content);
 }
     
 
