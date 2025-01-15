@@ -161,7 +161,8 @@
                                             <button class="btn btn-sm btn-success w-75px mt-0"
                                                 data-kt-element="add-item" id="addRowBtn" disabled>Add</button>
                                         </div>
-                                        <div class="invalid-feedback" id="available_question_error" style="font-weight:500;"></div>
+                                        <div class="invalid-feedback" id="available_question_error"
+                                            style="font-weight:500;"></div>
                                         <span class="fs-7 text-muted mt-1">Select the subject, topic, and difficulty
                                             level, specify the number of questions, and click the 'Add' button to
                                             include them in the Template table.</span>
@@ -304,82 +305,85 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     document.getElementById('addRowBtn').addEventListener('click', function(e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    const subjectSelect = document.getElementById('q_subject');
-    const subjectId = subjectSelect.value;
-    const topicSelect = document.getElementById('q_topic');
-    const topicId = topicSelect.value;
-    const difficultySelect = document.getElementById('difficulty_level');
-    const difficultyLevelId = difficultySelect.value;
-    const noOfQuestions = parseInt(document.getElementById('no_of_questions').value);
+        const subjectSelect = document.getElementById('q_subject');
+        const subjectId = subjectSelect.value;
+        const topicSelect = document.getElementById('q_topic');
+        const topicId = topicSelect.value;
+        const difficultySelect = document.getElementById('difficulty_level');
+        const difficultyLevelId = difficultySelect.value;
+        const noOfQuestions = parseInt(document.getElementById('no_of_questions').value);
 
-    if (!subjectId || !topicId || !difficultyLevelId || isNaN(noOfQuestions)) {
-        alert('Please complete all fields before proceeding.');
-        return;
-    }
-
-    // 🟢 Fetch available questions for the selected criteria
-    fetch('/get-available-questions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({
-            subject_id: subjectId,
-            topic_id: topicId,
-            difficulty_level_id: difficultyLevelId
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        const availableCount = data.available_count;
-
-        if (noOfQuestions > availableCount) {
-            $('#available_question_error').text(`Only ${availableCount} questions are available for this selection.`)
-            $('#available_question_error').show();
+        if (!subjectId || !topicId || !difficultyLevelId || isNaN(noOfQuestions)) {
+            alert('Please complete all fields before proceeding.');
             return;
         }
 
-        // 🟢 Proceed to add the row if validation passes
-        addRowToTable(subjectSelect, topicSelect, difficultySelect, noOfQuestions);
-        $('#available_question_error').hide();
-    })
-    .catch(error => {
-        console.error('Error fetching available questions:', error);
-       
+        // 🟢 Fetch available questions for the selected criteria
+        fetch('/get-available-questions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    subject_id: subjectId,
+                    topic_id: topicId,
+                    difficulty_level_id: difficultyLevelId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const availableCount = data.available_count;
+
+                if (noOfQuestions > availableCount) {
+                    $('#available_question_error').text(
+                        `Only ${availableCount} questions are available for the selected criteria. Refine the criteria and try again.`
+                    )
+                    $('#available_question_error').show();
+                    return;
+                }
+
+                // 🟢 Proceed to add the row if validation passes
+                addRowToTable(subjectSelect, topicSelect, difficultySelect, noOfQuestions);
+                $('#available_question_error').hide();
+            })
+            .catch(error => {
+                console.error('Error fetching available questions:', error);
+
+            });
     });
-});
 
-function addRowToTable(subjectSelect, topicSelect, difficultySelect, noOfQuestions) {
-    const subjectName = subjectSelect.selectedOptions[0].text;
-    const subjectId = subjectSelect.value;
-    const topicName = topicSelect.selectedOptions[0].text;
-    const topicId = topicSelect.value;
-    const difficultyLevelName = difficultySelect.selectedOptions[0].text;
-    const difficultyLevelId = difficultySelect.value;
+    function addRowToTable(subjectSelect, topicSelect, difficultySelect, noOfQuestions) {
+        const subjectName = subjectSelect.selectedOptions[0].text;
+        const subjectId = subjectSelect.value;
+        const topicName = topicSelect.selectedOptions[0].text;
+        const topicId = topicSelect.value;
+        const difficultyLevelName = difficultySelect.selectedOptions[0].text;
+        const difficultyLevelId = difficultySelect.value;
 
-    const table = document.getElementById('questionsTable');
-    const tbody = table.querySelector('tbody');
-    let rowExists = false;
+        const table = document.getElementById('questionsTable');
+        const tbody = table.querySelector('tbody');
+        let rowExists = false;
 
-    tbody.querySelectorAll('tr').forEach((row) => {
-        const rowSubjectName = row.querySelector('td:nth-child(2)').innerText;
-        const rowTopicName = row.querySelector('td:nth-child(3)').innerText;
-        const rowDifficultyLevelName = row.querySelector('td:nth-child(4)').innerText;
+        tbody.querySelectorAll('tr').forEach((row) => {
+            const rowSubjectName = row.querySelector('td:nth-child(2)').innerText;
+            const rowTopicName = row.querySelector('td:nth-child(3)').innerText;
+            const rowDifficultyLevelName = row.querySelector('td:nth-child(4)').innerText;
 
-        if (rowSubjectName === subjectName && rowTopicName === topicName && rowDifficultyLevelName === difficultyLevelName) {
-            const currentQuestions = parseInt(row.querySelector('td:nth-child(5)').innerText);
-            const updatedQuestions = currentQuestions + noOfQuestions;
-            row.querySelector('td:nth-child(5)').innerText = updatedQuestions;
-            rowExists = true;
-        }
-    });
+            if (rowSubjectName === subjectName && rowTopicName === topicName &&
+                rowDifficultyLevelName === difficultyLevelName) {
+                const currentQuestions = parseInt(row.querySelector('td:nth-child(5)').innerText);
+                const updatedQuestions = currentQuestions + noOfQuestions;
+                row.querySelector('td:nth-child(5)').innerText = updatedQuestions;
+                rowExists = true;
+            }
+        });
 
-    if (!rowExists) {
-        const row = document.createElement('tr');
-        row.innerHTML = `
+        if (!rowExists) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
             <td>${tbody.querySelectorAll('tr').length + 1}</td>
             <td>${subjectName}</td>
             <td>${topicName}</td>
@@ -388,25 +392,25 @@ function addRowToTable(subjectSelect, topicSelect, difficultySelect, noOfQuestio
             <td><button class="remove-btn btn btn-outline btn-outline-dashed btn-outline-danger btn-active-light-danger">Remove</button></td>
         `;
 
-        row.setAttribute('data-subject-id', subjectId);
-        row.setAttribute('data-topic-id', topicId);
-        row.setAttribute('data-difficulty-level-id', difficultyLevelId);
+            row.setAttribute('data-subject-id', subjectId);
+            row.setAttribute('data-topic-id', topicId);
+            row.setAttribute('data-difficulty-level-id', difficultyLevelId);
 
-        tbody.appendChild(row);
+            tbody.appendChild(row);
 
-        row.querySelector('.remove-btn').addEventListener('click', function() {
-            row.remove();
-            updateTableIndex(tbody);
-            if (tbody.querySelectorAll('tr').length === 0) {
-                table.style.display = 'none';
-            }
-        });
+            row.querySelector('.remove-btn').addEventListener('click', function() {
+                row.remove();
+                updateTableIndex(tbody);
+                if (tbody.querySelectorAll('tr').length === 0) {
+                    table.style.display = 'none';
+                }
+            });
+        }
+
+        table.style.display = 'table';
+        document.getElementById('difficulty_level').value = '';
+        document.getElementById('no_of_questions').value = '';
     }
-
-    table.style.display = 'table';
-    document.getElementById('difficulty_level').value = '';
-    document.getElementById('no_of_questions').value = '';
-}
 
 
 
