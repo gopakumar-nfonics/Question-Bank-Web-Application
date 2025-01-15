@@ -336,7 +336,23 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(data => {
         const availableCount = data.available_count;
 
-        if (noOfQuestions > availableCount) {
+        const table = document.getElementById('questionsTable');
+        const tbody = table.querySelector('tbody');
+        let alreadyAddedCount = 0;
+
+        tbody.querySelectorAll('tr').forEach((row) => {
+            const rowSubjectId = row.getAttribute('data-subject-id');
+            const rowTopicId = row.getAttribute('data-topic-id');
+            const rowDifficultyLevelId = row.getAttribute('data-difficulty-level-id');
+
+            if (rowSubjectId === subjectId && rowTopicId === topicId && rowDifficultyLevelId === difficultyLevelId) {
+                alreadyAddedCount += parseInt(row.querySelector('td:nth-child(5)').innerText);
+            }
+        });
+
+        const totalRequested = alreadyAddedCount + noOfQuestions;
+
+        if (totalRequested  > availableCount) {
             $('#available_question_error').text(`Only ${availableCount} questions are available for this selection.`)
             $('#available_question_error').show();
             return;
