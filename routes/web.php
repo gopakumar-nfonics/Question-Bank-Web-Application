@@ -8,15 +8,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', function () {
-    if (Auth::user()->isAdmin()) {
-        return redirect(route('dashboard'));
-    }
-    if (Auth::user()->isPapersetter()) {
-        return redirect(route('dashboard'));
-    }
-   
-})->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    
+    Route::get('/home', function () {
+        if (Auth::user()->isAdmin()) {
+            return redirect(route('dashboard'));
+        }
+        if (Auth::user()->isPapersetter()) {
+            return redirect(route('dashboard'));
+        }
+    
+    })->name('dashboard');
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
@@ -62,3 +65,4 @@ Route::post('/report/fetchdata', [App\Http\Controllers\resource\report::class, '
 
 Route::post('/get-available-questions', [App\Http\Controllers\resource\question::class, 'getAvailableQuestions']);
 
+});
