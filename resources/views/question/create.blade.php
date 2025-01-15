@@ -285,8 +285,8 @@ document.getElementById('q_subject').addEventListener('change', function() {
     }
 });
 </script>
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-
+<script src="{{ url('/') }}/assets/js/ck-editor/ckeditor.js"></script>
+<script src="{{ url('/') }}/assets/js/ck-editor/tex-mml-chtml.js"></script>
 <script>
     document.querySelectorAll('.editor').forEach(textarea => {
         ClassicEditor
@@ -301,7 +301,6 @@ document.getElementById('q_subject').addEventListener('change', function() {
             });
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         MathJax.typesetPromise();
