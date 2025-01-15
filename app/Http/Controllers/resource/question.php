@@ -316,7 +316,7 @@ class question extends Controller
     }
 
     
-    return redirect()->route('question.configiration')->with('success', 'Question paper configuration saved successfully!');
+    return redirect()->route('question.configiration')->with('success', 'Template saved successfully!');
 }
 public function questionConfigUpdate(Request $request, $id){
 
@@ -350,7 +350,7 @@ public function questionConfigUpdate(Request $request, $id){
     }
 
     
-    return redirect()->route('question.configiration')->with('success', 'Question paper configuration saved successfully!');
+    return redirect()->route('question.configiration')->with('success', 'Template updated successfully!');
 
 
 }
