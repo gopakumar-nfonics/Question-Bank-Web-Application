@@ -52,29 +52,29 @@
                         <!-- Filters -->
                         <div class="row mb-4 pt-5">
                             <div class="col-md-5">
-                                <select id="" class="form-select">
+                                <select id="qp_managers" class="form-select">
                                     <option value="">All QP Managers</option>
-                                    @foreach($subjects as $subject)
-                                    <option value="{{ $subject->id }}">{{ $subject->sub_name }}</option>
+                                    @foreach($qpmanagers as $qpm)
+                                    <option value="{{ $qpm->id }}">{{ $qpm->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
-                            <div class="col-md-5">
-                                <select id="" class="form-select">
+                            <div class="col-md-4">
+                                <select id="used_status" class="form-select">
                                     <option value="">All</option>
-                                    <option value="">Used</option>
-                                    <option value="">Not Used</option>
+                                    <option value="used">Used</option>
+                                    <option value="notused">Not Used</option>
 
                                 </select>
                             </div>
 
 
-                            <div class="col-md-2">
-                                <button id="exportBtn" class="btn btn-success w-100">
+                            <!--<div class="col-md-3">
+                                <button id="exportBtn" class="btn btn-success">
                                     <i class="fa fa-file-excel"></i> Export as Excel
                                 </button>
-                            </div>
+                            </div>-->
                         </div>
 
 
@@ -137,6 +137,8 @@ $(document).ready(function() {
                 d.subject = $('#subjectFilter').val();
                 d.topic = $('#topicFilter').val();
                 d.difficulty = $('#difficultyFilter').val();
+                d.qp_managers = $('#qp_managers').val();
+                d.used_status = $('#used_status').val();
             }
         },
         columns: [{
@@ -165,7 +167,7 @@ $(document).ready(function() {
     });
 
     // Refresh the table when filters change
-    $('#subjectFilter, #topicFilter, #difficultyFilter').change(function() {
+    $('#subjectFilter, #topicFilter, #difficultyFilter, #qp_managers, #used_status').change(function() {
         $('#subjecttable').DataTable().draw();
     });
 });
