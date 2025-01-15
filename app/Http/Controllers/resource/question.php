@@ -512,4 +512,20 @@ public function questionpaper()
         
     }
 
+
+    public function getAvailableQuestions(Request $request)
+    {
+        $subjectId = $request->subject_id;
+        $topicId = $request->topic_id;
+        $difficultyLevelId = $request->difficulty_level_id;
+
+        $availableCount = Questions::where('qs_subject_id', $subjectId)
+            ->where('qs_topic_id', $topicId)
+            ->where('qs_difficulty_level', $difficultyLevelId)
+            ->count();
+
+        return response()->json(['available_count' => $availableCount]);
+    }
+
+
 }

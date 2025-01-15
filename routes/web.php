@@ -60,3 +60,5 @@ Route::post('/question/deleteQuestionTemplate', [\App\Http\Controllers\resource\
 Route::resource('report',\App\Http\Controllers\resource\report::class);
 Route::post('/report/fetchdata', [App\Http\Controllers\resource\report::class, 'fetchdata'])->name('report.fetchdata');
 
+Route::post('/get-available-questions', [App\Http\Controllers\resource\question::class, 'getAvailableQuestions']);
+
