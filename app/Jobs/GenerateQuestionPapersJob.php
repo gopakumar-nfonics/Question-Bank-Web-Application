@@ -188,7 +188,9 @@ class GenerateQuestionPapersJob implements ShouldQueue
         $table->addRow(null, ['cantSplit' => true]);
         $table->addCell(3000, ['borderRightSize' => 6])->addText("Question", ['bold' => true,'size' => 12]);
         //$table->addCell(8000)->addText($question->qs_question);
-        $table->addCell(10000, ['gridSpan' => 4])->addText(htmlspecialchars($question->qs_question));
+        //$table->addCell(10000, ['gridSpan' => 4])->addText(htmlspecialchars($question->qs_question));
+        $this->addTextOrImage($table, $question->qs_question);
+
 
         // Add options with label-value borders
         $options = QuestionOption::where('qo_question_id', $question->qs_id)->get();
@@ -197,7 +199,9 @@ class GenerateQuestionPapersJob implements ShouldQueue
             $table->addRow(null, ['cantSplit' => true]);
             $table->addCell(3000, ['borderRightSize' => 6])->addText("Option " . chr(65 + $key), ['bold' => true,'size' => 12]);
             //$table->addCell(8000)->addText($option->qo_options);
-            $table->addCell(10000, ['gridSpan' => 4])->addText(htmlspecialchars($option->qo_options));
+           // $table->addCell(10000, ['gridSpan' => 4])->addText(htmlspecialchars($option->qo_options));
+           $this->addTextOrImage($table, $option->qo_options);
+
         }
 
         // Add correct answer row
@@ -235,6 +239,31 @@ class GenerateQuestionPapersJob implements ShouldQueue
     return $fileName;
 }
 
+private function addTextOrImage($table, $content)
+{
+    if (preg_match('/<img\s+src="data:image\/[^;]+;base64,([^"]+)"/', $content, $matches)) {
+        // Extract base64 image data
+        $base64Image = $matches[1];
+        $imageData = base64_decode($base64Image);
+
+        // Temporary image path
+        $tempImagePath = storage_path('app/temp_image.png');
+        file_put_contents($tempImagePath, $imageData);
+
+        // Add image to the cell
+        $table->addCell(10000, ['gridSpan' => 4])->addImage($tempImagePath, [
+            'width' => 200,
+            'height' => 200,
+            'wrappingStyle' => 'inline',
+        ]);
+
+        // Delete the temporary image
+        unlink($tempImagePath);
+    } else {
+        // If no image, add plain text
+        $table->addCell(10000, ['gridSpan' => 4])->addText(strip_tags($content));
+    }
+}
     
 
 
