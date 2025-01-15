@@ -211,8 +211,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
     {
         $table->addRow();
         $table->addCell(3000)->addText("Question:");
-        $cleanedQuestion = $this->cleanHtml($question->qs_question); // Clean HTML
-        \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), $cleanedQuestion, false, true);
+        \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), $question->qs_question);
     }
 
     /**
@@ -224,29 +223,8 @@ class GenerateQuestionPapersJob implements ShouldQueue
         foreach ($options as $key => $option) {
             $table->addRow();
             $table->addCell(3000)->addText("Option " . chr(65 + $key));
-            $cleanedOption = $this->cleanHtml($option->qo_options); // Clean HTML
-            \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), $cleanedOption, false, true);
+            \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), $option->qo_options);
         }
-    }
-
-    /**
-     * Clean HTML content to ensure all tags are properly closed.
-     */
-    private function cleanHtml($html)
-    {
-        libxml_use_internal_errors(true); // Disable warnings for invalid HTML
-        $dom = new \DOMDocument();
-
-        // Remove unwanted tags or attributes if necessary
-        $html = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $html);  // Remove any JavaScript
-        $html = preg_replace('/<style\b[^>]*>(.*?)<\/style>/is', '', $html);    // Remove any CSS
-
-        // Clean up malformed HTML
-        $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
-        $dom->saveHTML(); // This will fix unclosed tags
-
-        // Return the cleaned HTML
-        return $dom->saveHTML();
     }
 
 
