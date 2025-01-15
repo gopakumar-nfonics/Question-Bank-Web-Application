@@ -23,6 +23,7 @@
 }
 .color-green {
     color: #45ab48 !important;
+    font-weight: bold;
 }
 .breadcrumb {
     padding: 0px  !important;
