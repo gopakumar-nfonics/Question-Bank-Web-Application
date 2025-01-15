@@ -354,18 +354,74 @@ document.getElementById('q_subject').addEventListener('change', function() {
 </script>
 
 <script>
+    // document.addEventListener("DOMContentLoaded", function () {
+    //     // Function to set the answer-border class for the default checked radio button
+    //     function setDefaultChecked() {
+    //         const checkedRadio = document.querySelector('input[name="is_answer"]:checked');
+    //         if (checkedRadio) {
+    //             const optionId = `option${checkedRadio.value}`;
+    //             const textarea = document.getElementById(optionId);
+    //             if (textarea) {
+    //                 const parentDiv = textarea.parentElement; // Get the parent <div>
+    //                 if (parentDiv) {
+    //                     parentDiv.classList.add('answer-border');
+    //                 }
+    //             }
+    //         }
+    //     }
+
+    //     // Get all radio buttons with name "is_answer"
+    //     const radioButtons = document.querySelectorAll('input[name="is_answer"]');
+
+    //     // Add event listener to each radio button
+    //     radioButtons.forEach(radio => {
+    //         radio.addEventListener('change', function () {
+    //             // Remove the 'answer-border' class from all parent divs
+    //             document.querySelectorAll('.answer-border').forEach(div => {
+    //                 div.classList.remove('answer-border');
+    //             });
+
+    //             // Add 'answer-border' to the corresponding parent div of the textarea
+    //             const optionId = `option${this.value}`;
+    //             const textarea = document.getElementById(optionId);
+    //             if (textarea) {
+    //                 const parentDiv = textarea.parentElement; // Get the parent <div>
+    //                 if (parentDiv) {
+    //                     parentDiv.classList.add('answer-border');
+    //                 }
+    //             }
+    //         });
+    //     });
+
+    //     // Set the class for the default checked option on page load
+    //     setDefaultChecked();
+    // });
+
     document.addEventListener("DOMContentLoaded", function () {
-        // Function to set the answer-border class for the default checked radio button
+        // Function to set the default checked radio button styles
         function setDefaultChecked() {
             const checkedRadio = document.querySelector('input[name="is_answer"]:checked');
             if (checkedRadio) {
                 const optionId = `option${checkedRadio.value}`;
                 const textarea = document.getElementById(optionId);
+                const isAnswerLabel = checkedRadio.closest("label"); // Label for "Is Answer?"
+                const optionLabel = checkedRadio
+                    .closest(".fv-row") // Parent container of the radio button and labels
+                    .querySelector(".form-label"); // Label for "Option 1"
+
                 if (textarea) {
                     const parentDiv = textarea.parentElement; // Get the parent <div>
                     if (parentDiv) {
-                        parentDiv.classList.add('answer-border');
+                        parentDiv.classList.add("answer-border");
                     }
+                }
+
+                if (isAnswerLabel) {
+                    isAnswerLabel.classList.add("color-green");
+                }
+
+                if (optionLabel) {
+                    optionLabel.classList.add("color-green"); // Add class to "Option 1" label
                 }
             }
         }
@@ -374,27 +430,44 @@ document.getElementById('q_subject').addEventListener('change', function() {
         const radioButtons = document.querySelectorAll('input[name="is_answer"]');
 
         // Add event listener to each radio button
-        radioButtons.forEach(radio => {
-            radio.addEventListener('change', function () {
-                // Remove the 'answer-border' class from all parent divs
-                document.querySelectorAll('.answer-border').forEach(div => {
-                    div.classList.remove('answer-border');
+        radioButtons.forEach((radio) => {
+            radio.addEventListener("change", function () {
+                // Remove the 'answer-border' and 'color-green' classes
+                document.querySelectorAll(".answer-border").forEach((div) => {
+                    div.classList.remove("answer-border");
+                });
+                document.querySelectorAll(".color-green").forEach((element) => {
+                    element.classList.remove("color-green");
                 });
 
-                // Add 'answer-border' to the corresponding parent div of the textarea
+                // Add classes to the selected elements
                 const optionId = `option${this.value}`;
                 const textarea = document.getElementById(optionId);
+                const isAnswerLabel = this.closest("label"); // Label for "Is Answer?"
+                const optionLabel = this
+                    .closest(".fv-row") // Parent container of the radio button and labels
+                    .querySelector(".form-label"); // Label for "Option 1"
+
                 if (textarea) {
-                    const parentDiv = textarea.parentElement; // Get the parent <div>
+                    const parentDiv = textarea.parentElement;
                     if (parentDiv) {
-                        parentDiv.classList.add('answer-border');
+                        parentDiv.classList.add("answer-border");
                     }
+                }
+
+                if (isAnswerLabel) {
+                    isAnswerLabel.classList.add("color-green");
+                }
+
+                if (optionLabel) {
+                    optionLabel.classList.add("color-green"); // Add class to "Option 1" label
                 }
             });
         });
 
-        // Set the class for the default checked option on page load
+        // Set styles for the default checked option on page load
         setDefaultChecked();
     });
+
 </script>
 @endsection
