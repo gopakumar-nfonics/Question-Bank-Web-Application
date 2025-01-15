@@ -189,7 +189,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
         $table->addCell(3000, ['borderRightSize' => 6])->addText("Question", ['bold' => true,'size' => 12]);
         //$table->addCell(8000)->addText($question->qs_question);
         //$table->addCell(10000, ['gridSpan' => 4])->addText(htmlspecialchars($question->qs_question));
-        $this->addTextOrImage($table, $question->qs_question);
+        $this->addTextAndImages($table, $question->qs_question);
 
 
         // Add options with label-value borders
@@ -200,7 +200,7 @@ class GenerateQuestionPapersJob implements ShouldQueue
             $table->addCell(3000, ['borderRightSize' => 6])->addText("Option " . chr(65 + $key), ['bold' => true,'size' => 12]);
             //$table->addCell(8000)->addText($option->qo_options);
            // $table->addCell(10000, ['gridSpan' => 4])->addText(htmlspecialchars($option->qo_options));
-           $this->addTextOrImage($table, $option->qo_options);
+           $this->addTextAndImages($table, $option->qo_options);
 
         }
 
@@ -239,13 +239,30 @@ class GenerateQuestionPapersJob implements ShouldQueue
     return $fileName;
 }
 
-private function addTextOrImage($table, $content)
+private function addTextAndImages($table, $content)
 {
-    if ($this->isBase64Image($content)) {
-        $table->addCell(10000, ['gridSpan' => 4])->addImage($content);
-    } else {
-        $table->addCell(10000, ['gridSpan' => 4])->addText(htmlspecialchars($content));
+    // Split the content by some delimiter or pattern (for example, if images are in base64 format)
+    $textAndImages = $this->splitContent($content);
+
+    foreach ($textAndImages as $item) {
+        if ($this->isBase64Image($item)) {
+            // It's an image, add it to the document
+            $table->addCell(10000, ['gridSpan' => 4])->addImage($item);
+        } else {
+            // It's a text, add it as text
+            $table->addCell(10000, ['gridSpan' => 4])->addText(htmlspecialchars($item));
+        }
     }
+}
+
+private function splitContent($content)
+{
+    // You could use a custom pattern to split the content based on your specific use case.
+    // Here, I'm just using a simple method that splits the content assuming the base64 strings are images.
+    // For more complex patterns, you can use regex or other string functions.
+
+    // For example, split by new lines, images, etc.
+    return preg_split('/(data:image\/(png|jpg|jpeg|gif);base64,.*?)/s', $content);
 }
 
 private function isBase64Image($content)
