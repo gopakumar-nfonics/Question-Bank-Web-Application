@@ -304,45 +304,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     document.getElementById('addRowBtn').addEventListener('click', function(e) {
-        e.preventDefault();
+    e.preventDefault();
 
-        const subjectSelect = document.getElementById('q_subject');
-        const subjectId = subjectSelect.value;
-        const topicSelect = document.getElementById('q_topic');
-        const topicId = topicSelect.value;
-        const difficultySelect = document.getElementById('difficulty_level');
-        const difficultyLevelId = difficultySelect.value;
-        const noOfQuestions = parseInt(document.getElementById('no_of_questions').value);
+    const subjectSelect = document.getElementById('q_subject');
+    const subjectId = subjectSelect.value;
+    const topicSelect = document.getElementById('q_topic');
+    const topicId = topicSelect.value;
+    const difficultySelect = document.getElementById('difficulty_level');
+    const difficultyLevelId = difficultySelect.value;
+    const noOfQuestions = parseInt(document.getElementById('no_of_questions').value);
 
-        if (!subjectId || !topicId || !difficultyLevelId || isNaN(noOfQuestions)) {
-            alert('Please complete all fields before proceeding.');
-            return;
-        }
+    if (!subjectId || !topicId || !difficultyLevelId || isNaN(noOfQuestions)) {
+        alert('Please complete all fields before proceeding.');
+        return;
+    }
 
-        // 🟢 Fetch available questions for the selected criteria
-        fetch('/get-available-questions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    subject_id: subjectId,
-                    topic_id: topicId,
-                    difficulty_level_id: difficultyLevelId
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                const availableCount = data.available_count;
+    // 🟢 Fetch available questions for the selected criteria
+    fetch('/get-available-questions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+        },
+        body: JSON.stringify({
+            subject_id: subjectId,
+            topic_id: topicId,
+            difficulty_level_id: difficultyLevelId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const availableCount = data.available_count;
 
-                if (noOfQuestions > availableCount) {
-                    $('#available_question_error').text(
-                        `Only ${availableCount} questions are available for the selected criteria. Refine the criteria and try again.`
-                    )
-                    $('#available_question_error').show();
-                    return;
-                }
         const table = document.getElementById('questionsTable');
         const tbody = table.querySelector('tbody');
         let alreadyAddedCount = 0;
