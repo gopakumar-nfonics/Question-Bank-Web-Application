@@ -249,8 +249,17 @@ private function sanitizeHtml($html)
     // Initialize HTMLPurifier with a custom configuration
     $config = HTMLPurifier_Config::createDefault();
 
-    // Allow self-closing tags (like <img>)
-    $config->set('HTML.Allowed', 'div,p,br,strong,em,a[href|target],img[src|alt|width|height],ul,ol,li'); // add img tag with attributes
+    // Allow all necessary tags including img with src attributes (base64 encoded)
+    $config->set('HTML.Allowed', 'div,p,br,strong,em,a[href|target],img[src|alt|width|height],ul,ol,li'); // allows img with src, alt, width, and height
+
+    // Define allowed protocols to handle base64 and other valid protocols
+    $config->set('URI.AllowedSchemes', [
+        'http' => true,
+        'https' => true,
+        'ftp' => true,
+        'mailto' => true,
+        'data' => true // allows base64 data URI for images
+    ]);
 
     // Initialize HTMLPurifier with the custom configuration
     $purifier = new HTMLPurifier($config);
@@ -258,6 +267,7 @@ private function sanitizeHtml($html)
     // Clean the HTML content
     return $purifier->purify($html);
 }
+
 
 
     
