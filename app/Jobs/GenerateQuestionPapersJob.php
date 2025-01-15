@@ -211,7 +211,8 @@ class GenerateQuestionPapersJob implements ShouldQueue
     {
         $table->addRow();
         $table->addCell(3000)->addText("Question:");
-        \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), $question->qs_question);
+        $cleanedQuestion = $this->cleanHtml($question->qs_question); // Clean HTML
+        \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), $cleanedQuestion);
     }
 
     /**
@@ -223,8 +224,21 @@ class GenerateQuestionPapersJob implements ShouldQueue
         foreach ($options as $key => $option) {
             $table->addRow();
             $table->addCell(3000)->addText("Option " . chr(65 + $key));
-            \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), $option->qo_options);
+            $cleanedOption = $this->cleanHtml($option->qo_options); // Clean HTML
+            \PhpOffice\PhpWord\Shared\Html::addHtml($table->addCell(8000), $cleanedOption);
         }
+    }
+
+    /**
+     * Clean HTML content to ensure all tags are properly closed.
+     */
+    private function cleanHtml($html)
+    {
+        libxml_use_internal_errors(true); // Disable warnings for invalid HTML
+        $dom = new \DOMDocument();
+        $dom->loadHTML($html);
+        $dom->saveHTML(); // This will fix unclosed tags
+        return $dom->saveHTML();
     }
 
 
