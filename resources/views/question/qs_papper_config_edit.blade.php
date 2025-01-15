@@ -359,7 +359,7 @@
         const totalRequested = alreadyAddedCount + noOfQuestions;
 
         if (totalRequested > availableCount) {
-            $('#available_question_error').text(`Only ${availableCount} questions are available for this selection.`)
+            $('#available_question_error').text(`Only ${availableCount}  questions are available for the selected criteria. Refine the criteria and try again.`)
             $('#available_question_error').show();
             return;
         }
