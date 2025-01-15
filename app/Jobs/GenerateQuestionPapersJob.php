@@ -246,8 +246,13 @@ class GenerateQuestionPapersJob implements ShouldQueue
 }
 private function sanitizeHtml($html)
 {
-    // Initialize HTMLPurifier
+    // Initialize HTMLPurifier with a custom configuration
     $config = HTMLPurifier_Config::createDefault();
+
+    // Allow self-closing tags (like <img>)
+    $config->set('HTML.Allowed', 'div,p,br,strong,em,a[href|target],img[src|alt|width|height],ul,ol,li'); // add img tag with attributes
+
+    // Initialize HTMLPurifier with the custom configuration
     $purifier = new HTMLPurifier($config);
 
     // Clean the HTML content
