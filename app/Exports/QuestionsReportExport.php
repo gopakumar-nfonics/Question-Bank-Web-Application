@@ -161,10 +161,7 @@ class QuestionsReportExport implements FromArray, WithHeadings, WithTitle, Shoul
 
     // Apply bold styling to column headings
     $sheet->getStyle("A{$headerRow}:{$lastColumnLetter}{$headerRow}")->applyFromArray([
-        'font' => [
-            'bold' => true,
-            'size' => 14,
-        ],
+        'font' => ['bold' => true, 'size' => 11,  'name' => 'Verdana'],
         'alignment' => [
             'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
         ],
