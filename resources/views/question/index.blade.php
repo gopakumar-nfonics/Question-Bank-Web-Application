@@ -4,6 +4,7 @@
 <style>
     #subjecttable table td {
     border: 1px solid !important;
+    padding: 5px !important;
 }
 </style>
 <div class="d-flex flex-column flex-column-fluid">
