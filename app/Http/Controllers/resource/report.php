@@ -10,6 +10,8 @@ use App\Models\Subject;
 use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\QuestionsReportExport;
 
 class report extends Controller
 {
@@ -187,6 +189,11 @@ class report extends Controller
             ]);
         }
     }
+
+    public function exportToExcel(Request $request)
+{
+    return Excel::download(new QuestionsReportExport($request), 'AMQB_questions_reports.xlsx');
+}
     
 
 }

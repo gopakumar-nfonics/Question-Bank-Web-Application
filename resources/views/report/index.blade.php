@@ -70,11 +70,11 @@
                             </div>
 
 
-                            <!--<div class="col-md-3">
+                            <div class="col-md-3">
                                 <button id="exportBtn" class="btn btn-success">
                                     <i class="fa fa-file-excel"></i> Export as Excel
                                 </button>
-                            </div>-->
+                            </div>
                         </div>
 
 
@@ -171,5 +171,18 @@ $(document).ready(function() {
         $('#subjecttable').DataTable().draw();
     });
 });
+</script>
+<script>
+    $('#exportBtn').on('click', function () {
+        let subject = $('#subjectFilter').val();
+        let topic = $('#topicFilter').val();
+        let difficulty = $('#difficultyFilter').val();
+        let qp_manager = $('#qp_managers').val();
+        let used_status = $('#used_status').val();
+
+        let url = `/export-questions?subject=${subject}&topic=${topic}&difficulty=${difficulty}&qp_managers=${qp_manager}&used_status=${used_status}`;
+
+        window.location.href = url;
+    });
 </script>
 @endsection

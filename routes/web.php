@@ -65,4 +65,6 @@ Route::post('/report/fetchdata', [App\Http\Controllers\resource\report::class, '
 
 Route::post('/get-available-questions', [App\Http\Controllers\resource\question::class, 'getAvailableQuestions']);
 
+Route::get('/export-questions', [App\Http\Controllers\resource\report::class, 'exportToExcel'])->name('export.questions');
+
 });
