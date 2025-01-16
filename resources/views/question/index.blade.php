@@ -1,6 +1,11 @@
 @extends('layouts.admin')
 
 @section('content')
+<style>
+    #subjecttable table td {
+    border: 1px solid !important;
+}
+</style>
 <div class="d-flex flex-column flex-column-fluid">
     <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
         <!--begin::Toolbar container-->
