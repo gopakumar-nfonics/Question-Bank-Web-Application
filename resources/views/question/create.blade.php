@@ -246,21 +246,6 @@ input[type="radio"]:checked+.form-check-label {
 @endsection
 
 @section('pageScripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.0/katex.min.js"></script>
-<script>
-document.querySelectorAll('.questions').forEach((element) => {
-    element.addEventListener('input', function() {
-    var latex = this.value;
-    var output = document.getElementById('mathOutput');
-    output.innerHTML = ''; // Clear previous output
-    if (latex.trim() !== '') {
-        katex.render(latex, output, {
-            throwOnError: false
-        });
-    }
-});
-});
-</script>
 
 <script>
 document.getElementById('q_subject').addEventListener('change', function() {
