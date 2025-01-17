@@ -11,6 +11,9 @@ input[type="radio"]:checked {
 input[type="radio"]:checked+.form-check-label {
     color: green;
 }
+    .cke_notification {
+        display: none !important;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.15.0/katex.min.css">
 <div class="app-main flex-column flex-row-fluid" id="kt_app_main" data-select2-id="select2-data-kt_app_main">
@@ -281,22 +284,57 @@ document.getElementById('q_subject').addEventListener('change', function() {
     }
 });
 </script>
-<script src="{{ url('/') }}/assets/js/ck-editor/ckeditor.js"></script>
+
+<script src="https://cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
 <script src="{{ url('/') }}/assets/js/ck-editor/tex-mml-chtml.js"></script>
 <script>
-    document.querySelectorAll('.editor').forEach(textarea => {
-        ClassicEditor
-            .create(textarea, {
-                toolbar: ['bold', 'italic', 'link', 'undo', 'redo'],
-            })
-            .then(editor => {
-                console.log('Editor initialized for:', textarea.name, editor);
-            })
-            .catch(error => {
-                console.error('Error initializing editor for:', textarea.name, error);
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.editor').forEach((textarea) => {
+            const editor = CKEDITOR.replace(textarea, {
+                toolbar: [
+                    { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Superscript', 'Subscript'] },
+                    { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote'] },
+                    { name: 'insert', items: ['Image', 'Table', 'HorizontalRule'] },
+                    { name: 'styles', items: ['Styles', 'Format'] },
+                    { name: 'tools', items: ['Maximize'] },
+                ],
+                extraPlugins: 'pastefromword', // Enable Paste from Word
+                removePlugins: 'clipboard', // Remove CKEditor's default clipboard handling to fully customize
             });
+
+            // Custom handling for pasted content
+            editor.on('paste', function (evt) {
+                const content = evt.data.dataValue; // Get pasted content
+                if (content) {
+                    // Sanitize content to remove unwanted tags (e.g., MathML tags)
+                    const sanitizedContent = content
+                        .replace(/<m:.*?>.*?<\/m:.*?>/gi, '') // Remove MathML tags
+                        .replace(/<\?xml.*?>/gi, '') // Remove XML declarations
+                        .replace(/<o:.*?>.*?<\/o:.*?>/gi, '') // Remove Word-specific tags
+                        .replace(/<\/?span[^>]*>/gi, '') // Remove all <span> tags
+                        .replace(/<\/?m:[^>]*>/gi, '') // Remove other MathML tags
+                        .replace(/style="[^"]*"/gi, '') // Optionally remove inline styles
+                        .replace(/<[^\/>][^>]*>(\s|&nbsp;)*<\/[^>]+>/gi, ''); // Remove empty tags
+                        
+
+                    // Replace the pasted content with sanitized content
+                    evt.data.dataValue = sanitizedContent;
+
+                    // Optionally log sanitized content for debugging
+                    console.log('Sanitized Content:', sanitizedContent);
+                }
+            });
+
+            // Optional: Prevent duplication caused by image uploads or other events
+            editor.on('instanceReady', function () {
+                editor.document.on('drop', function (dropEvt) {
+                    dropEvt.data.preventDefault(); // Prevent default drop behavior
+                });
+            });
+        });
     });
 </script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         MathJax.typesetPromise();
